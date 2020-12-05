@@ -1,0 +1,60 @@
+body{
+  background-color: #eaeded;
+}
+.Form {
+  text-align: left;
+  position: relative;
+  top: 60px;
+  left: 25%;
+  width: 50%;
+}
+.backgroundimage {
+  background-image: url("Landing.jpg");
+  width: 100vw;
+  height: 95vh;
+  position: relative;
+  bottom: 85px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.tl {
+  position: relative;
+  top: 30px;
+}
+.nav {
+  overflow: auto;
+  z-index: 1;
+}
+.form {
+  width: 40%;
+  height: 15%;
+  position: relative;
+  left: 30%;
+}
+.white {
+  color: white;
+}
+.header{
+  position: relative;
+  bottom: 110px;
+  }
+#wrapper{
+    background-color: light grey;
+    position:absolute;
+    left:0;
+    right:0;
+    overflow:hidden;
+}
+.top{
+  background: rgba(0,0,0, 0.6);
+  height :inherit;
+}
+.footer{
+  color:white;
+  background-color: #2980b9;
+}
+.button{
+  position:relative;
+  left: 22%;
+  bottom: 5%;
+}
