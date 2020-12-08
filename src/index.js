@@ -10,6 +10,7 @@ import SignUp from './components/signup';
 import Login from './components/login';
 import Ecom from './components/ecommerce';
 import EditProperty from './components/editproperty';
+import Map from './components/map';
 
 const routing=(
   <BrowserRouter>
@@ -21,6 +22,8 @@ const routing=(
       <Route path="/login" component={Login}></Route>
       <Route path="/store" component={Ecom}></Route>
       <Route path="/editproperty" component={EditProperty}></Route>
+      <Route path="/editproperty" component={EditProperty}></Route>
+      <Route path="/map" component={Map}></Route>
     </div>
   </BrowserRouter>
 )

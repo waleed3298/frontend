@@ -19,7 +19,7 @@ class Navigation extends Component{
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="ml-auto">
-      <Nav.Link style={{color:"white"}} href="#home">Maps</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/map">Maps</Nav.Link>
       <Nav.Link style={{color:"white"}} href="#link">Plots</Nav.Link>
       <Nav.Link style={{color:"white"}} href="#link">About Us</Nav.Link>
     </Nav>
