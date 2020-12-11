@@ -1,4 +1,4 @@
-body{
+body {
   background-color: #eaeded;
 }
 .Form {
@@ -9,11 +9,11 @@ body{
   width: 50%;
 }
 .backgroundimage {
-  background-image: url("Landing.jpg");
+  background-image: url("bg.jpg");
   width: 100vw;
-  height: 95vh;
+  height: 98vh;
   position: relative;
-  bottom: 85px;
+  bottom: 200px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -34,27 +34,23 @@ body{
 .white {
   color: white;
 }
-.header{
+.header {
   position: relative;
   bottom: 110px;
-  }
-#wrapper{
-    background-color: light grey;
-    position:absolute;
-    left:0;
-    right:0;
-    overflow:hidden;
 }
-.top{
-  background: rgba(0,0,0, 0.6);
-  height :inherit;
+#wrapper {
+  background-color: light grey;
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
-.footer{
-  color:white;
-  background-color: #2980b9;
+.footer {
+  color: white;
+  background-color: #04164b;
 }
-.button{
-  position:relative;
+.button {
+  position: relative;
   left: 22%;
   bottom: 5%;
 }

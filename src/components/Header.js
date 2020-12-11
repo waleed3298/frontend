@@ -10,7 +10,7 @@ class Header extends Component{
     <div className="tl container">
       <div className="row mt-4">
         <div className="col-md-12 text-center mt-4">
-          <h1 className="text-heavy display-3 mb-4 mt-5 text-light" style={{fontWeight:"heavier"}}>Finding The Dream For Every Owner.
+          <h1 className="animate__animated animate__bounce text-heavy display-3 mb-4 mt-5 text-light" style={{fontWeight:"heavier"}}>Finding The Dream For Every Owner.
 </h1>
           <p className="tl lead mt-4 text-light">Search Properties for sale in Pakistan</p>
           <input className="tl form-control form mt-4 mr-2" type="text" placeholder="Search for Properties"/>

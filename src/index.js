@@ -11,11 +11,18 @@ import Login from './components/login';
 import Ecom from './components/ecommerce';
 import EditProperty from './components/editproperty';
 import Map from './components/map';
-
+import PropertyDetails from './components/propertyDetails';
+import {CookiesProvider} from 'react-cookie';
+import Navigation from './components/navbar';
+import Dashboard from './components/dashboard';
+import Properties from './components/properties';
+import Plots from './components/plots';
+import Commercial from './components/commercial';
 const routing=(
   <BrowserRouter>
-    <div>
+    <CookiesProvider>
       <Route exact path="/" component={App}></Route>
+      <Route exact path="/nav" component={Navigation}></Route>
       <Route path="/addProperty" component={AddProperty}></Route>
       <Route path="/advertisements" component={PropertyDisplay}></Route>
       <Route path="/signup" component={SignUp}></Route>
@@ -24,7 +31,12 @@ const routing=(
       <Route path="/editproperty" component={EditProperty}></Route>
       <Route path="/editproperty" component={EditProperty}></Route>
       <Route path="/map" component={Map}></Route>
-    </div>
+      <Route path="/AdDetails/:handle" component={PropertyDetails}></Route>
+      <Route path="/dashboard" component={Dashboard}></Route>
+      <Route path="/properties" component={Properties}></Route>
+      <Route path="/plots" component={Plots}></Route>
+      <Route path="/commercial-areas" component={Commercial}></Route>
+    </CookiesProvider>
   </BrowserRouter>
 )
 

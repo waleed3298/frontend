@@ -9,8 +9,8 @@ const properties = props.data.properties;
   const [viewport, setViewport] = useState({
     latitude: 31.582045,
     longitude: 74.329376,
-    width: "100vw",
-    height: "100vh",
+    width: props.width,
+    height: props.height,
     zoom: 10,
     errorMessage:null,
   });
@@ -58,7 +58,7 @@ const onSelected = (viewport,item) =>{
                 setSelectedProperty(property);
               }}
             >
-              <img src="/pin.png" alt="Skate Park Icon" />
+              <img src="/home.png" alt="Home icon" />
             </button>
           </Marker>
         ))}

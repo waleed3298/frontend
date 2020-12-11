@@ -7,8 +7,8 @@ import Col from 'react-bootstrap/Col';
 import CardDeck from 'react-bootstrap/CardDeck';
 import {withCookies} from 'react-cookie';
 import {Link} from 'react-router-dom';
-import Footer from './footer';
-class PropertyDisplay extends Component{
+
+class Commercial extends Component{
   state={
         properties:[],
         selectedProperty :  null,
@@ -16,7 +16,7 @@ class PropertyDisplay extends Component{
     }
     getAds = () =>{
       if(this.state.token){
-      fetch("http://127.0.0.1:4000/api/advertisements/",{
+      fetch("http://127.0.0.1:4000/api/commercial/",{
             method : 'GET',
             headers:{
               'Authorization':`Token ${this.state.token}`
@@ -36,7 +36,7 @@ class PropertyDisplay extends Component{
       var URL = '/AdDetails/'
         return(
             <div id="wrapper">
-            <Navigation  color="#04164b"  />
+            <Navigation  color="Black" />
             <h6>Search Results</h6>
             <Row>
                 {this.state.properties.map(property=>{
@@ -66,10 +66,9 @@ class PropertyDisplay extends Component{
                     )
                 })};
                 </Row>
-  <Footer />                
             </div>
         );
     };
 };
 
-export default withCookies(PropertyDisplay);
+export default withCookies(Commercial);

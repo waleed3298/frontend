@@ -5,10 +5,14 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CardDeck from 'react-bootstrap/CardDeck';
+import axios from 'axios';
 import {withCookies} from 'react-cookie';
 import {Link} from 'react-router-dom';
-import Footer from './footer';
-class PropertyDisplay extends Component{
+const api = axios.create({
+  baseURL : "http://127.0.0.1:4000/api"
+})
+
+class Dashboard extends Component{
   state={
         properties:[],
         selectedProperty :  null,
@@ -16,7 +20,7 @@ class PropertyDisplay extends Component{
     }
     getAds = () =>{
       if(this.state.token){
-      fetch("http://127.0.0.1:4000/api/advertisements/",{
+      fetch("http://127.0.0.1:4000/api/dashboard/",{
             method : 'GET',
             headers:{
               'Authorization':`Token ${this.state.token}`
@@ -32,11 +36,16 @@ class PropertyDisplay extends Component{
       this.getAds();
     }
 
+    Clicked = async(id) =>{
+      let data = await api.delete(`/Delete/${id}/`)
+      this.getAds();
+    }
+
     render(){
       var URL = '/AdDetails/'
         return(
             <div id="wrapper">
-            <Navigation  color="#04164b"  />
+            <Navigation  color="Black" />
             <h6>Search Results</h6>
             <Row>
                 {this.state.properties.map(property=>{
@@ -58,6 +67,7 @@ class PropertyDisplay extends Component{
                         </Card.Footer>
                       </Card>
                       </CardDeck>
+                      <Button onClick={()=>this.Clicked(property.id)}>Delete</Button>
                       <Link to={URL+property.id}>
                       <Button>View Advertisement</Button>
                       </Link>
@@ -66,10 +76,9 @@ class PropertyDisplay extends Component{
                     )
                 })};
                 </Row>
-  <Footer />                
             </div>
         );
     };
 };
 
-export default withCookies(PropertyDisplay);
+export default withCookies(Dashboard);

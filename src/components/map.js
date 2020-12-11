@@ -16,7 +16,7 @@ class Map extends Component{
 
   render(){
     return(
-      <Data data={this.state}/>
+      <Data width="100vw" height="100vh" data={this.state}/>
     )
   }
 }

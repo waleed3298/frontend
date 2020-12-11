@@ -6,10 +6,11 @@ import Home from './components/home';
 import Footer from './components/footer';
 
 class App extends Component{
+
     render(){
         return (
         <div id="wrapper">
-         <Navigation color="Transparent"/>
+         <Navigation  color="Transparent"/>
          <Header />
          <Home />
          <Footer />
