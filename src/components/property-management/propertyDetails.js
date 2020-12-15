@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
+import Navigation from '../navbar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import './components.css';
-import Data from './mapdata';
-
+import '../components.css';
+import Data from '../mapdata';
+import MapDetail from './detailmap';
 class PropertyDetails extends Component{
     state = {
       }
@@ -39,6 +39,7 @@ class PropertyDetails extends Component{
                 <h6>{this.state.res.Units}</h6><hr />
             </Col>
             </Row>
+            <MapDetail width="65vw" height="65vh" data={this.state.res} />
             </div>
             : null }
             </div>

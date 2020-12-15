@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
+import Navigation from '../navbar';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import './components.css';
+import '../components.css';
 import Button from 'react-bootstrap/Button';
-
+import Footer from '../footer';
 class EditProperty extends Component{
 state = { postId:'',
 id:'',
@@ -25,7 +25,8 @@ User : ''
 }
 
 componentDidMount(){
-    fetch("http://127.0.0.1:4000/api/Edit/8/",{
+  const { handle } = this.props.match.params     
+    fetch(`http://127.0.0.1:4000/api/Edit/${handle}/`,{
             method : 'GET'
             }).then(resp=>resp.json()).then(res=>this.setState({
                 'Title':res.Title,
@@ -55,6 +56,7 @@ handleChange = (event) =>{
        });
     };
 handleSubmit = (event) =>{
+  const {handle} = this.props.match.params;
   const requestOptions = {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -74,20 +76,21 @@ handleSubmit = (event) =>{
       User: this.state.User,
      })
 };
-fetch('http://127.0.0.1:4000/api/Edit/8/', requestOptions)
+fetch(`http://127.0.0.1:4000/api/Edit/${handle}/`, requestOptions)
     .then(response => response.json())
     .then(data => this.setState({ postId: data.id }));
 }
 
     render(){
         return (
-            <div>
-            <Navigation color='black' />
+            <div id="wrapper">
+            <Navigation color="#34495E" />
             <div className='Form'>
             <Form onSubmit={this.handleSubmit}>
                       <Form.Group>
-                      <h1 style={{textAlign:'center'}}>Edit Your Advertisement</h1><br />
-                      <h3 className="text-info" style={{textAlign:'center'}}>Property Type and Location</h3>
+                      <h1 style={{textAlign:'center',fontFamily:'prata'}}>Edit Your Advertisement</h1><br />
+                      <h3 className="text-info" style={{textAlign:'center',fontFamily:'Courgette'}}>Property Location and Details</h3>
+                      <div id="Form">
                       <Form.Label>Listing Title</Form.Label>
                               <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" />
                               <br />
@@ -156,12 +159,13 @@ fetch('http://127.0.0.1:4000/api/Edit/8/', requestOptions)
                           </Form.Group>
                           <br />
                           <br/>
-                          <Button type='submit' variant="info" type="submit">Submit Form</Button>
-
+                          <Button type='submit' style={{backgroundColor:'#34495E'}} type="submit">Submit Form</Button>
+</div>
                   <br />
                 </Form.Group>
               </Form>
-            </div>
+            </div> <br/><br/>
+            <Footer />
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
+import Navigation from '../navbar';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';

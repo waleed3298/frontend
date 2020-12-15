@@ -1,12 +1,29 @@
 body {
   background-color: #eaeded;
 }
+ProSidebar {
+  height: 100vh;
+}
 .Form {
   text-align: left;
   position: relative;
+  top: 20px;
+  left: 10%;
+  width: 80%;
+}
+#Form {
+  text-align: left;
+  position: relative;
   top: 60px;
-  left: 25%;
-  width: 50%;
+  left: 20%;
+  width: 60%;
+}
+Form.Control {
+  text-align: left;
+  position: relative;
+  top: 60px;
+  left: 10%;
+  width: 60%;
 }
 .backgroundimage {
   background-image: url("bg.jpg");
@@ -47,7 +64,7 @@ body {
 }
 .footer {
   color: white;
-  background-color: #04164b;
+  background-color: #3a626f;
 }
 .button {
   position: relative;

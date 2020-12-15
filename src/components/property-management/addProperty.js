@@ -1,17 +1,33 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import './components.css';
+import '../components.css';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import './map.css';
 import {withCookies} from 'react-cookie'
+import Navigation from '../navbar';
+import ReactMapGL, {Marker, NavigationControl,GeolocateControl} from 'react-map-gl';
+import Geocoder from 'react-mapbox-gl-geocoder';
+import Pin from './pin';
+import Footer from '../footer';
 
 class AddProperty extends Component{
-
-
-  state={token:this.props.cookies.get('ad-token'),showHouseForm:false,showPlotForm:false,showCommercialForm:false,Ad_id:'',
+  
+  state={token:this.props.cookies.get('ad-token'),showHouseForm:false,showPlotForm:false,showCommercialForm:false,Ad_id:'',error:'',
+  viewport: {
+    latitude: 33.6844,
+    longitude: 73.0479,
+    zoom: 5.5,
+    bearing: 0,
+    pitch: 0
+  },
+  marker: {
+    latitude: 33.6844,
+    longitude: 73.0479
+  },
+  events: {},
   Title:'',
   Description:'',
   Type:'',
@@ -55,27 +71,76 @@ handleImageChange = (e) =>{
         form_data.append('Purpose',this.state.Purpose);
         form_data.append('User',this.state.User);
         form_data.append('Image',this.state.image,this.state.image.name);
+        form_data.append('latitude',this.state.marker.latitude);
+        form_data.append('longitude',this.state.marker.longitude);
         let url = 'http://127.0.0.1:4000/api/CreateAd/';
         axios.post(url,form_data,{
           headers:{
             'content-type':'multipart/form-data',
             'Authorization': `Token ${this.state.token}`
           }
-        }).then(res=>console.log(res)).catch(error=>console.log(error))        
+        }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
+        if(this.state.error){
+          return(
+            <h1>{this.state.error}</h1>
+          )
+        }
+        else{
+          window.location.href='/dashboard'
+        }        
       }
+      _updateViewport = viewport => {
+        this.setState({viewport});
+      };
+    
+      _logDragEvent(name, event) {
+        this.setState({
+          events: {
+            ...this.state.events,
+            [name]: event.lngLat
+          }
+        });
+      }
+    
+      _onMarkerDragStart = event => {
+        this._logDragEvent('onDragStart', event);
+      };
+    
+      _onMarkerDrag = event => {
+        this._logDragEvent('onDrag', event);
+      };
+    
+      _onMarkerDragEnd = event => {
+        this._logDragEvent('onDragEnd', event);
+        this.setState({
+          marker: {
+            longitude: event.lngLat[0],
+            latitude: event.lngLat[1]
+          }
+        });
+      };
+      
+      onSelected = (viewport,item) =>{
+        this.setState({viewport:viewport});
+      }
+      
+    
 
       render(){
+        const {viewport, marker} = this.state;
         return(
           <div>
                   {this.state.token ?
-                    <div><Navigation color="#2980b9" className="top" />
-                        <div className="Form">
+                    <div id="wrapper">
+                    <Navigation color="#3A626F" />
+                     <div className="Form">
                         <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
-                        <h1 style={{textAlign:'center'}}>Add Property</h1><br />
-                        <h3 className="text-info" style={{textAlign:'center'}}>Property Type and Location</h3>
+                        <div id="Form">
+                        <h1 style={{textAlign:'center',fontFamily:'prata'}}>Add Property</h1><br />
+                        <h3 className="text-info" style={{textAlign:'center',fontFamily:'Courgette'}}>Property Location and Details</h3>
                         <Form.Label>Listing Title</Form.Label>
-                                <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" />
+                                <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" /><br/><br/>
                         <Form.Label>Image</Form.Label>
                         <input type="file" id="image" accept="image/jpg,image/png" onChange={this.handleImageChange} required />
                                 <br />
@@ -108,7 +173,7 @@ handleImageChange = (e) =>{
                             <Form.Label>Units</Form.Label>
                                         <Form.Control value={this.state.Units} name='Units' onChange={this.handleChange} size="md" as="select">
                                         <option value="square_yards">Square Yards</option>
-                                        <option value="square_metres">Square Metres</option>
+                                        <option value="square_meters">Square Meters</option>
                                         <option value="marla">Marla</option>
                                         <option value="kanal">Kanal</option>
                                         </Form.Control>
@@ -142,18 +207,56 @@ handleImageChange = (e) =>{
                             <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
                             </Row>
                             </Form.Group>
+                            </div>
                             <br />
                             <br/>
-                            <Button type='submit' variant="info" >Submit Form</Button>
-                    <br />
-                  </Form.Group>
+                     <br />
+                     <Form.Label>Select Location from Map</Form.Label>        
+                <ReactMapGL
+        {...viewport}
+        width="100%"
+        height="75vh"
+        mapStyle="mapbox://styles/waleed3298/ckid1zo1y1op21apb5ln1umo9"
+        onViewportChange={this._updateViewport}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+      >
+        <Marker
+          longitude={marker.longitude}
+          latitude={marker.latitude}
+          offsetTop={-20}
+          offsetLeft={-10}
+          draggable
+          onDragStart={this._onMarkerDragStart}
+          onDrag={this._onMarkerDrag}
+          onDragEnd={this._onMarkerDragEnd}
+        >
+          <Pin size={20} /> 
+         </Marker>
+         <Geocoder style={{width:'100px'}}
+mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+onSelected={this.onSelected}
+viewport={viewport}
+hideOnSelect={true}
+value=""
+/>
+
+          <NavigationControl onViewportChange={this._updateViewport} />
+          <GeolocateControl
+          positionOptions={{enableHighAccuracy: true}}
+          trackUserLocation={true}
+        />
+
+
+      </ReactMapGL>
+      <br/><br/>
+      <Button style={{backgroundColor:'#3A626F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit Form</Button>
+      </Form.Group>
                 </Form>
-
-                    </div>
                 </div>
-
-                     :
+                <Footer />
+      </div>             :
                    window.location.href = '/login'}
+      
                    </div>
 )
           }

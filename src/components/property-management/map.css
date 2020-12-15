@@ -1,8 +1,15 @@
+ReactMapGL {
+  text-align: left;
+  position: relative;
+  top: 60px;
+  left: 10%;
+  width: 80%;
+}
 .mapboxgl-ctrl {
   position: absolute;
   bottom: 2%;
-  right: 2%;
-  width: 3%;
+  right: 4%;
+  width: 2%;
   background-color: transparent;
 }
 

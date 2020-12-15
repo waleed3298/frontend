@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
+import Navigation from '../navbar';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -8,7 +8,7 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import {withCookies} from 'react-cookie';
 import {Link} from 'react-router-dom';
 
-class Commercial extends Component{
+class Properties extends Component{
   state={
         properties:[],
         selectedProperty :  null,
@@ -16,7 +16,7 @@ class Commercial extends Component{
     }
     getAds = () =>{
       if(this.state.token){
-      fetch("http://127.0.0.1:4000/api/commercial/",{
+      fetch("http://127.0.0.1:4000/api/properties/",{
             method : 'GET',
             headers:{
               'Authorization':`Token ${this.state.token}`
@@ -71,4 +71,4 @@ class Commercial extends Component{
     };
 };
 
-export default withCookies(Commercial);
+export default withCookies(Properties);

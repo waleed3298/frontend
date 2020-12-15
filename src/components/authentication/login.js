@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
+import Navigation from '../navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {withCookies} from 'react-cookie';
@@ -8,7 +8,8 @@ class Login extends Component{
     state = {
         credentials:{
             username:'',password:''
-        }
+        },
+        errorMessage : '',
     }
     handleChange = (event) =>{
         const cred = this.state.credentials
@@ -25,8 +26,13 @@ class Login extends Component{
     .then(
       data => {
         console.log(data.token)
-        this.props.cookies.set('ad-token',data.token)
-        window.location.href = '/advertisements'
+        if (data.token != null){
+        this.props.cookies.set('ad-token',data.token)    
+         window.location.href = '/dashboard'
+        }
+        else{
+            this.setState({errorMessage:'Username or Password Incorrect'})
+        }
       }
     )
     .catch( error => console.error(error))
@@ -35,21 +41,37 @@ class Login extends Component{
     login = () =>{
         this.getToken()
     }
+    
+  signup = () =>{
+    window.location.href = '/signup'
+  }
 
     render(){
         return (
             <div>
-            <Navigation color="Black" />
+            <Navigation color="#34495E" />
             <div className="Form">
             <h1 className="text-info mt-4" style={{textAlign:'center'}}>Login</h1>
             <br/>
+            {this.state.errorMessage ? 
+            <h6>{this.state.errorMessage}</h6>
+             : null}
+             <div id="Form">
             <Form.Group>
             <Form.Label>Username:</Form.Label>
                 <Form.Control onChange={this.handleChange} name="username" value={this.state.credentials.username} size="md" type="text" placeholder="Username" /><br />
             <Form.Label>Password:</Form.Label>
                 <Form.Control onChange={this.handleChange} size="md" name="password" value={this.state.credentials.password} type="password" placeholder="Enter your Password" /><br />
-                <Button onClick={this.login} style={{textAlign:'center'}} variant="info">Log In</Button>
+                
+                <Button onClick={this.login} style={{textAlign:'center'}} variant="info">Log In</Button><br/>
+                {this.state.errorMessage ?
+                <div>
+                <Button onClick={this.signup} style={{textAlign:'center'}} variant="info">Sign Up</Button>
+                
+                </div>
+                 : null}
             </Form.Group>
+            </div>
             </div>
             </div>
         )

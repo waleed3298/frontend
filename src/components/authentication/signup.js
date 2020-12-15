@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import Navigation from './navbar';
+import Navigation from '../navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
+import '../components.css';
 
 class SignUp extends Component{
     state = {
@@ -39,7 +40,7 @@ class SignUp extends Component{
     render(){
         return (
             <div>
-            <Navigation color="Black" />
+            <Navigation color="#34495E" />
             <div className="Form">
             <h1 className="text-info mt-4" style={{textAlign:'center'}}>Sign Up</h1>
             <br/>
