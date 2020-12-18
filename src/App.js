@@ -10,7 +10,7 @@ class App extends Component{
     render(){
         return (
         <div id="wrapper">
-         <Navigation  color="Transparent"/>
+         <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial"  color="Transparent"/>
          <Header />
          <Home />
          <Footer />

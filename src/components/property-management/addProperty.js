@@ -41,7 +41,6 @@ class AddProperty extends Component{
   Baths:'',
   Purpose:'',
   image : null,
-  User : '1',
 };
 
   handleChange = (event) =>{
@@ -69,7 +68,6 @@ handleImageChange = (e) =>{
         form_data.append('Beds',this.state.Beds);
         form_data.append('Baths',this.state.Baths);
         form_data.append('Purpose',this.state.Purpose);
-        form_data.append('User',this.state.User);
         form_data.append('Image',this.state.image,this.state.image.name);
         form_data.append('latitude',this.state.marker.latitude);
         form_data.append('longitude',this.state.marker.longitude);
@@ -81,13 +79,11 @@ handleImageChange = (e) =>{
           }
         }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
         if(this.state.error){
-          return(
-            <h1>{this.state.error}</h1>
-          )
+          return <h1>{this.state.error}</h1>
         }
         else{
-          window.location.href='/dashboard'
-        }        
+          window.location.href="/dashboard"
+        }
       }
       _updateViewport = viewport => {
         this.setState({viewport});
@@ -132,13 +128,13 @@ handleImageChange = (e) =>{
           <div>
                   {this.state.token ?
                     <div id="wrapper">
-                    <Navigation color="#3A626F" />
+                    <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#3A626F" />
                      <div className="Form">
                         <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
                         <div id="Form">
                         <h1 style={{textAlign:'center',fontFamily:'prata'}}>Add Property</h1><br />
-                        <h3 className="text-info" style={{textAlign:'center',fontFamily:'Courgette'}}>Property Location and Details</h3>
+                        <h3 className="text-info" style={{textAlign:'center',fontFamily:'Lora'}}>Property Location and Details</h3>
                         <Form.Label>Listing Title</Form.Label>
                                 <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" /><br/><br/>
                         <Form.Label>Image</Form.Label>

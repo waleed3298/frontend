@@ -1,7 +1,7 @@
 body {
   background-color: #eaeded;
 }
-ProSidebar {
+SideNav {
   height: 100vh;
 }
 .Form {
@@ -18,6 +18,14 @@ ProSidebar {
   left: 20%;
   width: 60%;
 }
+#SearchForm {
+  text-align: left;
+  position: relative;
+  top: 60px;
+  width: 90%;
+  left: 10%;
+  right: 5%;
+}
 Form.Control {
   text-align: left;
   position: relative;
@@ -28,7 +36,7 @@ Form.Control {
 .backgroundimage {
   background-image: url("bg.jpg");
   width: 100vw;
-  height: 98vh;
+  height: 100vh;
   position: relative;
   bottom: 200px;
   background-size: 100% 100%;
@@ -56,18 +64,42 @@ Form.Control {
   bottom: 110px;
 }
 #wrapper {
-  background-color: light grey;
+  background-color: #eaeded;
   position: absolute;
   left: 0;
   right: 0;
   overflow: hidden;
 }
 .footer {
+  position: relative;
+  top: -100%;
+  width: 100%;
   color: white;
-  background-color: #3a626f;
+  background-color: #34495e;
 }
 .button {
   position: relative;
   left: 22%;
   bottom: 5%;
+}
+.icon {
+  color: #34495e;
+  margin-bottom: 1rem;
+}
+i:hover {
+  color: 457b9d;
+}
+
+.top {
+  height: inherit;
+  background: rgba(0, 0, 0, 0.5);
+}
+.One:hover {
+  font-size: 100px;
+}
+
+@media (max-width: 1028px) {
+  #features {
+    margin-top: 200px;
+  }
 }

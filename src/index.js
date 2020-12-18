@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'font-awesome/css/font-awesome.min.css';
 import App from './App';
 import AddProperty from './components/property-management/addProperty';
 import reportWebVitals from './reportWebVitals';
@@ -38,7 +39,7 @@ const routing=(
       <Route path="/properties" component={Properties}></Route>
       <Route path="/plots" component={Plots}></Route>
       <Route path="/commercial-areas" component={Commercial}></Route>
-      <Route path='/results/:handle' component={SearchResult}></Route>
+      <Route path='/search' component={SearchResult}></Route>
     </CookiesProvider>
   </BrowserRouter>
 )

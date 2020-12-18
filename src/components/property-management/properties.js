@@ -1,20 +1,23 @@
 import React,{Component} from 'react';
 import Navigation from '../navbar';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import CardDeck from 'react-bootstrap/CardDeck';
 import {withCookies} from 'react-cookie';
-import {Link} from 'react-router-dom';
+import PropertyAd from './propertyads';
+import Pagination from '../pagination';
+import SideNav, {  NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import Footer from '../footer';
 
 class Properties extends Component{
   state={
-        properties:[],
-        selectedProperty :  null,
-        token : this.props.cookies.get('ad-token')
-    }
-    getAds = () =>{
+    loading: false,
+    postsPerPage : 6,
+    currentPage : 1,
+    properties:[],
+    selectedProperty :  null,
+    token : this.props.cookies.get('ad-token')
+  }
+
+  getAds = () =>{
       if(this.state.token){
       fetch("http://127.0.0.1:4000/api/properties/",{
             method : 'GET',
@@ -33,39 +36,76 @@ class Properties extends Component{
     }
 
     render(){
+      const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
+      const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+      const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
+      const paginate = pageNumber => this.setState({currentPage:pageNumber});
+    
       var URL = '/AdDetails/'
         return(
             <div id="wrapper">
-            <Navigation  color="Black" />
-            <h6>Search Results</h6>
-            <Row>
-                {this.state.properties.map(property=>{
-                    return(
-                    <Col sm={12} md={6} lg={3}>
-                    <div key={property.id}>
-                    <CardDeck>
-                      <Card style={{margin:'20px'}}>
-                        <Card.Img variant="top" src={property.Image} />
-                        <Card.Body>
-                          <Card.Title>{property.Title}</Card.Title>
-                          <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                          </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                          <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                      </Card>
-                      </CardDeck>
-                      <Link to={URL+property.id}>
-                      <Button>View Advertisement</Button>
-                      </Link>
-                      </div>
-                    </Col>
-                    )
-                })};
-                </Row>
+            <Navigation  color="#34495E" />
+            <SideNav style={{backgroundColor:'#34495E',height:'1400px'}}
+    onSelect={(selected) => {
+        // Add your code here
+    }}
+>
+    <SideNav.Toggle />
+    <SideNav.Nav  defaultSelected="home">
+        <NavItem eventKey="home">
+            <NavIcon>
+                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+            <a href="/">Home</a>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="maps">
+            <NavIcon>
+                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+            <a href="/map">Maps</a>
+            </NavText>
+          </NavItem>
+            <NavItem eventKey="properties">
+            <NavIcon>
+                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+                <NavText>
+                <a href="/properties">Properties</a>
+                </NavText>
+            </NavItem>
+            <NavItem eventKey="plots">
+            <NavIcon>
+                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+                <NavText>
+                <a href="/plots">Plots</a>
+                </NavText>
+            </NavItem>
+            <NavItem eventKey="commercial">
+            <NavIcon>
+                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+                <NavText>
+                <a href="/commercial-areas">Commercial Areas</a>
+                </NavText>
+            </NavItem>
+            
+    </SideNav.Nav>
+</SideNav>
+      <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
+            <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Houses For Sale</h1>
+            <br/><br/>
+          <PropertyAd properties={currentPosts} loading={this.state.loading} />
+        <Pagination
+          postsPerPage={this.state.postsPerPage}
+          totalPosts={this.state.properties.length}
+          paginate={paginate}
+      />
+                </div>
+               
             </div>
         );
     };

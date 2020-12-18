@@ -6,23 +6,23 @@ import Col from 'react-bootstrap/Col';
 import '../components.css';
 import Button from 'react-bootstrap/Button';
 import Footer from '../footer';
+import axios from 'axios';
+
 class EditProperty extends Component{
 state = { postId:'',
-id:'',
 Title:'',
-Description:'',
-Type:'',
-Location:'',
-Construction_status:'',
-Price:'',
-Size:'',
-Units:'',
-City:'',
-Beds:'',
-Baths:'',
-Purpose:'',
-User : ''
-}
+  Description:'',
+  Type:'',
+  Location:'',
+  Construction_status:'',
+  Price:'',
+  Size:'',
+  Units:'',
+  City:'',
+  Beds:'',
+  Baths:'',
+  Purpose:'',
+  image : null,}
 
 componentDidMount(){
   const { handle } = this.props.match.params     
@@ -46,45 +46,52 @@ componentDidMount(){
 
             })).then(res=>console.log(this.state.Type)).catch(error=>console.log(error));       
 }
-
-
-
+handleImageChange = (e) =>{
+  this.setState({image:e.target.files[0]})
+}
 handleChange = (event) =>{
         const value = event.target.value;
        this.setState({
          [event.target.name]: value 
        });
     };
-handleSubmit = (event) =>{
-  const {handle} = this.props.match.params;
-  const requestOptions = {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      Title: this.state.Title,
-      Description: this.state.Description,
-      Size: this.state.Size,
-      Price: this.state.Price,
-      Units: this.state.Units,
-      Type: this.state.Type,
-      Purpose: this.state.Purpose,
-      Beds: this.state.Beds,
-      Baths: this.state.Baths,
-      Construction_status: this.state.Construction_status, 
-      City: this.state.City,
-      Location: this.state.Location,
-      User: this.state.User,
-     })
-};
-fetch(`http://127.0.0.1:4000/api/Edit/${handle}/`, requestOptions)
-    .then(response => response.json())
-    .then(data => this.setState({ postId: data.id }));
-}
-
+    handleSubmit = (e) =>{
+      e.preventDefault();
+      console.log(this.state);
+      let form_data = new FormData();
+      form_data.append('Title',this.state.Title);
+      form_data.append('Description',this.state.Description);
+      form_data.append('Type',this.state.Type);
+      form_data.append('Location',this.state.Location);
+      form_data.append('Construction_status',this.state.Construction_status);
+      form_data.append('Price',this.state.Price);
+      form_data.append('Size',this.state.Size);
+      form_data.append('Units',this.state.Units);
+      form_data.append('City',this.state.City);
+      form_data.append('Beds',this.state.Beds);
+      form_data.append('Baths',this.state.Baths);
+      form_data.append('Purpose',this.state.Purpose);
+      form_data.append('Image',this.state.image,this.state.image.name);
+      const { handle } = this.props.match.params
+      let url = `http://127.0.0.1:4000/api/Edit/${handle}/`;
+      axios.put(url,form_data,{
+        headers:{
+          'content-type':'multipart/form-data',
+          'Authorization': `Token ${this.state.token}`
+        }
+      }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
+      if(this.state.error){
+        return <h1>{this.state.error}</h1>
+      }
+      else{
+        window.location.href="/dashboard"
+      }
+    }
+   
     render(){
         return (
             <div id="wrapper">
-            <Navigation color="#34495E" />
+            <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
             <div className='Form'>
             <Form onSubmit={this.handleSubmit}>
                       <Form.Group>
@@ -94,6 +101,10 @@ fetch(`http://127.0.0.1:4000/api/Edit/${handle}/`, requestOptions)
                       <Form.Label>Listing Title</Form.Label>
                               <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" />
                               <br />
+                              <Form.Label>Image</Form.Label>
+                        <input type="file" id="image" accept="image/jpg,image/png" onChange={this.handleImageChange} />
+                                <br />
+                        
                       <Form.Label className="mt-1">Property Type</Form.Label>
                       <Form.Control as="radio" value={this.state.Type} onChange={this.handleChange}>
                       <Row>

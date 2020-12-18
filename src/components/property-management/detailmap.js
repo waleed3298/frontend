@@ -35,7 +35,7 @@ const onSelected = (viewport,item) =>{
   return (
     <div>
     {property.latitude? 
-        <ReactMapGL style={{position:'relative',left:'20%'}}
+        <ReactMapGL style={{position:'relative',left:'10%'}}
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         mapStyle="mapbox://styles/waleed3298/ckid1zo1y1op21apb5ln1umo9"

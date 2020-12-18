@@ -1,20 +1,19 @@
 import React,{Component} from 'react';
 import Navigation from '../navbar';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import CardDeck from 'react-bootstrap/CardDeck';
 import {withCookies} from 'react-cookie';
-import {Link} from 'react-router-dom';
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import PropertyAd from './propertyads';
+import Pagination from '../pagination';
+import SideNav, {  NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import Footer from '../footer';
 class PropertyDisplay extends Component{
   state={
-        properties:[],
-        selectedProperty :  null,
-        token : this.props.cookies.get('ad-token')
+      loading: false,
+      postsPerPage : 6,
+      currentPage : 1,
+      properties:[],
+      selectedProperty :  null,
+      token : this.props.cookies.get('ad-token')
     }
     getAds = () =>{
       if(this.state.token){
@@ -35,10 +34,15 @@ class PropertyDisplay extends Component{
     }
 
     render(){
-      var URL = '/AdDetails/'
+      const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
+      const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+      const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
+      const paginate = pageNumber => this.setState({currentPage:pageNumber});
+    
         return(
             <div id="wrapper">
-            <SideNav style={{backgroundColor:'#04164b',height:'1400px'}}
+            <Navigation  color="#34495E" />
+            <SideNav style={{backgroundColor:'#34495E',height:'1400px'}}
     onSelect={(selected) => {
         // Add your code here
     }}
@@ -88,36 +92,19 @@ class PropertyDisplay extends Component{
             
     </SideNav.Nav>
 </SideNav>
-            <h6>Search Results</h6>
-            <Row>
-                {this.state.properties.map(property=>{
-                    return(
-                    <Col sm={12} md={6} lg={4}>
-                    <div key={property.id}>
-                    <CardDeck style={{position:'relative',left:'10%'}}>
-                      <Card style={{margin:'20px',width:'25%'}}>
-                        <Card.Img variant="top" src={property.Image} />
-                        <Card.Body>
-                          <Card.Title>{property.Title}</Card.Title>
-                          <Card.Text>
-                            This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                          </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                          <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                      </Card>
-                      </CardDeck>
-                      <Link to={URL+property.id}>
-                      <Button>View Advertisement</Button>
-                      </Link>
-                      </div>
-                    </Col>
-                    )
-                })};
-                </Row>
-  <Footer />                
+      <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
+            <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Dashboard</h1>
+            <div class="ui horizontal divider">
+            Your Advertisements
+          </div>
+          <PropertyAd properties={currentPosts} loading={this.state.loading} />
+        <Pagination
+          postsPerPage={this.state.postsPerPage}
+          totalPosts={this.state.properties.length}
+          paginate={paginate}
+      />
+                </div>
+               
             </div>
         );
     };

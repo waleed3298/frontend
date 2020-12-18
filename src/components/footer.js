@@ -7,7 +7,7 @@ class Footer extends React.Component{
   render(){
     return(
       <div className='footer'>
-      <div className='top'>
+      <div>
       <Row  style={{position:'relative',left:'12%',top:'10px',padding:'5%'}}>
       <Col>
       <div>

@@ -3,11 +3,15 @@ import "./components.css";
 import Button from 'react-bootstrap/Button';
 import {withCookies} from 'react-cookie';
 import {Link} from 'react-router-dom';
+import {Row,Col} from 'react-bootstrap';
 
 class Header extends Component{
   state = {
     search:'',
   }
+signup = () =>{
+  window.location.href='/signup'
+}
   
 handleChange = (event) =>{
   const value = event.target.value;
@@ -22,16 +26,18 @@ handleChange = (event) =>{
     <div className="top">
     <div className="dark-overlay landing-inner text-dark mt-4">
     <div className="tl container">
-      <div className="row mt-4">
-        <div className="col-md-12 text-center mt-4">
-          <h1 className="animate__animated animate__bounce text-heavy display-3 mb-4 mt-5 text-light" style={{fontWeight:"heavier"}}>Finding The Dream For Every Owner.
-</h1>
-          <p className="tl lead mt-4 text-light">Search Properties for sale in Pakistan</p>
-          <input name="search" onChange={this.handleChange} value={this.state.value} className="tl form-control form mt-4 mr-2" type="text" />
-          <i class="search icon"></i>
-          <Link to={URL+this.state.search}>
-          <Button onClick={this.submit} className="button ml-2 btn-lg" style={{backgroundColor:'#7BBc7f'}}>Search</Button>
-          </Link>
+      <div  className="row mt-4">
+        <div style={{width:'80%',left:'10%',right:'10%',top:'10%'}} className="mt-4 col-md-12 text-center mt-4">
+        <div style={{position:'relative',top:'20%'}} className="row mt-4">
+        <div className="col-lg-6 col-md-6">
+          <h1 id="head" className="text-heavy text-left display-4 mb-4 mt-5 text-light" style={{fontWeight:"heavier",fontSize:'5rem'}}>Finding The Dream For Every Owner
+</h1></div><div className="col-lg-6 col-md-6">
+          <h4 style={{marginLeft:'22%',marginTop:'10%',width:'150px',color:'white'}}>Join Us Now</h4>
+          <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.signup} variant="info">Sign Up</Button><br/>
+          <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.signup} variant="info">Search Properties</Button><br/><br/><br/><br/>
+          
+          </div>
+          </div>
           </div>
       </div>
     </div>

@@ -1,24 +1,17 @@
 import React,{Component} from 'react';
 import Navigation from './navbar';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import CardDeck from 'react-bootstrap/CardDeck';
-import axios from 'axios';
 import {withCookies} from 'react-cookie';
-import {Link} from 'react-router-dom';
-import Footer from './footer';
 import Image from 'react-bootstrap/Image';
-
-const api = axios.create({
-  baseURL : "http://127.0.0.1:4000/api"
-})
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import Pagination from './pagination';
+import Posts from './ads';
+import './components.css';
 
 class Dashboard extends Component{
   
   state={
-        postsPerPage : 10,
+        loading: true,
+        postsPerPage : 3,
         currentPage : 1,
         properties:[],
         profile:[],
@@ -32,16 +25,21 @@ class Dashboard extends Component{
               'Authorization':`Token ${this.state.token}`
             }
             }).then(resp=>resp.json()).then(res=>this.setState({profile:res})).catch(error=>console.log(error));
+          if(!this.state.profile){
+              window.location.href='/createProfile'
+          }
     
     }
     getAds = () =>{
       if(this.state.token){
+        this.setState({loading:true})
       fetch("http://127.0.0.1:4000/api/dashboard/",{
             method : 'GET',
             headers:{
               'Authorization':`Token ${this.state.token}`
             }
             }).then(resp=>resp.json()).then(res=>this.setState({properties:res})).catch(error=>console.log(error));
+            this.setState({loading:false})
          }
     else{
       window.location.href = '/login'
@@ -51,85 +49,104 @@ class Dashboard extends Component{
     componentDidMount(){
     this.getProfiles();
     this.getAds();
-    
+    this.setState({loading:false})
   }
 
-    Clicked = async(id) =>{
-      let data = await api.delete(`/Delete/${id}/`)
-      this.getAds();
-    }
     
     render(){
-      var URL = '/editproperty/'
+    const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
+    const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
+    const paginate = pageNumber => this.setState({currentPage:pageNumber});
+  
+      
         return(
-            <div id="wrapper">
-            <Navigation  color="#34495E" />
-            {this.state.profile.map(data=>
-            <div style={{width:'60%',position:'relative',left:'0%',right:'40%'}}>
-            <div className="row">
-            <div className="col-lg-3 col-md-6 col-sm-6">
-            <Image src={data.image}></Image>
-            </div>
-            <div className="col-lg-3 col-md-6 col-sm-6">
-              <h4>Name:{data.name}</h4><br/>
-              <h6>Age:{data.Age}</h6><br/>
-              <h6>Contact:{data.contact_no}</h6><br/>
-            </div>
-            </div>
-            </div>
-            )}
+            <div style={{fontFamily:'Lora'}} id="wrapper">
+            {this.state.loading ?
+              <div class="ui segment">
+              <div class="ui active dimmer">
+                <div class="ui text loader">Loading</div>
+              </div>
+              <p></p>
+            </div> 
+            : 
+            <div>
+            <Navigation color="#34495E" />
+            <SideNav style={{backgroundColor:'#34495E',height:'100%'}}
+    onSelect={(selected) => {
+        // Add your code here
+    }}
+>
+    <SideNav.Toggle />
+    <SideNav.Nav >
+    {this.state.profile.map(data=>
+    <NavItem  eventKey="Profile">
+            <NavIcon>
+            <Image alt="Profile Picture" style={{width:'50px',height:'50px',marginTop:'20px'}} src={data.image}></Image>
+            </NavIcon>
+            <NavText className="ml-4">
+            <h6>Name:<b>{data.name}</b></h6>
+            <h6>Age:{data.Age}</h6>
+            <h6>Contact:{data.contact_no}</h6>
+            </NavText>
+        </NavItem>
+        )}<br/><br/>
+        <NavItem eventKey="home"><br/><br/>
+            <NavIcon>
+                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+            <a href="/">Home</a>
+            </NavText>
+        </NavItem>
+        <NavItem eventKey="maps">
+            <NavIcon>
+                <i className="fa fa-fw fa-map" style={{ fontSize: '1.75em' }} />
+            </NavIcon>
+            <NavText>
+            <a href="/map">Maps</a>
+            </NavText>
+          </NavItem>
+            <NavItem eventKey="properties">
+            <NavIcon>
+                </NavIcon>
+                <NavText>
+                <a href="/properties">Properties</a>
+                </NavText>
+            </NavItem>
+            <NavItem eventKey="plots">
+            <NavIcon>
+                </NavIcon>
+                <NavText>
+                <a href="/plots">Plots</a>
+                </NavText>
+            </NavItem>
+            <NavItem eventKey="commercial">
+            <NavIcon>
+                </NavIcon>
+                <NavText>
+                <a href="/commercial-areas">Commercial Areas</a>
+                </NavText>
+            </NavItem>
+            
+    </SideNav.Nav>
+</SideNav>
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
-            <Row>
-                {this.state.properties.map(property=>{
-                    return(
-                    <Col sm={12} md={6} lg={4}>
-                    <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div  className="card">
-                        <div className="image">
-                          <img src={property.Image}/>
-                        </div>
-                        <div className="content">
-                          <div className="header"></div>
-                          <div className="meta">
-                            <a>{property.Title}</a>
-                          </div>
-                          <div className="description">
-                            {property.Price}
-                            </div>
-                        </div>
-                        <div className="extra content">
-                          <span className="right floated">
-                            {property.Date}
-                          </span>
-                          <span>
-                            {property.Size} {property.Units}
-                          </span><br/><br/>
-                          <span className="mt-2">
-                                                
-                      <Link to={URL+property.id}>
-                      <Button className="btn-sm ml-3 mr-3" style={{backgroundColor:'#34495E',marginLeft:'30px'}}>Edit Ad</Button>
-                      </Link>
-                      <Button className="btn-sm ml-3 mr-3" style={{backgroundColor:'#E74C3C',marginLeft:'30px'}}  onClick={()=>this.Clicked(property.id)}>Delete</Button>
-                            </span>
-                        </div>
-                      </div>
-                    </div>
-                    </Col>
-                    )
-                })};
-                </Row>
+            <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Dashboard</h1>
+            <div class="ui horizontal divider">
+            Your Advertisements
+          </div>
+        <Posts properties={currentPosts} loading={this.state.loading} />
+        <Pagination
+          postsPerPage={this.state.postsPerPage}
+          totalPosts={this.state.properties.length}
+          paginate={paginate}
+      /><br/><br/>
                 </div>
-                <Footer />
+           </div> }
             </div>
-        );
+        )
     };
 };
 
 export default withCookies(Dashboard);
-
-                      
-
-
-
-
-
