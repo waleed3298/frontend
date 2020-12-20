@@ -63,7 +63,7 @@ class Login extends Component{
             <Form.Label>Password:</Form.Label>
                 <Form.Control onChange={this.handleChange} size="md" name="password" value={this.state.credentials.password} type="password" placeholder="Enter your Password" /><br />
                 
-                <Button onClick={this.login} style={{textAlign:'center'}} variant="info">Log In</Button><br/>
+                <Button onClick={this.login} style={{textAlign:'center',position:'relative',width:'100px',left:'40%'}} variant="info">Log In</Button><br/>
                 {this.state.errorMessage ?
                 <div>
                 <Button onClick={this.signup} style={{textAlign:'center'}} variant="info">Sign Up</Button>

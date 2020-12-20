@@ -12,6 +12,9 @@ class Header extends Component{
 signup = () =>{
   window.location.href='/signup'
 }
+search = () =>{
+  window.location.href='/search'
+}
   
 handleChange = (event) =>{
   const value = event.target.value;
@@ -34,7 +37,7 @@ handleChange = (event) =>{
 </h1></div><div className="col-lg-6 col-md-6">
           <h4 style={{marginLeft:'22%',marginTop:'10%',width:'150px',color:'white'}}>Join Us Now</h4>
           <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.signup} variant="info">Sign Up</Button><br/>
-          <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.signup} variant="info">Search Properties</Button><br/><br/><br/><br/>
+          <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.search} variant="info">Search Properties</Button><br/><br/><br/><br/>
           
           </div>
           </div>

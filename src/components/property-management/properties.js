@@ -62,7 +62,8 @@ class Properties extends Component{
         </NavItem>
         <NavItem eventKey="maps">
             <NavIcon>
-                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
+            <i className="fa fa-fw fa-map" style={{ fontSize: '1.75em' }} />
+           
             </NavIcon>
             <NavText>
             <a href="/map">Maps</a>
@@ -70,15 +71,13 @@ class Properties extends Component{
           </NavItem>
             <NavItem eventKey="properties">
             <NavIcon>
-                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
             </NavIcon>
                 <NavText>
-                <a href="/properties">Properties</a>
+                <a href="/properties">Houses</a>
                 </NavText>
             </NavItem>
             <NavItem eventKey="plots">
             <NavIcon>
-                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
             </NavIcon>
                 <NavText>
                 <a href="/plots">Plots</a>
@@ -86,7 +85,6 @@ class Properties extends Component{
             </NavItem>
             <NavItem eventKey="commercial">
             <NavIcon>
-                <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
             </NavIcon>
                 <NavText>
                 <a href="/commercial-areas">Commercial Areas</a>

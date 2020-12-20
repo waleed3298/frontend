@@ -119,7 +119,6 @@ handleImageChange = (e) =>{
       onSelected = (viewport,item) =>{
         this.setState({viewport:viewport});
       }
-      
     
 
       render(){
@@ -247,12 +246,11 @@ value=""
       <br/><br/>
       <Button style={{backgroundColor:'#3A626F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit Form</Button>
       </Form.Group>
-                </Form>
+                      </Form>
                 </div>
                 <Footer />
       </div>             :
                    window.location.href = '/login'}
-      
                    </div>
 )
           }

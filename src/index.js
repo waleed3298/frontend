@@ -19,8 +19,9 @@ import Dashboard from './components/dashboard';
 import Properties from './components/property-management/properties';
 import Plots from './components/property-management/plots';
 import Commercial from './components/property-management/commercial';
-import SearchResult from './components/search-results';
+import SearchResult from './components/property-management/search-results';
 import MapDetail from './components/property-management/detailmap';
+import Chat from './components/chat';
 const routing=(
   <BrowserRouter>
     <CookiesProvider>
@@ -40,6 +41,7 @@ const routing=(
       <Route path="/plots" component={Plots}></Route>
       <Route path="/commercial-areas" component={Commercial}></Route>
       <Route path='/search' component={SearchResult}></Route>
+      <Route path="/chat" component={Chat}></Route>
     </CookiesProvider>
   </BrowserRouter>
 )

@@ -7,7 +7,7 @@ class Map extends Component{
     properties:[]
   }
     componentDidMount() {
-    axios.get(`http://127.0.0.1:4000/api/properties/`)
+    axios.get(`http://127.0.0.1:4000/api/advertisements/`)
       .then(res => {
         const properties = res.data;
         this.setState({ properties });

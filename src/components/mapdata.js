@@ -45,7 +45,7 @@ const onSelected = (viewport,item) =>{
           setViewport(viewport);
         }}
       >
-        {properties.map(property => (
+      {properties.map(property => (
           <Marker
             key={property.id}
             latitude={property.latitude}
@@ -72,9 +72,10 @@ const onSelected = (viewport,item) =>{
             }}
           >
             <div>
-              <h2>{selectedProperty.Title}</h2>
+              <h2 className="text-info">{selectedProperty.Title}</h2>
+              <h6>{selectedProperty.Price}</h6>
               <h6>{selectedProperty.Type}</h6>
-              <p>{selectedProperty.Description}</p>
+              <h6>{selectedProperty.Size} {selectedProperty.Units}</h6>
             </div>
           </Popup>
         ) : null}

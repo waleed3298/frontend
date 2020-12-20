@@ -41,7 +41,7 @@ class SignUp extends Component{
         return (
             <div>
             <Navigation color="#34495E" />
-            <div className="Form">
+            <div className="Form" style={{width:'50%',position:'relative',left:'25%'}}>
             <h1 className="text-info mt-4" style={{textAlign:'center'}}>Sign Up</h1>
             <br/>
             <Form.Group>
@@ -49,7 +49,7 @@ class SignUp extends Component{
                 <Form.Control size="md" onChange={this.handleChange} name="email" type="email" placeholder="Email" /><br />
                 <Form.Control size="md" onChange={this.handleChange} name="password" type="password" placeholder="Enter your Password" /><br />
                 <Form.Control size="md" onChange={this.handleChange} name="password2" type="password" placeholder="Retype Password" /><br/>
-                <Button onClick={this.handleClick} style={{textAlign:'center'}} variant="info">Sign Up</Button>
+                <Button onClick={this.handleClick} style={{textAlign:'center',position:'relative',width:'100px',left:'40%'}} variant="info">Sign Up</Button>
             </Form.Group>
             </div>
             </div>

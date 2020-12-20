@@ -38,7 +38,8 @@ class Posts extends Component{
                         </div>
                         <div className="extra content">
                           <span className="right floated">
-                            {property.Date}
+                          <i className="fa fa-eye" style={{ fontSize: '1.75em' }} />
+             {property.Views}
                           </span>
                           <span>
                             {property.Size} {property.Units}

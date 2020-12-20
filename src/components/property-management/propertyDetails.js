@@ -5,9 +5,12 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import '../components.css';
 import Data from '../mapdata';
+import axios from 'axios';
 import MapDetail from './detailmap';
 import Button from 'react-bootstrap/Button';
 import Footer from '../footer';
+import Views from './addViews';
+
 class PropertyDetails extends Component{
     state = {
       }
@@ -18,8 +21,8 @@ class PropertyDetails extends Component{
             }).then(resp=>resp.json()).then(res=>this.setState({res})).catch(error=>console.log(error));
       }
       componentDidMount () {
-       this.getDetails()
-  }
+       this.getDetails();
+       }
         
       render() {
           const properties = [this.state.Property]
@@ -61,8 +64,11 @@ class PropertyDetails extends Component{
             <Button style={{backgroundColor:'#34495E'}}>Contact Seller</Button>
             </Col>
             <Col lg={12}>
-            <h6><b>Location on Map</b> </h6>
+            <h6><b>Location on Map</b> </h6><br/><br/>
             <MapDetail width="65vw" height="65vh" data={this.state.res} />
+            </Col><br/><br/>
+            <Col lg={12}>
+            <Views data={this.state.res} />
             </Col>
             </div>
             </Row><br/><br/>

@@ -1,17 +1,19 @@
 import React,{Component} from 'react';
-import './components.css';
+import '../components.css';
 import Button from 'react-bootstrap/Button';
 import {withCookies} from 'react-cookie';
 import {Row,Col,Form} from 'react-bootstrap';
 import axios from 'axios';
-import Pagination from './pagination';
-import Navigation from './navbar';
+import Pagination from '../pagination';
+import Navigation from '../navbar';
 import {Link} from 'react-router-dom';
-import Footer from './footer';
+import Footer from '../footer';
 class SearchResult extends Component{
     state = {
         token: this.props.cookies.get('ad-token'),
         search:false,
+        clicked:false,
+        featured:[],
         postsPerPage : 6,
         currentPage : 1,
         properties:[],
@@ -22,7 +24,9 @@ class SearchResult extends Component{
         Construction_status:'',
         Price:'',
         Type:'',
-        Purpose:''
+        Purpose:'',
+        Beds:'',
+        Baths:'',
     }
 handleChange = (event) =>{
     const value = event.target.value;
@@ -30,9 +34,11 @@ handleChange = (event) =>{
      [event.target.name]: value 
    });
   };
+handleClick = (id) =>{
+  window.location.href = `/AdDetails/${id}`
+}
   handleSubmit = (e) =>{
     e.preventDefault();
-    const response = [];
     const url2 = `?search=${this.state.Type},${this.state.Location},${this.state.Construction_status},${this.state.Price},${this.state.Size},${this.state.Units},${this.state.City},${this.state.Purpose},`
     console.log(this.state);
     let url = 'http://127.0.0.1:4000/api/advertisements'+url2;
@@ -43,6 +49,18 @@ handleChange = (event) =>{
       }
     }).then(res=>this.setState({properties:res.data})).catch(error=>this.setState({error:error}));    
     this.setState({search:true})
+    this.setState({clicked:true})
+  }
+  componentDidMount(){
+    this.getFeatured();
+  }
+  getFeatured = () =>{
+    let url = 'http://127.0.0.1:4000/api/Featured/'
+    axios.get(url,{
+      headers:{
+        'content-type':'multipart/form-data',
+      }
+    }).then(res=>this.setState({featured:res.data})).catch(error=>this.setState({error:error}));
   }
 
 render(){
@@ -55,7 +73,7 @@ render(){
     <div>
     <Navigation color="#34495E" />
     <h3 style={{fontFamily:'Lora',textAlign:'center'}}>Search Advertisements</h3>
-    <Form style={{width:'80%',left:'20%'}}>
+    <Form style={{width:'60%',position:'relative',left:'20%'}}>
                       <Form.Group>
                       <div id="SearchForm">
                       <Row>
@@ -85,11 +103,19 @@ render(){
                           </Col>
                           <Col>
                           <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='sm' as='select'>
-                                      <option value="complete">Please Select</option>
+                                      <option value="">Please Select</option>
                                       <option value="complete">Complete</option>
                                       <option value="under_construction">Under Construction</option>
                           </Form.Control>                         
                           </Col>
+                          </Row>
+                          <Row>
+                            <Col>
+                            <Form.Control size="sm" onChange={e=>this.handleChange(e)} value={this.state.Beds} name="Beds" type="text" placeholder="No of Bedrooms" />
+                            </Col>
+                            <Col>
+                            <Form.Control size="sm" onChange={e=>this.handleChange(e)} value={this.state.Baths} name="Baths" type="text" placeholder="No of Bathrooms" />
+                            </Col>
                           </Row>
                           <Row>
                             <Col>
@@ -107,26 +133,26 @@ render(){
                           <Row>
                           <Col><Form.Check onClick={this.HouseForm} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
                           <Col><Form.Check onClick={this.PlotForm} name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check></Col>
+                          <Col><Form.Check onClick={this.PlotForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check>
+                          </Col>
                           </Row>
                           </Form.Group>
                           </Col>
                           </Row>
                           <br />
-                          <br/>
-                          <Button onClick={this.handleSubmit} style={{backgroundColor:'#34495E',position:'relative',left:'40%',right:'40%',width:'200px',bottom:'10%'}}>Search</Button>
+                          <Button onClick={this.handleSubmit} style={{backgroundColor:'#34495E',position:'relative',left:'33%',width:'200px',bottom:'10%'}}>Search</Button>
 </div>
                   <br />
                 </Form.Group><br/>
               </Form><br/>
     {this.state.properties.length!=0 & this.state.search ? 
     <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'20%'}}>
-    <div class="ui horizontal divider">
+    <div className="ui horizontal divider">
             Seach Results
           </div>
     <Row>
     {currentPosts.map(property=>
-      <Col sm={12} md={6} lg={4}>
+      <Col key={property.id} sm={12} md={6} lg={4}>
                     <div style={{marginBottom:'10px'}} className="ui link cards">
                       <div style={{boxShadow: '10px 10px  #D5DBDB'}}  className="card">
                         <div className="image">
@@ -147,12 +173,9 @@ render(){
                           </span>
                           <span>
                             {property.Size} {property.Units}
-                          </span><br/><br/>
+                          </span><br/>
                           <span className="mt-2">
-                      <Link to={URL+property.id}>
-                      <Button className="btn-md " style={{backgroundColor:'#34495E',marginLeft:'30px'}}>Edit Ad</Button>
-                      </Link>
-                      <Button className="btn-md mr-4" style={{backgroundColor:'#E74C3C',marginLeft:'30px'}}  onClick={()=>this.Clicked(property.id)}>Delete</Button>
+                      <Button className="btn-md " onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#34495E',marginLeft:'30px'}}>View Advertisement</Button>
                         </span>
                         </div>
                       </div>
@@ -166,7 +189,54 @@ render(){
           paginate={paginate}
       /><br/><br/>
       <Footer style={{width:'100%'}} />
-      </div>: null}            
+      </div>:
+      <div>
+      {this.state.clicked ? <h1 style={{textAlign:'center'}}>Sorry! No results Found...</h1>
+      : null }
+       <div style={{position:'relative',left:'10%',width:'80%'}} className="ui horizontal divider">
+            Suggested Properties
+          </div>
+          <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%'}}>
+    <Row>
+    {this.state.featured.map(property=>
+      <Col key={property.id} sm={12} md={6} lg={4}>
+                    <div style={{marginBottom:'10px'}} className="ui link cards">
+                      <div  className="card">
+                        <div className="image">
+                      <div style={{backgroundColor:'#eaeded',width:'20%',position:'relative',marginLeft:'15px'}} class="ui yellow ribbon label">
+                          <i style={{color:'white'}} class="star icon"></i> Featured
+                        </div>                              
+                          <img alt="Property" src={property.Image}/>
+                        </div>
+                        <div className="content">
+                          <div className="header"></div>
+                          <div className="meta">
+                            {property.Title}
+                          </div>
+                          <div className="description">
+                            {property.Price}
+                            </div>
+                        </div>
+                        <div className="extra content">
+                          <span className="right floated">
+                            {property.Date}
+                          </span>
+                          <span>
+                            {property.Size} {property.Units}
+                          </span><br/><br/>
+                          <span className="mt-2">
+                      <Button className="btn-md " onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#34495E',marginLeft:'30px'}}>View Advertisement</Button>
+                        </span>
+                        </div>
+                      </div>
+                    </div>
+                    </Col>
+    )}
+    </Row>
+    <br/><br/>
+      </div>
+  
+    </div>}            
     </div>
           );
   };

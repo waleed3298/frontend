@@ -6,7 +6,7 @@ import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import Pagination from './pagination';
 import Posts from './ads';
 import './components.css';
-
+import Button from 'react-bootstrap/Button';
 class Dashboard extends Component{
   
   state={
@@ -29,6 +29,9 @@ class Dashboard extends Component{
               window.location.href='/createProfile'
           }
     
+    }
+    handleClick = () =>{
+      window.location.href = '/addProperty'
     }
     getAds = () =>{
       if(this.state.token){
@@ -111,7 +114,7 @@ class Dashboard extends Component{
             <NavIcon>
                 </NavIcon>
                 <NavText>
-                <a href="/properties">Properties</a>
+                <a href="/properties">Houses</a>
                 </NavText>
             </NavItem>
             <NavItem eventKey="plots">
@@ -141,7 +144,7 @@ class Dashboard extends Component{
           postsPerPage={this.state.postsPerPage}
           totalPosts={this.state.properties.length}
           paginate={paginate}
-      /><br/><br/>
+      /> <Button onClick={this.handleClick} style={{backgroundColor:'#34495E',width:'200px'}}>Add New Property</Button><br/><br/>
                 </div>
            </div> }
             </div>
