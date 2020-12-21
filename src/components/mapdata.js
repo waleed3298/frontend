@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import ReactMapGL, { NavigationControl,Marker, Popup,GeolocateControl } from "react-map-gl";
 import Geocoder from 'react-mapbox-gl-geocoder';
 import './map.css';
-export default function Data(props) {
+import Button from 'react-bootstrap/Button';
+import {Link} from 'react-router-dom';
 
+export default function Data(props) {
 const properties = props.data.properties;
 
   const [viewport, setViewport] = useState({
@@ -33,9 +35,7 @@ const properties = props.data.properties;
 const onSelected = (viewport,item) =>{
   setViewport(viewport);
 }
-
-
-  return (
+return (
     <div>
       <ReactMapGL
         {...viewport}

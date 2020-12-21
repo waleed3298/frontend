@@ -38,7 +38,7 @@ class Posts extends Component{
                         </div>
                         <div className="extra content">
                           <span className="right floated">
-                          <i className="fa fa-eye" style={{ fontSize: '1.75em' }} />
+                          <i className="fa fa-eye mr-2" style={{ fontSize: '1em' }} />
              {property.Views}
                           </span>
                           <span>

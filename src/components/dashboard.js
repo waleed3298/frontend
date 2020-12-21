@@ -14,6 +14,7 @@ class Dashboard extends Component{
         postsPerPage : 3,
         currentPage : 1,
         properties:[],
+        liked:[],
         profile:[],
         selectedProperty :  null,
         token : this.props.cookies.get('ad-token')
@@ -48,10 +49,29 @@ class Dashboard extends Component{
       window.location.href = '/login'
     }
   }
+getLiked = ()=>{
+  if(this.state.token){
+    this.setState({loading:true})
+  fetch("http://127.0.0.1:4000/api/LikedAds/",{
+        method : 'GET',
+        headers:{
+          'Authorization':`Token ${this.state.token}`
+        }
+        }).then(resp=>resp.json()).then(res=>this.setState({liked:res})).catch(error=>console.log(error));
+        this.state.liked.map(property=>{
+          this.setState({liked:property.id})
+          console.log(this.state.liked)
+        })
+     }
+else{
+  window.location.href = '/login'
+}
+}
 
     componentDidMount(){
     this.getProfiles();
     this.getAds();
+    this.getLiked();
     this.setState({loading:false})
   }
 
@@ -60,6 +80,7 @@ class Dashboard extends Component{
     const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
     const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
     const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
+    const LikedAds = this.state.liked.slice(indexOfFirstPost,indexOfLastPost)
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
   
       
@@ -139,12 +160,25 @@ class Dashboard extends Component{
             <div class="ui horizontal divider">
             Your Advertisements
           </div>
+          <a href="/addProperty" className="round-button"><i className="fa fa-plus"></i></a>
+        <br/><br/>
         <Posts properties={currentPosts} loading={this.state.loading} />
         <Pagination
           postsPerPage={this.state.postsPerPage}
           totalPosts={this.state.properties.length}
           paginate={paginate}
-      /> <Button onClick={this.handleClick} style={{backgroundColor:'#34495E',width:'200px'}}>Add New Property</Button><br/><br/>
+      /> <br/><br/>
+       <div class="ui horizontal divider">
+          Saved Advertisements
+          </div>
+          <a href="/addProperty" class="round-button"><i className="fa fa-plus"></i></a>
+        <br/><br/>
+        <Posts properties={LikedAds} loading={this.state.loading} />
+        <Pagination
+          postsPerPage={this.state.postsPerPage}
+          totalPosts={this.state.liked.length}
+          paginate={paginate}
+      />
                 </div>
            </div> }
             </div>

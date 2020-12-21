@@ -40,7 +40,13 @@ class AddProperty extends Component{
   Beds:'',
   Baths:'',
   Purpose:'',
+  Featured:'',
   image : null,
+  image1 : null,
+  image2 : null,
+  image3 : null,
+  image4 : null,
+  image5 : null,
 };
 
   handleChange = (event) =>{
@@ -48,6 +54,17 @@ class AddProperty extends Component{
    this.setState({
      [event.target.name]: value
    });
+};
+handlemultipleChange = (event) =>{
+  const value = event.target.files[0];
+ this.setState({
+   [event.target.name]: value
+ });
+ console.log(this.state.image1);
+ console.log(this.state.image2);
+ console.log(this.state.image3);
+ console.log(this.state.image4);
+ console.log(this.state.image5);
 };
 handleImageChange = (e) =>{
   this.setState({image:e.target.files[0]})
@@ -69,8 +86,15 @@ handleImageChange = (e) =>{
         form_data.append('Baths',this.state.Baths);
         form_data.append('Purpose',this.state.Purpose);
         form_data.append('Image',this.state.image,this.state.image.name);
+        form_data.append('Featured',this.state.Featured)
         form_data.append('latitude',this.state.marker.latitude);
         form_data.append('longitude',this.state.marker.longitude);
+        form_data.append('Image1',this.state.image1);
+        form_data.append('Image2',this.state.image2);
+        form_data.append('Image3',this.state.image3);
+        form_data.append('Image4',this.state.image4);
+        form_data.append('Image5',this.state.image5);
+        
         let url = 'http://127.0.0.1:4000/api/CreateAd/';
         axios.post(url,form_data,{
           headers:{
@@ -202,8 +226,24 @@ handleImageChange = (e) =>{
                             <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
                             </Row>
                             </Form.Group>
-                            </div>
+                            
                             <br />
+                            <Form.Label className="mt-1">Featured</Form.Label>
+                        <Form.Group as="radio" value={this.state.Type} onChange={this.handleChange}>
+                        <Row>
+                        <Col><Form.Check  name="Featured" value="True" type="radio" label="Yes"></Form.Check></Col>
+                        <Col><Form.Check  name="Featured" value="False" type="radio" label="No"></Form.Check></Col>
+                        </Row>
+                        </Form.Group>
+                        <Form.Label>Advertisement Images</Form.Label>
+                        <input  type="file" name="image1" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image2" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image3" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image4" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image5" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        
+                        </div>
+                        <br />
                             <br/>
                      <br />
                      <Form.Label>Select Location from Map</Form.Label>        

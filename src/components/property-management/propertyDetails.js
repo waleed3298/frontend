@@ -13,6 +13,7 @@ import Views from './addViews';
 
 class PropertyDetails extends Component{
     state = {
+        flag:false,
       }
       getDetails = () =>{
         const { handle } = this.props.match.params
@@ -22,6 +23,7 @@ class PropertyDetails extends Component{
       }
       componentDidMount () {
        this.getDetails();
+       this.setState({flag:true})
        }
         
       render() {
@@ -60,9 +62,6 @@ class PropertyDetails extends Component{
                 <h6>Size: {this.state.res.Size} {this.state.res.Units}</h6>
             <h6>Construction Status: {this.state.res.Construction_status}</h6>
             </Col><br/>
-            <Col lg={12}>
-            <Button style={{backgroundColor:'#34495E'}}>Contact Seller</Button>
-            </Col>
             <Col lg={12}>
             <h6><b>Location on Map</b> </h6><br/><br/>
             <MapDetail width="65vw" height="65vh" data={this.state.res} />

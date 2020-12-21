@@ -191,8 +191,8 @@ render(){
       <Footer style={{width:'100%'}} />
       </div>:
       <div>
-      {this.state.clicked ? <h1 style={{textAlign:'center'}}>Sorry! No results Found...</h1>
-      : null }
+      {this.state.clicked ?<div>
+       <h1 style={{textAlign:'center'}}>Sorry! No results Found...</h1>
        <div style={{position:'relative',left:'10%',width:'80%'}} className="ui horizontal divider">
             Suggested Properties
           </div>
@@ -236,6 +236,8 @@ render(){
     <br/><br/>
       </div>
   
+      </div>
+      : null }
     </div>}            
     </div>
           );
