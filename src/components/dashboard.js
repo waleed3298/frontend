@@ -6,18 +6,58 @@ import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import Pagination from './pagination';
 import Posts from './ads';
 import './components.css';
+import axios from 'axios';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import {Row,Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+
 class Dashboard extends Component{
   
   state={
+        name:'',
+        image:null,
+        Age:'',
+        flag:false,
+        contact_no:'',
         loading: true,
         postsPerPage : 3,
         currentPage : 1,
+        currentLikedPage : 1,
         properties:[],
         liked:[],
         profile:[],
         selectedProperty :  null,
         token : this.props.cookies.get('ad-token')
+    }
+    handleChange = (event) =>{
+      const value = event.target.value;
+     this.setState({
+       [event.target.name]: value
+     });
+  };
+  handleImageChange = (e) =>{
+      this.setState({image:e.target.files[0]})
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        let form_data = new FormData();
+        form_data.append('name',this.state.name)
+        form_data.append('Age',this.state.Age)
+        form_data.append('contact_no',this.state.contact_no)
+        let url = 'http://127.0.0.1:4000/api/createProfile/';
+          axios.post(url,form_data,{
+            headers:{
+              'content-type':'multipart/form-data',
+              'Authorization': `Token ${this.state.token}`
+            }
+          }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
+          if(this.state.error){
+            return <h1>{this.state.error}</h1>
+          }
+          else{
+            window.location.href="/dashboard"
+          }
     }
     getProfiles = () =>{
       fetch("http://127.0.0.1:4000/api/profile/",{
@@ -26,10 +66,7 @@ class Dashboard extends Component{
               'Authorization':`Token ${this.state.token}`
             }
             }).then(resp=>resp.json()).then(res=>this.setState({profile:res})).catch(error=>console.log(error));
-          if(!this.state.profile){
-              window.location.href='/createProfile'
-          }
-    
+            this.setState({flag:true})
     }
     handleClick = () =>{
       window.location.href = '/addProperty'
@@ -58,14 +95,13 @@ getLiked = ()=>{
           'Authorization':`Token ${this.state.token}`
         }
         }).then(resp=>resp.json()).then(res=>this.setState({liked:res})).catch(error=>console.log(error));
-        this.state.liked.map(property=>{
-          this.setState({liked:property.id})
-          console.log(this.state.liked)
-        })
      }
 else{
   window.location.href = '/login'
 }
+}
+handleLink = (id) =>{
+  window.location.href = `/AdDetails/${id}`
 }
 
     componentDidMount(){
@@ -82,10 +118,14 @@ else{
     const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
     const LikedAds = this.state.liked.slice(indexOfFirstPost,indexOfLastPost)
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
-  
+    const paginate_saved = pageNumber => this.setState({currentLikedPage:pageNumber});
+    
+    URL = '/AdDetails/'; 
       
         return(
             <div style={{fontFamily:'Lora'}} id="wrapper">
+            {this.state.profile.length>0 ?
+            <div>
             {this.state.loading ?
               <div class="ui segment">
               <div class="ui active dimmer">
@@ -160,7 +200,12 @@ else{
             <div class="ui horizontal divider">
             Your Advertisements
           </div>
-          <a href="/addProperty" className="round-button"><i className="fa fa-plus"></i></a>
+          <div style={{position:'relative',left:'75%'}} className="row"><div className="Col-lg-6">
+          <a href="/addProperty" className="round-button mr-3"><i className="fa fa-envelope"></i></a>
+          </div>
+          <div className="Col-lg-6">
+          <a href="/addProperty" className="round-button ml-2"><i className="fa fa-plus"></i></a>
+          </div></div>
         <br/><br/>
         <Posts properties={currentPosts} loading={this.state.loading} />
         <Pagination
@@ -168,20 +213,72 @@ else{
           totalPosts={this.state.properties.length}
           paginate={paginate}
       /> <br/><br/>
+      {this.state.liked.length>0 ? 
+      <div>
        <div class="ui horizontal divider">
           Saved Advertisements
           </div>
-          <a href="/addProperty" class="round-button"><i className="fa fa-plus"></i></a>
         <br/><br/>
-        <Posts properties={LikedAds} loading={this.state.loading} />
+        <Row>
+                {this.props.loading ? <h2>Loading...</h2> : null}
+                {LikedAds.map(property=>{
+                    return(
+                    <Col sm={12} md={6} lg={4}>
+                    <div style={{marginBottom:'10px'}} className="ui link cards">
+                      <div className="card">
+                        <div className="content">
+                          <div className="header"></div>
+                          <div className="meta">
+                            {property.Title}
+                          </div>
+                          <div className="description">
+                            {property.Price}
+                            </div>
+                        </div>
+                        <div className="extra content">
+                          <span className="mt-2">
+                      <Button onClick={()=>this.handleLink(property.Ad)} className="btn-md " style={{backgroundColor:'#34495E',marginLeft:'30px'}}>View Advertisement</Button>
+                        </span>
+                        </div>
+                      </div>
+                    </div>
+                    </Col>
+                    )
+                })}
+                </Row>
+           </div>     : <h6>No liked Advertisements</h6> }
+    <br/><br/>
         <Pagination
           postsPerPage={this.state.postsPerPage}
           totalPosts={this.state.liked.length}
-          paginate={paginate}
+          paginate={paginate_saved}
       />
                 </div>
            </div> }
+   </div> : 
+   <div>
+   <Navigation color="#34495E" />
+            <div className="Form">
+                        <Form onSubmit={this.handleSubmit}>
+                        <Form.Group>
+                        <div id="Form">
+                        <h1 style={{textAlign:'center',fontFamily:'prata'}}>Create Profile</h1><br />
+                        <h3 className="text-info" style={{textAlign:'center',fontFamily:'Lora'}}>Personal Information</h3>
+                        <Form.Label>Name</Form.Label>
+                                <Form.Control size="md" name="name" value={this.state.name} onChange={e=>this.handleChange(e)} type="text" placeholder="Your Name" /><br/><br/>
+                        <Form.Label>Age</Form.Label>
+                                <Form.Control size="md" name="Age" value={this.state.Age} onChange={e=>this.handleChange(e)} type="number" placeholder="Your Name" /><br/><br/>
+                        
+                        <Form.Label>Contact Number</Form.Label>
+                        <Form.Control size="md" name="contact_no" value={this.state.contact_no} onChange={e=>this.handleChange(e)} type="text" placeholder="Your Contact Number" /><br/><br/>
+                        <Button style={{backgroundColor:'#3A626F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit</Button>
+      
             </div>
+            </Form.Group>
+            </Form>
+            </div>
+            </div>
+    }     </div>
         )
     };
 };

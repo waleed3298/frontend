@@ -43,8 +43,6 @@ class Views extends Component{
             <div>
             <h6><b>Contact Seller</b> </h6>
             <Button style={{backgroundColor:'#34495E'}} onClick={this.handleClick}>Contact Seller</Button><br/><br/>
-            <Button style={{backgroundColor:'#34495E'}} onClick={this.handleClick}><i className="fa fa-heart"></i> Save Property</Button>
-            
             </div>
         )
     }

@@ -9,7 +9,6 @@ import { Route , BrowserRouter } from 'react-router-dom';
 import PropertyDisplay from './components/property-management/advertisements';
 import SignUp from './components/authentication/signup';
 import Login from './components/authentication/login';
-import Ecom from './components/ecommerce';
 import EditProperty from './components/property-management/editproperty';
 import Map from './components/map';
 import PropertyDetails from './components/property-management/propertyDetails';
@@ -22,6 +21,8 @@ import Commercial from './components/property-management/commercial';
 import SearchResult from './components/property-management/search-results';
 import MapDetail from './components/property-management/detailmap';
 import Chat from './components/chat';
+import Results from './components/results';
+import Landing from './components/e-commerce/landing';
 const routing=(
   <BrowserRouter>
     <CookiesProvider>
@@ -31,7 +32,6 @@ const routing=(
       <Route path="/advertisements" component={PropertyDisplay}></Route>
       <Route path="/signup" component={SignUp}></Route>
       <Route path="/login" component={Login}></Route>
-      <Route path="/store" component={Ecom}></Route>
       <Route path="/editproperty/:handle" component={EditProperty}></Route>
       <Route path="/map" component={Map}></Route>
       <Route path="/map/:handle" component={MapDetail}></Route>
@@ -42,6 +42,8 @@ const routing=(
       <Route path="/commercial-areas" component={Commercial}></Route>
       <Route path='/search' component={SearchResult}></Route>
       <Route path="/chat" component={Chat}></Route>
+      <Route path="/results/:handle" component={Results}></Route>
+      <Route path="/store" component={Landing}></Route>
     </CookiesProvider>
   </BrowserRouter>
 )

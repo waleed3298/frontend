@@ -44,7 +44,7 @@ class SignUp extends Component{
             <div className="Form" style={{width:'50%',position:'relative',left:'25%'}}>
             <h1 className="text-info mt-4" style={{textAlign:'center'}}>Sign Up</h1>
             <br/>
-            <Form.Group>
+            <Form.Group style={{width:'60%',position:'relative',left:'20%'}}>
                 <Form.Control size="md" onChange={this.handleChange} name="username" type="text" placeholder="Username" /><br />
                 <Form.Control size="md" onChange={this.handleChange} name="email" type="email" placeholder="Email" /><br />
                 <Form.Control size="md" onChange={this.handleChange} name="password" type="password" placeholder="Enter your Password" /><br />

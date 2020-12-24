@@ -59,6 +59,13 @@ Form.Control {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+.backgroundimage1 {
+  background-image: url("ecom.jpg");
+  width: 100vw;
+  height: 90vh;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
 .tl {
   position: relative;
   top: 30px;

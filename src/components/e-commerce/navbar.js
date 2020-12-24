@@ -3,10 +3,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import "./components.css";
+import "../components.css";
 import {withCookies} from 'react-cookie';
 import Button from 'react-bootstrap/Button';
-class Navigation extends Component{
+
+class NavBar extends Component{
   state={
     token: this.props.cookies.get('ad-token'),
     user:[],
@@ -52,8 +53,8 @@ handleSearch = () =>{
      }
       return(
             <div>
-                <Navbar className="nav mb-4 container-fluid" style={styles.color} expand="lg">
-  <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:'white',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b>Estate</b></Navbar.Brand>
+                <Navbar style={{backgroundColor:'white'}} className="nav mb-4 container-fluid navbar-light" expand="lg">
+  <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:'black',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b>Estate</b></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
   <Form style={{position:'relative',left:'15%'}} inline>
@@ -61,14 +62,13 @@ handleSearch = () =>{
       <Button onClick={this.handleSearch} className="mr-2" variant="outline-info"><i className="fa fa-search"></i> Search</Button>
     </Form>
     <Nav className="ml-auto">
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/map">{this.props.link1}</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/properties">{this.props.link2}</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/plots">{this.props.link3}</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/commercial-areas">{this.props.link4}</Nav.Link>
+      <Nav.Link style={{color:"black"}} href="http://localhost:3000/map">Home</Nav.Link>
+      <Nav.Link style={{color:"black"}} href="http://localhost:3000/properties">About</Nav.Link>
+      <Nav.Link style={{color:"black"}} href="http://localhost:3000/plots">Tools</Nav.Link>
     </Nav>
     {this.state.user ? 
       this.state.user.map(data=>
-        <Nav.Link className="ml-4" style={{color:"white"}} href="http://localhost:3000/dashboard">{data.username.toUpperCase()}</Nav.Link>)
+        <Nav.Link className="ml-4" style={{color:"black"}} href="http://localhost:3000/dashboard">{data.username.toUpperCase()}</Nav.Link>)
        : null}
       
     <Form inline>
@@ -85,4 +85,4 @@ handleSearch = () =>{
         );
     };
 };
-export default withCookies(Navigation);
+export default withCookies(NavBar);

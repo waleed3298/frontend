@@ -60,11 +60,6 @@ handlemultipleChange = (event) =>{
  this.setState({
    [event.target.name]: value
  });
- console.log(this.state.image1);
- console.log(this.state.image2);
- console.log(this.state.image3);
- console.log(this.state.image4);
- console.log(this.state.image5);
 };
 handleImageChange = (e) =>{
   this.setState({image:e.target.files[0]})
@@ -151,7 +146,7 @@ handleImageChange = (e) =>{
           <div>
                   {this.state.token ?
                     <div id="wrapper">
-                    <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#3A626F" />
+                    <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
                      <div className="Form">
                         <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
@@ -235,8 +230,8 @@ handleImageChange = (e) =>{
                         <Col><Form.Check  name="Featured" value="False" type="radio" label="No"></Form.Check></Col>
                         </Row>
                         </Form.Group>
-                        <Form.Label>Advertisement Images</Form.Label>
-                        <input  type="file" name="image1" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <Form.Label>Advertisement Images</Form.Label><br/>
+                        <input type="file" name="image1" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
                         <input type="file" name="image2" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
                         <input type="file" name="image3" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
                         <input type="file" name="image4" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
