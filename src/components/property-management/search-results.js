@@ -70,89 +70,89 @@ render(){
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
   
       return (
-    <div>
-    <Navigation color="#34495E" />
-    <h3 style={{fontFamily:'Lora',textAlign:'center'}}>Search Advertisements</h3>
-    <Form style={{width:'60%',position:'relative',left:'20%'}}>
-                      <Form.Group>
-                      <div id="SearchForm">
-                      <Row>
-                        <Col>
-                        <Form.Control onChange={e=>this.handleChange(e)} size="sm" name="Price" type="text" value={this.state.Price} placeholder="Estimated Price of the property" />    
-                        </Col>
-                        <Col>
-                        <Form.Control onChange={e=>this.handleChange(e)} value={this.state.City} size="sm" name="City" type="text" placeholder="City" />
-                        </Col>
-                        <Col>
-                        <Form.Control onChange={e=>this.handleChange(e)} value={this.state.Location} size="sm" name="Location" type="text" placeholder="Location" />
-                        </Col>
-                        </Row>
+        <div style={{backgroundColor:'white'}}>
+        <Navigation color="black" />
+        <Row><Col lg={6} md={6}>
+        <div  style={{width:'60%',zIndex:'1'}}>
+        <Form style={{width:'65%',backgroundColor:'transparent'}}>
+                        <Form.Group>
+                        <div id="SearchForm">
+                        <Form.Label><b>Property Location:</b></Form.Label>
+                          <Form.Control style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.City} size="sm" name="City" type="text" placeholder="City" />
+                        <br/> 
+                          <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} value={this.state.Location} size="sm" name="Location" type="text" placeholder="Location" />
                         <br/>
-                      <Row>
-                          <Col>
-                          <Form.Control size="sm" onChange={e=>this.handleChange(e)} value={this.state.Size} name="Size" type="text" placeholder="Size Property" />
-                          </Col>
-                          <Col>
-                            <Form.Control value={this.state.Units} name='Units' onChange={this.handleChange} size="sm" as="select">
-                                      <option value="square_yards">Square Yards</option>
-                                      <option value="square_metres">Square Metres</option>
-                                      <option value="marla">Marla</option>
-                                      <option value="kanal">Kanal</option>
-                                      </Form.Control>
-                                      <br />
-                          </Col>
-                          <Col>
-                          <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='sm' as='select'>
-                                      <option value="">Please Select</option>
-                                      <option value="complete">Complete</option>
-                                      <option value="under_construction">Under Construction</option>
-                          </Form.Control>                         
-                          </Col>
-                          </Row>
-                          <Row>
+                        <Form.Label><b>Property Specifications:</b></Form.Label>
+                        <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} size="sm" name="Price" type="text" value={this.state.Price} placeholder="Estimated Price of the property" />    
+                        <br/>
+                            <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Size} name="Size" type="text" placeholder="Size Property" />
+                            <br/>
+                            <Row>
                             <Col>
-                            <Form.Control size="sm" onChange={e=>this.handleChange(e)} value={this.state.Beds} name="Beds" type="text" placeholder="No of Bedrooms" />
+                              <Form.Control style={{backgroundColor:'#f4f6f7'}} value={this.state.Units} name='Units' onChange={this.handleChange} size="sm" as="select">
+                                        <option value="square_yards">Units</option>
+                                        <option value="square_yards">Square Yards</option>
+                                        <option value="square_metres">Square Metres</option>
+                                        <option value="marla">Marla</option>
+                                        <option value="kanal">Kanal</option>
+                                        </Form.Control>
+                                        <br />
                             </Col>
                             <Col>
-                            <Form.Control size="sm" onChange={e=>this.handleChange(e)} value={this.state.Baths} name="Baths" type="text" placeholder="No of Bathrooms" />
+                            <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='sm' as='select'>
+                                        <option value="">Status</option>
+                                        <option value="complete">Complete</option>
+                                        <option value="under_construction">Under Construction</option>
+                            </Form.Control>                         
                             </Col>
-                          </Row>
-                          <Row>
+                            </Row>
+                            <Row>
+                              <Col>
+                              <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Beds} name="Beds" type="text" placeholder="Bedrooms" />
+                              </Col>
+                              <Col>
+                              <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Baths} name="Baths" type="text" placeholder="Bathrooms" />
+                              </Col>
+                            </Row><br/>
+                            <Form.Label><b>Property Type:</b></Form.Label>
+                            <Row>
+                              <Col>
+                              <Form.Group style={{width:'40%'}} value={this.state.Purpose} onChange={this.handleChange}>
+                            <Row>
+                            <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
+                            <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
+                            </Row>
+                            </Form.Group>
+                              <Col>
+                            </Col>  
+                              </Col>
                             <Col>
-                            <Form.Group style={{width:'40%'}} value={this.state.Purpose} onChange={this.handleChange}>
-                          <Row>
-                          <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
-                          </Row>
-                          </Form.Group>
-                            <Col>
-                          </Col>  
+                            <Form.Group style={{width:'60%',position:'relative',left:'20%',right:'20%'}} value={this.state.Type} onChange={this.handleChange}>
+                            <Row>
+                            <Col><Form.Check onClick={this.HouseForm} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
+                            <Col><Form.Check onClick={this.PlotForm} name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
+                            <Col><Form.Check onClick={this.PlotForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check>
                             </Col>
-                          <Col>
-                          <Form.Group style={{width:'60%',position:'relative',left:'20%',right:'20%'}} value={this.state.Type} onChange={this.handleChange}>
-                          <Row>
-                          <Col><Form.Check onClick={this.HouseForm} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check>
-                          </Col>
-                          </Row>
-                          </Form.Group>
-                          </Col>
-                          </Row>
-                          <br />
-                          <Button onClick={this.handleSubmit} style={{backgroundColor:'#34495E',position:'relative',left:'33%',width:'200px',bottom:'10%'}}>Search</Button>
-</div>
-                  <br />
-                </Form.Group><br/>
-              </Form><br/>
-    {this.state.properties.length!=0 & this.state.search ? 
+                            </Row>
+                            </Form.Group>
+                            </Col>
+                            </Row>
+                            <br />
+                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#34495E',position:'relative',left:'3%',width:'200px',bottom:'10%'}}>Apply Changes</Button>
+  </div>
+                    <br />
+                  </Form.Group><br/>
+                </Form><br/>
+                </div></Col><Col lg={6} md={6}>
+                <div style={{float:'right',position:'relative',top:'2%'}}>
+                {this.state.properties.length!=0 & this.state.search ? 
     <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'20%'}}>
     <div className="ui horizontal divider">
             Seach Results
           </div>
     <Row>
     {currentPosts.map(property=>
-      <Col key={property.id} sm={12} md={6} lg={4}>
+      <Col key={property.id} sm={12} md={12} lg={12}>
                     <div style={{marginBottom:'10px'}} className="ui link cards">
                       <div style={{boxShadow: '10px 10px  #D5DBDB'}}  className="card">
                         <div className="image">
@@ -199,7 +199,7 @@ render(){
           <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%'}}>
     <Row>
     {this.state.featured.map(property=>
-      <Col key={property.id} sm={12} md={6} lg={4}>
+      <Col key={property.id} sm={12} md={12} lg={12}>
                     <div style={{marginBottom:'10px'}} className="ui link cards">
                       <div  className="card">
                         <div className="image">
@@ -238,8 +238,11 @@ render(){
   
       </div>
       : null }
-    </div>}            
-    </div>
+    </div>}
+       </div>
+       </Col></Row>
+        </div>
+
           );
   };
 }

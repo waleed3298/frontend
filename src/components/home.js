@@ -55,7 +55,7 @@ class Home extends Component{
 </div>
 <div className="feature-box col-lg-4">
     <i onMouseOver={this.MouseOver} onMouseOut={this.MouseOut} style={{fontSize:'50px'}} className="icon fas fa-wrench fa-4x mb-4"></i>
-    <h3 style={{fontWeight:'bold'}}>Construction Material</h3>
+    <a href="/store"><h3 style={{fontWeight:'bold',color:'black'}}>Construction Material</h3></a>
     <p>Buy and Sell All type of Construction Material.</p>
 </div>
 </div>

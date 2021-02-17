@@ -39,7 +39,7 @@ class PropertyAd extends Component{
                           </span><br/><br/>
                           <span className="mt-2">       
                     <Link to={URL+property.id}>
-                    <Button>View Advertisement</Button>
+                    <Button style={{backgroundColor:'#34495E'}}>View Advertisement</Button>
                       </Link>
                                            
                             </span>

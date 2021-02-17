@@ -21,8 +21,7 @@ Title:'',
   City:'',
   Beds:'',
   Baths:'',
-  Purpose:'',
-  image : null,}
+  Purpose:'',}
 
 componentDidMount(){
   const { handle } = this.props.match.params     
@@ -71,7 +70,6 @@ handleChange = (event) =>{
       form_data.append('Beds',this.state.Beds);
       form_data.append('Baths',this.state.Baths);
       form_data.append('Purpose',this.state.Purpose);
-      form_data.append('Image',this.state.image,this.state.image.name);
       const { handle } = this.props.match.params
       let url = `http://127.0.0.1:4000/api/Edit/${handle}/`;
       axios.put(url,form_data,{
@@ -91,18 +89,16 @@ handleChange = (event) =>{
     render(){
         return (
             <div id="wrapper">
-            <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
+            <Navigation  link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
             <div className='Form'>
             <Form onSubmit={this.handleSubmit}>
                       <Form.Group>
                       <h1 style={{textAlign:'center',fontFamily:'prata'}}>Edit Your Advertisement</h1><br />
-                      <h3 className="text-info" style={{textAlign:'center',fontFamily:'Courgette'}}>Property Location and Details</h3>
+                      <h3 className="text-info" style={{textAlign:'center',fontFamily:'Lora'}}>Property Location and Details</h3>
                       <div id="Form">
                       <Form.Label>Listing Title</Form.Label>
                               <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" />
                               <br />
-                              <Form.Label>Image</Form.Label>
-                        <input type="file" id="image" accept="image/jpg,image/png" onChange={this.handleImageChange} />
                                 <br />
                         
                       <Form.Label className="mt-1">Property Type</Form.Label>
@@ -170,7 +166,7 @@ handleChange = (event) =>{
                           </Form.Group>
                           <br />
                           <br/>
-                          <Button type='submit' style={{backgroundColor:'#34495E'}} type="submit">Submit Form</Button>
+                          <Button type='submit' style={{backgroundColor:'#34495E',position:'relative',left:'30%',width:'200px'}} type="submit">Submit Form</Button><br/><br/>
 </div>
                   <br />
                 </Form.Group>

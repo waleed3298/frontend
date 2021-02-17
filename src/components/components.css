@@ -62,7 +62,9 @@ Form.Control {
 .backgroundimage1 {
   background-image: url("ecom.jpg");
   width: 100vw;
-  height: 90vh;
+  position: relative;
+  bottom: 200px;
+  height: 100vh;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -116,7 +118,7 @@ i:hover {
 
 .top {
   height: inherit;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(1, 21, 51, 0.37);
 }
 .One:hover {
   font-size: 100px;

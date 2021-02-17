@@ -10,7 +10,7 @@ const api = axios.create({
 class Posts extends Component{
     Clicked = async(id) =>{
         let data = await api.delete(`/Delete/${id}/`)
-        window.location.href = '/dashboard'
+        window.location.href = '/dashboardAds'
       }
     
     render(){

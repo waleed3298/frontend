@@ -62,8 +62,7 @@ class Properties extends Component{
         </NavItem>
         <NavItem eventKey="maps">
             <NavIcon>
-            <i className="fa fa-fw fa-map" style={{ fontSize: '1.75em' }} />
-           
+            <i className="fa fa-map" style={{ fontSize: '1.75em' }} />
             </NavIcon>
             <NavText>
             <a href="/map">Maps</a>
@@ -88,6 +87,13 @@ class Properties extends Component{
             </NavIcon>
                 <NavText>
                 <a href="/commercial-areas">Commercial Areas</a>
+                </NavText>
+            </NavItem>
+            <NavItem eventKey="search">
+            <NavIcon>
+            </NavIcon>
+                <NavText>
+                <a href="/search">Search Advertisements</a>
                 </NavText>
             </NavItem>
             

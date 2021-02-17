@@ -89,7 +89,13 @@ class Properties extends Component{
                 <a href="/commercial-areas">Commercial Areas</a>
                 </NavText>
             </NavItem>
-            
+            <NavItem eventKey="search">
+            <NavIcon>
+            </NavIcon>
+                <NavText>
+                <a href="/search">Search Advertisements</a>
+                </NavText>
+            </NavItem>
     </SideNav.Nav>
 </SideNav>
       <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>

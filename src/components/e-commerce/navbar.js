@@ -53,22 +53,22 @@ handleSearch = () =>{
      }
       return(
             <div>
-                <Navbar style={{backgroundColor:'white'}} className="nav mb-4 container-fluid navbar-light" expand="lg">
-  <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:'black',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b>Estate</b></Navbar.Brand>
+                <Navbar style={{backgroundColor:this.props.color}} className="nav mb-4 container-fluid navbar-light" expand="lg">
+  <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:'white',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b>Estate</b></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
   <Form style={{position:'relative',left:'15%'}} inline>
       <Form.Control style={{width:'500px'}} name="search" onChange={this.handleChange} value={this.state.search} type="text" placeholder="Search Keywords..." className="mr-sm-2" />
-      <Button onClick={this.handleSearch} className="mr-2" variant="outline-info"><i className="fa fa-search"></i> Search</Button>
+      <Button onClick={this.handleSearch} className="mr-2" variant="success"><i className="fa fa-search"></i> Search</Button>
     </Form>
     <Nav className="ml-auto">
-      <Nav.Link style={{color:"black"}} href="http://localhost:3000/map">Home</Nav.Link>
-      <Nav.Link style={{color:"black"}} href="http://localhost:3000/properties">About</Nav.Link>
-      <Nav.Link style={{color:"black"}} href="http://localhost:3000/plots">Tools</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/map">Home</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/properties">About</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/plots">Tools</Nav.Link>
     </Nav>
     {this.state.user ? 
       this.state.user.map(data=>
-        <Nav.Link className="ml-4" style={{color:"black"}} href="http://localhost:3000/dashboard">{data.username.toUpperCase()}</Nav.Link>)
+        <Nav.Link className="ml-4" style={{color:"white"}} href="http://localhost:3000/dashboard">{data.username.toUpperCase()}</Nav.Link>)
        : null}
       
     <Form inline>
