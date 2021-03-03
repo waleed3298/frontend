@@ -12,16 +12,16 @@ import Button from 'react-bootstrap/Button';
 import {Row,Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import SideBar from '../sidebar';
+import LoaderExampleActive from '../loader';
 
-class Dashboard extends Component{
-  
+class Dashboard extends Component{  
   state={
         name:'',
         image:null,
         Age:'',
         flag:false,
         contact_no:'',
-        loading: false,
+        loading: true,
         postsPerPage : 3,
         currentPage : 1,
         currentLikedPage : 1,
@@ -31,35 +31,7 @@ class Dashboard extends Component{
         selectedProperty :  null,
         token : this.props.cookies.get('ad-token')
     }
-    handleChange = (event) =>{
-      const value = event.target.value;
-     this.setState({
-       [event.target.name]: value
-     });
-  };
-  handleImageChange = (e) =>{
-      this.setState({image:e.target.files[0]})
-    }
-    handleSubmit = (e) => {
-        e.preventDefault();
-        let form_data = new FormData();
-        form_data.append('name',this.state.name)
-        form_data.append('Age',this.state.Age)
-        form_data.append('contact_no',this.state.contact_no)
-        let url = 'http://127.0.0.1:4000/api/createProfile/';
-          axios.post(url,form_data,{
-            headers:{
-              'content-type':'multipart/form-data',
-              'Authorization': `Token ${this.state.token}`
-            }
-          }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
-          if(this.state.error){
-            return <h1>{this.state.error}</h1>
-          }
-          else{
-            window.location.href="/dashboard"
-          }
-    }
+    
     getProfiles = () =>{
       fetch("http://127.0.0.1:4000/api/profile/",{
             method : 'GET',
@@ -67,7 +39,6 @@ class Dashboard extends Component{
               'Authorization':`Token ${this.state.token}`
             }
             }).then(resp=>resp.json()).then(res=>this.setState({profile:res})).catch(error=>console.log(error));
-            this.setState({flag:true})
     }
   
 getLiked = ()=>{
@@ -100,85 +71,22 @@ StoreItems = () =>{
     componentDidMount(){
     this.getProfiles();
     this.getLiked();
-    this.setState({loading:false})
+    this.setState({flag:true,loading:false})
     }
 
     
     render(){
     URL = '/AdDetails/'; 
         return(
-            <div style={{fontFamily:'Lora'}} >
-            {this.state.profile.length>0 ?
-            <div>
+          <div>
+          {this.state.loading===true ? 
+            <LoaderExampleActive />
+          :  <div style={{fontFamily:'Lora'}} >
+           <div>
             <div>
             <Navigation color="#34495E" />
-            <SideNav style={{backgroundColor:'#34495E',height:'800px'}}
-    onSelect={(selected) => {
-        // Add your code here
-    }}
->
-    <SideNav.Toggle />
-    <SideNav.Nav >
-    {this.state.profile.map(data=>
-    <NavItem  eventKey="Profile">
-            <NavIcon>
-            <Image alt="Profile Picture" style={{width:'50px',height:'50px',marginTop:'20px'}} src={data.image}></Image>
-            </NavIcon>
-            <NavText className="ml-4">
-            <h6>Name:<b>{data.name}</b></h6>
-            <h6>Age:{data.Age}</h6>
-            <h6>Contact:{data.contact_no}</h6>
-            </NavText>
-        </NavItem>
-        )}<br/><br/>
-        <NavItem eventKey="home"><br/><br/>
-            <NavIcon>
-                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            <a href="/">Home</a>
-            </NavText>
-        </NavItem>
-        <NavItem eventKey="maps">
-            <NavIcon>
-                <i className="fa fa-fw fa-map" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            <a href="/map">Maps</a>
-            </NavText>
-          </NavItem>
-            <NavItem eventKey="properties">
-            <NavIcon>
-                </NavIcon>
-                <NavText>
-                <a href="/properties">Houses</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="plots">
-            <NavIcon>
-                </NavIcon>
-                <NavText>
-                <a href="/plots">Plots</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="commercial">
-            <NavIcon>
-                </NavIcon>
-                <NavText>
-                <a href="/commercial-areas">Commercial Areas</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="search">
-            <NavIcon>
-            </NavIcon>
-                <NavText>
-                <a href="/search">Search Advertisements</a>
-                </NavText>
-            </NavItem>            
-    </SideNav.Nav>
-</SideNav>
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
-            <div class="ui horizontal divider">
+            <div className="ui horizontal divider">
             <h1 style={{textAlign:'center',fontFamily:'Oswald'}}>Dashboard</h1>
           </div>
      <br/>
@@ -264,31 +172,9 @@ StoreItems = () =>{
      </Row>
                 </div>
            </div>
-   </div> : 
-   <div>
-   <Navigation color="#34495E" />
-            <div className="Form">
-                        <Form onSubmit={this.handleSubmit}>
-                        <Form.Group>
-                        <div id="Form">
-                        <h1 style={{textAlign:'center',fontFamily:'prata'}}>Create Profile</h1><br />
-                        <h3 className="text-info" style={{textAlign:'center',fontFamily:'Lora'}}>Personal Information</h3>
-                        <Form.Label>Name</Form.Label>
-                                <Form.Control size="md" name="name" value={this.state.name} onChange={e=>this.handleChange(e)} type="text" placeholder="Your Name" /><br/><br/>
-                        <Form.Label>Age</Form.Label>
-                                <Form.Control size="md" name="Age" value={this.state.Age} onChange={e=>this.handleChange(e)} type="number" placeholder="Your Name" /><br/><br/>
-                        
-                        <Form.Label>Contact Number</Form.Label>
-                        <Form.Control size="md" name="contact_no" value={this.state.contact_no} onChange={e=>this.handleChange(e)} type="text" placeholder="Your Contact Number" /><br/><br/>
-                        <Button style={{backgroundColor:'#3A626F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit</Button>
-      
-            </div>
-            </Form.Group>
-            </Form>
-            </div>
-            </div>
-    }     </div>
-        )
+   </div>
+         </div> }
+    </div>)
     };
 };
 

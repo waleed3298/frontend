@@ -8,13 +8,14 @@ import Pagination from '../pagination';
 import Navigation from '../navbar';
 import {Link} from 'react-router-dom';
 import Footer from '../footer';
+
 class SearchResult extends Component{
     state = {
         token: this.props.cookies.get('ad-token'),
         search:false,
         clicked:false,
         featured:[],
-        postsPerPage : 6,
+        postsPerPage : 3,
         currentPage : 1,
         properties:[],
         City:'',
@@ -37,6 +38,18 @@ handleChange = (event) =>{
 handleClick = (id) =>{
   window.location.href = `/AdDetails/${id}`
 }
+getResults = () =>{
+  const { handle } = this.props.match.params
+  let url = `http://127.0.0.1:4000/api/advertisements/?search=${handle}`
+  axios.get(url,{
+    headers:{
+      'content-type':'multipart/form-data',
+      'Authorization': `Token ${this.state.token}`
+    }
+  }).then(res=>this.setState({properties:res.data})).catch(error=>this.setState({error:error}));    
+  this.setState({search:true})
+  }
+
   handleSubmit = (e) =>{
     e.preventDefault();
     const url2 = `?search=${this.state.Type},${this.state.Location},${this.state.Construction_status},${this.state.Price},${this.state.Size},${this.state.Units},${this.state.City},${this.state.Purpose},`
@@ -52,6 +65,7 @@ handleClick = (id) =>{
     this.setState({clicked:true})
   }
   componentDidMount(){
+    this.getResults();
     this.getFeatured();
   }
   getFeatured = () =>{
@@ -71,10 +85,14 @@ render(){
   
       return (
         <div style={{backgroundColor:'white'}}>
-        <Navigation color="black" />
-        <Row><Col lg={6} md={6}>
-        <div  style={{width:'60%',zIndex:'1'}}>
-        <Form style={{width:'65%',backgroundColor:'transparent'}}>
+        <Navigation color="#556B2F" />
+        <div style={{textAlign:'center',width:'60%',position:'relative',left:'20%'}} className="text-center ui horizontal divider">
+            Search Results
+          </div>
+        <div className="row"><div style={{textAlign:'center'}} className="col-lg-6 col-md-8 col-sm-12">
+        <div  style={{width:'60%',zIndex:'1',position:'relative',bottom:'10%'}}>
+        
+        <Form style={{width:'65%',paddingRight:'5%'}}>
                         <Form.Group>
                         <div id="SearchForm">
                         <Form.Label><b>Property Location:</b></Form.Label>
@@ -115,122 +133,79 @@ render(){
                               </Col>
                             </Row><br/>
                             <Form.Label><b>Property Type:</b></Form.Label>
-                            <Row>
-                              <Col>
-                              <Form.Group style={{width:'40%'}} value={this.state.Purpose} onChange={this.handleChange}>
-                            <Row>
-                            <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
-                            <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
-                            </Row>
-                            </Form.Group>
-                              <Col>
-                            </Col>  
-                              </Col>
-                            <Col>
-                            <Form.Group style={{width:'60%',position:'relative',left:'20%',right:'20%'}} value={this.state.Type} onChange={this.handleChange}>
-                            <Row>
-                            <Col><Form.Check onClick={this.HouseForm} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
-                            <Col><Form.Check onClick={this.PlotForm} name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                            <Col><Form.Check onClick={this.PlotForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check>
-                            </Col>
-                            </Row>
-                            </Form.Group>
-                            </Col>
-                            </Row>
-                            <br />
-                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#34495E',position:'relative',left:'3%',width:'200px',bottom:'10%'}}>Apply Changes</Button>
+                            
+                          <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Purpose" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
+                                      <option value="">Purpose</option>
+                                      <option value="sale">Sale</option>
+                                      <option value="rent">Rent</option>
+                                      </Form.Control> <br/>            
+                          <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Type" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
+                                      <option value="">Type</option>
+                                      <option value="property">House</option>
+                                      <option value="plot">Plot</option>
+                                      <option value="commercial_area">Commercial Area</option>
+                          </Form.Control>                         
+                          
+                          <br />
+                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#556B2F',position:'relative',left:'3%',width:'200px',bottom:'10%'}}>Apply Changes</Button>
   </div>
                     <br />
                   </Form.Group><br/>
                 </Form><br/>
-                </div></Col><Col lg={6} md={6}>
+                </div></div><div className="col-lg-6 col-md-8 col-sm-12">
                 <div style={{float:'right',position:'relative',top:'2%'}}>
                 {this.state.properties.length!=0 & this.state.search ? 
     <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'20%'}}>
-    <div className="ui horizontal divider">
-            Seach Results
-          </div>
     <Row>
-    {currentPosts.map(property=>
-      <Col key={property.id} sm={12} md={12} lg={12}>
-                    <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div style={{boxShadow: '10px 10px  #D5DBDB'}}  className="card">
-                        <div className="image">
-                          <img alt="Property" src={property.Image}/>
-                        </div>
-                        <div className="content">
-                          <div className="header"></div>
-                          <div className="meta">
-                            {property.Title}
-                          </div>
-                          <div className="description">
-                            {property.Price}
-                            </div>
-                        </div>
-                        <div className="extra content">
-                          <span className="right floated">
-                            {property.Date}
-                          </span>
-                          <span>
-                            {property.Size} {property.Units}
-                          </span><br/>
-                          <span className="mt-2">
-                      <Button className="btn-md " onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#34495E',marginLeft:'30px'}}>View Advertisement</Button>
-                        </span>
-                        </div>
-                      </div>
-                    </div>
-                    </Col>
+    {currentPosts.map(property=>                      
+      <div id={property.id} className="card mb-3" style={{minWidth: '150%',position:'relative',right:'50%'}}>
+  <div className="row no-gutters">
+    <div className="col-md-4">
+      <img src={property.Image} className="card-img" alt="..."/>
+    </div>
+    <div className="col-md-8">
+      <div className="card-body">
+        <h5 className="card-title">{property.Title}</h5>
+        <p className="card-text text-muted">Type: {property.Type}</p>
+        <p className="card-text text-muted">For {property.Purpose}</p>
+        <p style={{display:'inline',fontSize:'10px'}} className="card-text mr-2"><small className="text-muted"><i className="fa fa-2x fa-bed">   {property.Beds}</i></small></p>
+       <p style={{display:'inline'}} className="card-text text-muted"><i className="fa  fa-bath">   {property.Baths}</i></p>
+      </div>
+      <Button onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#556b2f'}}>View Advertisement</Button>
+    </div>
+  </div>
+</div>      
     )}
     </Row>
-    <Pagination style={{position:'relative',left:'30%',right:'30%'}}
+    <Pagination style={{position:'relative',right:'70%'}}
           postsPerPage={this.state.postsPerPage}
           totalPosts={this.state.properties.length}
           paginate={paginate}
       /><br/><br/>
-      <Footer style={{width:'100%'}} />
       </div>:
       <div>
       {this.state.clicked ?<div>
-       <h1 style={{textAlign:'center'}}>Sorry! No results Found...</h1>
-       <div style={{position:'relative',left:'10%',width:'80%'}} className="ui horizontal divider">
+       <h1 style={{textAlign:'left'}}>Sorry! No results Found...</h1>
+       <div style={{position:'relative',width:'80%'}} className="ui horizontal divider">
             Suggested Properties
           </div>
           <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%'}}>
     <Row>
     {this.state.featured.map(property=>
-      <Col key={property.id} sm={12} md={12} lg={12}>
-                    <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div  className="card">
-                        <div className="image">
-                      <div style={{backgroundColor:'#eaeded',width:'20%',position:'relative',marginLeft:'15px'}} class="ui yellow ribbon label">
-                          <i style={{color:'white'}} class="star icon"></i> Featured
-                        </div>                              
-                          <img alt="Property" src={property.Image}/>
-                        </div>
-                        <div className="content">
-                          <div className="header"></div>
-                          <div className="meta">
-                            {property.Title}
-                          </div>
-                          <div className="description">
-                            {property.Price}
-                            </div>
-                        </div>
-                        <div className="extra content">
-                          <span className="right floated">
-                            {property.Date}
-                          </span>
-                          <span>
-                            {property.Size} {property.Units}
-                          </span><br/><br/>
-                          <span className="mt-2">
-                      <Button className="btn-md " onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#34495E',marginLeft:'30px'}}>View Advertisement</Button>
-                        </span>
-                        </div>
-                      </div>
-                    </div>
-                    </Col>
+      <div id={property.id} className="card mb-3" style={{maxWidth: '540px',position:'relative',right:'50%'}}>
+  <div className="row no-gutters">
+    <div className="col-md-4">
+      <img src={property.Image} className="card-img" alt="..."/>
+    </div>
+    <div className="col-md-8">
+      <div className="card-body">
+        <h5 className="card-title">{property.Title}</h5>
+        <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
     )}
     </Row>
     <br/><br/>
@@ -240,7 +215,7 @@ render(){
       : null }
     </div>}
        </div>
-       </Col></Row>
+       </div></div>
         </div>
 
           );

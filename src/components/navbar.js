@@ -10,11 +10,12 @@ class Navigation extends Component{
   state={
     token: this.props.cookies.get('ad-token'),
     user:[],
-    search:'',
+    profile:[]
   }
 componentDidMount(){
   if (this.state.token){
     this.getUser()
+    this.getProfiles();
   }
 }
 handleChange = (e) =>{
@@ -23,10 +24,16 @@ handleChange = (e) =>{
     [e.target.name]:value
   });
 }
-handleSearch = () =>{
-  window.location.href = `http://localhost:3000/results/${this.state.search}`;
+getProfiles = () =>{
+  fetch("http://127.0.0.1:4000/api/profile/",{
+        method : 'GET',
+        headers:{
+          'Authorization':`Token ${this.state.token}`
+        }
+        }).then(resp=>resp.json()).then(res=>this.setState({profile:res})).catch(error=>console.log(error));
+        console.log((this.state.profile))
+        this.setState({flag:true});
 }
-
   getUser = () =>{
     fetch("http://127.0.0.1:4000/api/user/",{
             method : 'GET',
@@ -40,14 +47,25 @@ handleSearch = () =>{
     this.props.cookies.remove('ad-token')
     window.location.href = "/"
   }
+  add = () =>{
+    if (this.state.token){
+      window.location.href="/addProperty"
+    }
+    else{
+      window.location.href="/login"
+    }
+  }
  
   login = () =>{
     window.location.href = '/login'
   }
+  signup = () =>{
+    window.location.href = '/signup'
+  }
     render(){
       const styles = {
         color:{
-         backgroundColor : this.props.color
+         backgroundColor : this.props.color,
        }
      }
       return(
@@ -56,15 +74,13 @@ handleSearch = () =>{
   <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:'white',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b>Estate</b></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
-  <Form style={{position:'relative',left:'15%'}} inline>
-      <Form.Control style={{width:'500px'}} name="search" onChange={this.handleChange} value={this.state.search} type="text" placeholder="Search Keywords..." className="mr-sm-2" />
-      <Button onClick={this.handleSearch} className="mr-2" variant="outline-info"><i className="fa fa-search"></i> Search</Button>
-    </Form>
     <Nav className="ml-auto">
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/map">{this.props.link1}</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/properties">{this.props.link2}</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/plots">{this.props.link3}</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/commercial-areas">{this.props.link4}</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/map">Map</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/properties">Buy</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/plots">Rent</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/commercial-areas">Blog</Nav.Link>
+      <Nav.Link style={{color:"white"}} href="http://localhost:3000/search">Search Properties</Nav.Link>
+      <Button onClick={this.add}  type="button"  className="btn btn-secondary mr-3">Add New Property</Button>
     </Nav>
     {this.state.user ? 
       this.state.user.map(data=>
@@ -73,10 +89,16 @@ handleSearch = () =>{
       
     <Form inline>
     {this.state.token ?
-      <button onClick={this.logout} type='Button' className="btn btn-info btn-md  mr-2" >Logout</button>
+      <div>
+      {this.state.profile.length>0?
+        this.state.profile.map(profile=>{
+        <h6>{profile.Age}</h6>
+      }) : null}
+      <button onClick={this.logout} style={{backgroundColor:'orange',color:'white'}} type='Button' className="btn btn-md  mr-2" >Logout</button></div>
        :
        <div>
-      <button onClick={this.login} type='Button' className="btn btn-info btn-md ml-2 mr-2">Login</button>
+      <button onClick={this.login} type='Button' style={{backgroundColor:'#EB984E',color:'white'}} className="btn  btn-md ml-2 mr-2">Login</button>
+      <button onClick={this.signup} style={{backgroundColor:'#EB984E',color:'white'}} type='Button' className="btn btn-md ml-2 mr-2">SignUp</button>
       </div> }
     </Form>
   </Navbar.Collapse>

@@ -28,6 +28,7 @@ import PropertyAds from './components/dashboard/propertyAds';
 import SavedAds from './components/dashboard/savedAds';
 import DashboardItems from './components/dashboard/items';
 import Items from './components/e-commerce/items';
+
 const routing=(
   <BrowserRouter>
     <CookiesProvider>
@@ -48,12 +49,13 @@ const routing=(
       <Route path="/properties" component={Properties}></Route>
       <Route path="/plots" component={Plots}></Route>
       <Route path="/commercial-areas" component={Commercial}></Route>
-      <Route path='/search' component={SearchResult}></Route>
+      <Route path='/search/:handle' component={SearchResult}></Route>
       <Route path="/chat" component={Chat}></Route>
       <Route exact path="/results/:handle" component={Results}></Route>
       <Route path="/store" component={Landing}></Route>
       <Route path="/store-items" component={Items}></Route>
       <Route path="/AddItem" component={AddItem}></Route>
+      
     </CookiesProvider>
   </BrowserRouter>
 )

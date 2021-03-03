@@ -95,17 +95,17 @@ handleChange = (event) =>{
     <Button style={{backgroundColor:'#3b6998'}}><i className="fa fa-plus"></i> Post new property</Button>
   </Navbar.Collapse>
 </Navbar>
-      <Row><Col lg={6} md={6}>
+      <Row><Col lg={6} md={6} style={{backgroundColor:'#394357',height:'89.5vh'}}>
       <div  style={{width:'56%',zIndex:'1',height:'86vh',position:'relative',bottom:'8%'}}>
-      <Form style={{width:'65%',backgroundColor:'transparent'}}>
+      <Form style={{width:'65%',}}>
                       <Form.Group>
                       <div id="SearchForm">
-                      <Form.Label><b>Property Location:</b></Form.Label>
+                      <Form.Label style={{color:'#e7e8ea'}}><b>Property Location:</b></Form.Label>
                         <Form.Control style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.City} size="sm" name="City" type="text" placeholder="City" />
                       <br/> 
                         <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} value={this.state.Location} size="sm" name="Location" type="text" placeholder="Location" />
                       <br/>
-                      <Form.Label><b>Property Specifications:</b></Form.Label>
+                      <Form.Label style={{color:'#e7e8ea'}}><b>Property Specifications:</b></Form.Label>
                       <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} size="sm" name="Price" type="text" value={this.state.Price} placeholder="Estimated Price of the property" />    
                       <br/>
                           <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Size} name="Size" type="text" placeholder="Size Property" />
@@ -137,36 +137,27 @@ handleChange = (event) =>{
                             <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Baths} name="Baths" type="text" placeholder="Bathrooms" />
                             </Col>
                           </Row><br/>
-                          <Form.Label><b>Property Type:</b></Form.Label>
-                          <Row>
-                            <Col>
-                            <Form.Group style={{width:'40%'}} value={this.state.Purpose} onChange={this.handleChange}>
-                          <Row>
-                          <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
-                          </Row>
-                          </Form.Group>
-                            <Col>
-                          </Col>  
-                            </Col>
-                          <Col>
-                          <Form.Group style={{width:'60%',position:'relative',left:'20%',right:'20%'}} value={this.state.Type} onChange={this.handleChange}>
-                          <Row>
-                          <Col><Form.Check onClick={this.HouseForm} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                          <Col><Form.Check onClick={this.PlotForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check>
-                          </Col>
-                          </Row>
-                          </Form.Group>
-                          </Col>
-                          </Row>
+                          <Form.Label style={{color:'#e7e8ea'}}><b>Property Type:</b></Form.Label>
+                          
+                          <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Purpose" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
+                                      <option value="">Purpose</option>
+                                      <option value="sale">Sale</option>
+                                      <option value="rent">Rent</option>
+                                      </Form.Control> <br/>            
+                          <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Type" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
+                                      <option value="">Type</option>
+                                      <option value="property">House</option>
+                                      <option value="plot">Plot</option>
+                                      <option value="commercial_area">Commercial Area</option>
+                          </Form.Control>                         
+                          
                           <br />
                           <Row>
                             <Col lg={6} md={6}>
-                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#34495E',position:'relative',width:'120px'}}>Apply Changes</Button>
+                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#FF8C00',position:'relative',width:'120px'}}>Apply Changes</Button>
                             </Col>
                             <Col lg={6} md={6}>
-                          <Button className="mr-2" onClick={this.reset} style={{backgroundColor:'#34495E',position:'relative',width:'100px'}}>Reset Form</Button>
+                          <Button className="mr-2" onClick={this.reset} style={{backgroundColor:'#FF8C00',position:'relative',width:'100px'}}>Reset Form</Button>
                             </Col>
                           </Row>
 </div>
@@ -174,7 +165,7 @@ handleChange = (event) =>{
                 </Form.Group><br/>
               </Form><br/>
               </div></Col><Col lg={6} md={6}>
-                <div className="mr-2" style={{float:'right',position:'relative'}}> <Data width="80vw" height="86vh" data={this.state}   /></div> 
+                <div className="mr-2" style={{float:'right',position:'relative'}}> <Data width="80vw" height="89vh" data={this.state}   /></div> 
      </Col></Row>
       </div>
     )

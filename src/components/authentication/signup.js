@@ -2,8 +2,9 @@ import React,{Component} from 'react';
 import Navigation from '../navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button'
-import '../components.css';
-
+import './authentication.css'
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 class SignUp extends Component{
     state = {
         credentials:{
@@ -41,7 +42,9 @@ class SignUp extends Component{
         return (
             <div>
             <Navigation color="#34495E" />
-            <div className="Form" style={{width:'50%',position:'relative',left:'25%'}}>
+            <Row>
+                <Col className="signup" lg={6}><img className="signup" src="/signup.jpg" alt="signup" /></Col>
+                <Col lg={6}><div className="Form" style={{width:'50%',position:'relative',left:'25%'}}>
             <h1 className="text-info mt-4" style={{textAlign:'center'}}>Sign Up</h1>
             <br/>
             <Form.Group style={{width:'60%',position:'relative',left:'20%'}}>
@@ -49,9 +52,12 @@ class SignUp extends Component{
                 <Form.Control size="md" onChange={this.handleChange} name="email" type="email" placeholder="Email" /><br />
                 <Form.Control size="md" onChange={this.handleChange} name="password" type="password" placeholder="Enter your Password" /><br />
                 <Form.Control size="md" onChange={this.handleChange} name="password2" type="password" placeholder="Retype Password" /><br/>
+                <Form.Control size="md" onChange={this.handleChange} name="contact_no" type="text" placeholder="Contact Number" /><br/>
                 <Button onClick={this.handleClick} style={{textAlign:'center',position:'relative',width:'100px',left:'40%'}} variant="info">Sign Up</Button>
             </Form.Group>
             </div>
+            </Col>
+            </Row>            
             </div>
         );
     }

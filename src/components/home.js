@@ -41,6 +41,7 @@ class Home extends Component{
     render(){
         return (<div>
         <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%',textAlign:'center'}}>
+        <h1 style={{textAlign:'center',fontFamily:'Anton'}}><b>Why Estate?</b></h1><br/>
           <section id="features">
 <div className="row">
   <div className="feature-box col-lg-4">

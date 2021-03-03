@@ -53,9 +53,7 @@ Form.Control {
 .backgroundimage {
   background-image: url("bg.jpg");
   width: 100vw;
-  height: 100vh;
-  position: relative;
-  bottom: 200px;
+  height: 100%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -82,12 +80,15 @@ Form.Control {
   position: relative;
   left: 30%;
 }
+#div {
+  background: rgb(0, 0, 0, 0.5);
+}
 .white {
   color: white;
 }
 .header {
   position: relative;
-  bottom: 110px;
+  bottom: 100px;
 }
 #wrapper {
   background-color: #eaeded;
@@ -115,7 +116,6 @@ Form.Control {
 i:hover {
   color: 457b9d;
 }
-
 .top {
   height: inherit;
   background: rgba(1, 21, 51, 0.37);
@@ -127,5 +127,10 @@ i:hover {
 @media (max-width: 1028px) {
   #features {
     margin-top: 200px;
+  }
+}
+@media screen and (max-width: 600px) {
+  Button {
+    background-color: olive;
   }
 }

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import {withCookies} from 'react-cookie';
 import {Link} from 'react-router-dom';
 import {Row,Col} from 'react-bootstrap';
+import LandingForm from './landingform';
 
 class Header extends Component{
   state = {
@@ -27,25 +28,23 @@ handleChange = (event) =>{
         return (
     <div className="header backgroundimage">
     <div className="top">
-    <div className="dark-overlay landing-inner text-dark mt-4">
+    <div className="dark-overlay landing-inner text-dark mt-2">
     <div className="tl container">
-      <div  className="row mt-4">
-        <div style={{width:'80%',left:'10%',right:'10%',top:'10%'}} className="mt-4 col-md-12 text-center mt-4">
-        <div style={{position:'relative',top:'20%'}} className="row mt-4">
+      <div  className="row">
+        <div style={{width:'80%',left:'10%',right:'10%',top:'2%'}} className="mt-4 col-md-12 text-center mt-4">
+        <div style={{position:'relative',top:'10%'}} className="row mt-4">
         <div className="col-lg-6 col-md-6">
-          <h1 id="head" className="text-heavy text-left display-4 mb-4 mt-5 text-light" style={{fontWeight:"heavier",fontSize:'5rem'}}>Finding The Dream For Every Owner
+          <h1 id="head" className="text-heavy text-left display-4 mb-4 mt-5 text-light" style={{fontWeight:"heavier",fontSize:'5rem',position:'relative',right:'5%'}}>Finding The Dream For Every Owner
 </h1></div><div className="col-lg-6 col-md-6">
-          <h4 style={{marginLeft:'22%',marginTop:'10%',width:'150px',color:'white'}}>Join Us Now</h4>
-          <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.signup} variant="info">Sign Up</Button><br/>
-          <Button style={{marginRight:'70%',marginTop:'5%',width:'150px'}} className="button btn-md" onClick={this.search} variant="info">Search Properties</Button><br/><br/><br/><br/>
-          
+       <LandingForm />    
           </div>
           </div>
           </div>
       </div>
     </div>
+  </div><br/><br/><br/><br/>
   </div>
-  </div>
+  <br/>        
   </div>
             );
     };

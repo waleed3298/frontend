@@ -41,6 +41,9 @@ class AddProperty extends Component{
   Baths:'',
   Purpose:'',
   Featured:'',
+  contact_no:'',
+  cell_no:'',
+  email:'',
   image : null,
   image1 : null,
   image2 : null,
@@ -89,6 +92,9 @@ handleImageChange = (e) =>{
         form_data.append('Image3',this.state.image3);
         form_data.append('Image4',this.state.image4);
         form_data.append('Image5',this.state.image5);
+        form_data.append('email',this.state.email);
+        form_data.append('contact_no',this.state.contact_no);
+        form_data.append('cell_no',this.state.cell_no);
         
         let url = 'http://127.0.0.1:4000/api/CreateAd/';
         axios.post(url,form_data,{
@@ -146,45 +152,23 @@ handleImageChange = (e) =>{
           <div>
                   {this.state.token ?
                     <div id="wrapper">
-                    <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
+                    <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#556B2F" />
                      <div className="Form">
                         <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
                         <div id="Form">
-                        <h1 style={{textAlign:'center',fontFamily:'prata'}}>Add Property</h1><br />
-                        <h3 className="text-info" style={{textAlign:'center',fontFamily:'Lora'}}>Property Location and Details</h3>
-                        <Form.Label>Listing Title</Form.Label>
-                                <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" /><br/><br/>
-                        <Form.Label>Image</Form.Label>
-                        <input type="file" id="image" accept="image/jpg,image/png" onChange={this.handleImageChange} required />
-                                <br />
-                        <Form.Label className="mt-1">Property Type</Form.Label>
-                        <Form.Group as="radio" value={this.state.Type} onChange={this.handleChange}>
-                        <Row>
-                        <Col><Form.Check  name="Type" value="property" type="radio" label="House"></Form.Check></Col>
-                        <Col><Form.Check  name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                        <Col><Form.Check  name="Type" value="commercial" type="radio" label="Commercial"></Form.Check></Col>
-                        </Row>
-                        </Form.Group>
-                        <br />
-                        <Form.Label>City</Form.Label>
-                            <Form.Control onChange={e=>this.handleChange(e)} value={this.state.City} size="md" name="City" type="text" placeholder="Enter Your City" />
-                            <br />
-                            <Form.Control onChange={e=>this.handleChange(e)} value={this.state.Location} size="md" name="Location" type="text" placeholder="Location" />
-                               <br />
-                                <Form.Label>Description</Form.Label>
-                                <Form.Control value={this.state.Description} onChange={e=>this.handleChange(e)} name="Description" as="textarea" rows={3}/>
-                                <br />
-                                <Form.Label>Price</Form.Label>
+                        <h1 style={{textAlign:'center',fontFamily:'prata'}}>Post your Listing</h1><br />
+                        <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Details</h6><br/>
+                                <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" /><br/>
+                                <Form.Control value={this.state.Description} onChange={e=>this.handleChange(e)} placeholder="Description" name="Description" as="textarea" rows={3}/><br/>
+                                
                                 <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Price" type="text" value={this.state.Price} placeholder="Asking Price of your property" />
-                                <br />
+                                <br/>
                             <Row>
                             <Col>
-                            <Form.Label>Size</Form.Label>
                                         <Form.Control size="md" onChange={e=>this.handleChange(e)} value={this.state.Size} name="Size" type="text" placeholder="Size of your Property" />
                             </Col>
                             <Col>
-                            <Form.Label>Units</Form.Label>
                                         <Form.Control value={this.state.Units} name='Units' onChange={this.handleChange} size="md" as="select">
                                         <option value="square_yards">Square Yards</option>
                                         <option value="square_meters">Square Meters</option>
@@ -192,56 +176,18 @@ handleImageChange = (e) =>{
                                         <option value="kanal">Kanal</option>
                                         </Form.Control>
                                         <br />
-
                             </Col>
-                            </Row>
-                            <Row>
-                            <Col>
-                            <Form.Label>Bedrooms</Form.Label>
-                            <Form.Control value={this.state.Beds} onChange={e=>this.handleChange(e)} size="md" name="Beds" type="text" placeholder="Bedrooms" />
-
-                            </Col>
-                            <Col>
-                            <Form.Label>Bathrooms</Form.Label>
-                            <Form.Control value={this.state.Baths} onChange={e=>this.handleChange(e)} size="md" name="Baths" type="text" placeholder="Bathrooms" />
-                                        <br />
-
-                            </Col>
-                            </Row>
-                            <Form.Label>Construction Status</Form.Label>
-                                        <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='md' as='select'>
-                                        <option value="">Please Select</option>
-                                        <option value="complete">Complete</option>
-                                        <option value="under_construction">Under Construction</option>
-                            </Form.Control>
-                            <Form.Label>Purpose</Form.Label>
-                            <Form.Group value={this.state.Purpose} onChange={this.handleChange}>
-                            <Row>
-                            <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
-                            <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
-                            </Row>
-                            </Form.Group>
-                            
-                            <br />
-                            <Form.Label className="mt-1">Featured</Form.Label>
+                            </Row>       
+                        <Form.Label>Image</Form.Label>
+                        <input type="file" id="image" accept="image/jpg,image/png" onChange={this.handleImageChange} required />
+                                <br />
                         <Form.Group as="radio" value={this.state.Type} onChange={this.handleChange}>
-                        <Row>
-                        <Col><Form.Check  name="Featured" value="True" type="radio" label="Yes"></Form.Check></Col>
-                        <Col><Form.Check  name="Featured" value="False" type="radio" label="No"></Form.Check></Col>
-                        </Row>
                         </Form.Group>
-                        <Form.Label>Advertisement Images</Form.Label><br/>
-                        <input type="file" name="image1" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
-                        <input type="file" name="image2" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
-                        <input type="file" name="image3" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
-                        <input type="file" name="image4" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
-                        <input type="file" name="image5" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
-                        
-                        </div>
                         <br />
-                            <br/>
-                     <br />
-                     <Form.Label>Select Location from Map</Form.Label>        
+                        <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Location Details</h6><br/>
+                            <Form.Control onChange={e=>this.handleChange(e)} value={this.state.City} size="md" name="City" type="text" placeholder="Enter Your City" /><br/>
+                            <Form.Control onChange={e=>this.handleChange(e)} value={this.state.Location} size="md" name="Location" type="text" placeholder="Location" /><br/>
+                        <Form.Label>Select Location from Map</Form.Label>        
                 <ReactMapGL
         {...viewport}
         width="100%"
@@ -278,12 +224,67 @@ value=""
 
 
       </ReactMapGL>
-      <br/><br/>
-      <Button style={{backgroundColor:'#3A626F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit Form</Button>
+      <br/><br/>        <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Type and Information</h6><br/>
+                
+                        <Form.Label>Property Type</Form.Label>
+                        <Row>
+                        <Col><Form.Check  name="Type" value="property" type="radio" label="House"></Form.Check></Col>
+                        <Col><Form.Check  name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
+                        <Col><Form.Check  name="Type" value="commercial" type="radio" label="Commercial"></Form.Check></Col>
+                        </Row>
+                        <br/>  
+                            <Row>
+                            <Col>
+                            <Form.Control value={this.state.Beds} onChange={e=>this.handleChange(e)} size="md" name="Beds" type="text" placeholder="Bedrooms" />
+
+                            </Col>
+                            <Col>
+                            <Form.Control value={this.state.Baths} onChange={e=>this.handleChange(e)} size="md" name="Baths" type="text" placeholder="Bathrooms" />
+                                        <br />
+
+                            </Col>
+                            </Row>
+                                        <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='md' as='select'>
+                                        <option value="">Construction Status</option>
+                                        <option value="complete">Complete</option>
+                                        <option value="under_construction">Under Construction</option>
+                            </Form.Control>
+                            <Form.Label>Purpose</Form.Label>
+                            <Form.Group value={this.state.Purpose} onChange={this.handleChange}>
+                            <Row>
+                            <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
+                            <Col><Form.Check onClick={this.PlotForm} name="Purpose" value="rent" type="radio" label="Rent"></Form.Check></Col>
+                            </Row>
+                            </Form.Group>
+                            <Form.Label className="mt-1">Featured</Form.Label>
+                        <Form.Group as="radio" value={this.state.Type} onChange={this.handleChange}>
+                        <Row>
+                        <Col><Form.Check  name="Featured" value="True" type="radio" label="Yes"></Form.Check></Col>
+                        <Col><Form.Check  name="Featured" value="False" type="radio" label="No"></Form.Check></Col>
+                        </Row>
+                        </Form.Group>
+                        <br/>
+                        <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Upload Images for Advertisement</h6><br/>
+                        <input type="file" name="image1" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image2" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image3" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image4" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <input type="file" name="image5" id="image" accept="image/jpg,image/png" onChange={this.handlemultipleChange} />
+                        <br/><br/><h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Owner Details</h6><br/>
+                                <Form.Control size="md" name="contact_no" value={this.state.contact_no} onChange={e=>this.handleChange(e)} type="text" placeholder="Contact Number" /><br/>
+                                <Form.Control size="md" name="cell_no" value={this.state.cell_no} onChange={e=>this.handleChange(e)} type="text" placeholder="Cell Number" /><br/>
+                                <Form.Control size="md" name="email" value={this.state.email} onChange={e=>this.handleChange(e)} type="text" placeholder="Email" /><br/>
+                        
+                        </div>
+                        <br />
+                            <br/>
+                     <br />
+                    <br/>
+      <Button className="btn btn-lg" style={{backgroundColor:'#556B2F',position:'relative',left:'40%',marginBottom:'100px',width:'20%'}} type="submit" >Submit Form</Button>
       </Form.Group>
                       </Form>
                 </div>
-                <Footer />
+                <Footer color="#556B2F" />
       </div>             :
                    window.location.href = '/login'}
                    </div>
