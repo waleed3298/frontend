@@ -89,32 +89,16 @@ handleChange = (event) =>{
     render(){
         return (
             <div id="wrapper">
-            <Navigation  link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
+            <Navigation  linkColor="white" color="#556B2F" />
             <div className='Form'>
             <Form onSubmit={this.handleSubmit}>
                       <Form.Group>
-                      <h1 style={{textAlign:'center',fontFamily:'prata'}}>Edit Your Advertisement</h1><br />
-                      <h3 className="text-info" style={{textAlign:'center',fontFamily:'Lora'}}>Property Location and Details</h3>
+                      <h1 style={{textAlign:'center',fontFamily:'Oswald',marginTop:'50px'}}>Edit Your Advertisement</h1><br />
                       <div id="Form">
+                      <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Details</h6> 
                       <Form.Label>Listing Title</Form.Label>
                               <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" />
                               <br />
-                                <br />
-                        
-                      <Form.Label className="mt-1">Property Type</Form.Label>
-                      <Form.Control as="radio" value={this.state.Type} onChange={this.handleChange}>
-                      <Row>
-                      <Col><Form.Check onClick={this.HouseForm} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
-                      <Col><Form.Check onClick={this.PlotForm} name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                      <Col><Form.Check onClick={this.CommercialForm} name="Type" value="commercial" type="radio" label="Commercial"></Form.Check></Col>
-                      </Row>
-                      </Form.Control>
-                      <br />
-                      <Form.Label>City</Form.Label>
-                          <Form.Control onChange={e=>this.handleChange(e)} value={this.state.City} size="md" name="City" type="text" placeholder="Enter Your City" />
-                          <br />
-                          <Form.Control onChange={e=>this.handleChange(e)} value={this.state.Location} size="md" name="Location" type="text" placeholder="Location" />
-                             <br />
                               <Form.Label>Description</Form.Label>
                               <Form.Control value={this.state.Description} onChange={e=>this.handleChange(e)} name="Description" as="textarea" rows={3}/>
                               <br />
@@ -138,7 +122,15 @@ handleChange = (event) =>{
 
                           </Col>
                           </Row>
-                          <Row>
+                          <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Location Details</h6> 
+                          <br/>
+                          <Form.Label>City</Form.Label>
+                          <Form.Control onChange={e=>this.handleChange(e)} value={this.state.City} size="md" name="City" type="text" placeholder="Enter Your City" />
+                          <br />
+                          <Form.Control onChange={e=>this.handleChange(e)} value={this.state.Location} size="md" name="Location" type="text" placeholder="Location" />
+                             <br />
+                             <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Type and Details</h6> 
+                               <br/>  <Row>
                           <Col>
                           <Form.Label>Bedrooms</Form.Label>
                           <Form.Control value={this.state.Beds} onChange={e=>this.handleChange(e)} size="md" name="Beds" type="text" placeholder="Bedrooms" />
@@ -151,12 +143,23 @@ handleChange = (event) =>{
 
                           </Col>
                           </Row>
-                          <Form.Label>Construction Status</Form.Label>
+                          <Row>
+                            <Col><Form.Label>Property Type</Form.Label>
+                                      <Form.Control name="Type" value={this.state.Type} onChange={this.handleChange} size='md' as='select'>
+                                      <option value="property">House</option>
+                                      <option value="plot">Plot</option>
+                                      <option value="commercial_area">Commercial Area</option>
+                                      <option value="flat">Flat</option>
+                                 </Form.Control>
+                      <br /></Col>
+                            <Col><Form.Label>Construction Status</Form.Label>
                                       <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='md' as='select'>
                                       <option value="complete">Please Select</option>
                                       <option value="complete">Complete</option>
                                       <option value="under_construction">Under Construction</option>
                           </Form.Control>
+                          </Col>
+                          </Row><br/>
                           <Form.Label>Purpose</Form.Label>
                           <Form.Group value={this.state.Purpose} onChange={this.handleChange}>
                           <Row>
@@ -166,13 +169,13 @@ handleChange = (event) =>{
                           </Form.Group>
                           <br />
                           <br/>
-                          <Button type='submit' style={{backgroundColor:'#34495E',position:'relative',left:'30%',width:'200px'}} type="submit">Submit Form</Button><br/><br/>
+                          <Button type='submit' style={{backgroundColor:'#556B2F',position:'relative',left:'30%',width:'200px'}} type="submit">Submit Form</Button><br/><br/>
 </div>
                   <br />
                 </Form.Group>
               </Form>
             </div> <br/><br/>
-            <Footer />
+            <Footer color="#556B2F" />
             </div>
         )
     }

@@ -10,6 +10,8 @@ import Navigation from './navbar';
 import './map.css';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import {Grid,Segment} from 'semantic-ui-react';
+
 class Map extends Component{
   state = {
     token: this.props.cookies.get('ad-token'),
@@ -79,33 +81,41 @@ handleChange = (event) =>{
     Beds:'',
     Baths:'',});
   }
+  add = () =>{
+    if (this.state.token){
+      window.location.href="/addProperty"
+    }
+    else{
+      window.location.href="/login"
+    }
+  }
   render(){
     return(
       <div style={{backgroundColor:'white'}}>
   <Navbar style={{borderBottom:'1px solid #808080'}} className="nav container-fluid bg-light" expand="lg">
-  <Navbar.Brand className="ml-3" style={{fontSize:'2rem',color:'#3b6998',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b><a style={{color:'#3b6998'}} href="/">Estate</a></b></Navbar.Brand>
+  <Navbar.Brand className="ml-3" style={{fontSize:'2rem',color:'#556B2F',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b><a style={{color:'#556B2F'}} href="/">Estate</a></b></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="ml-auto">
-      <Nav.Link style={{color:"#3b6998"}} href="http://localhost:3000/search">Search Properties</Nav.Link>
-      <Nav.Link style={{color:"#3b6998"}} href="http://localhost:3000/properties">Houses</Nav.Link>
-      <Nav.Link style={{color:"#3b6998"}} href="http://localhost:3000/plots">Plots</Nav.Link>
-      <Nav.Link className="mr-2" style={{color:"#3b6998"}} href="http://localhost:3000/commercial-areas">Commercial Properties</Nav.Link>
+      <Nav.Link style={{color:"#556B2F"}} href="http://localhost:3000/search/None">Search Properties</Nav.Link>
+      <Nav.Link style={{color:"#556B2F"}} href="http://localhost:3000/properties">Houses</Nav.Link>
+      <Nav.Link style={{color:"#556B2F"}} href="http://localhost:3000/plots">Plots</Nav.Link>
+      <Nav.Link className="mr-2" style={{color:"#556B2F"}} href="http://localhost:3000/commercial-areas">Commercial Properties</Nav.Link>
     </Nav>
-    <Button style={{backgroundColor:'#3b6998'}}><i className="fa fa-plus"></i> Post new property</Button>
+    <Button onClick={this.add} style={{backgroundColor:'#556B2F'}}><i className="fa fa-plus"></i> Post new property</Button>
   </Navbar.Collapse>
 </Navbar>
-      <Row><Col lg={6} md={6} style={{backgroundColor:'#394357',height:'89.5vh'}}>
-      <div  style={{width:'56%',zIndex:'1',height:'86vh',position:'relative',bottom:'8%'}}>
+      <Row><Col lg={6} md={6} style={{backgroundColor:'white',height:'89.5vh'}}>
+      <div  style={{width:'56%',zIndex:'1',height:'76vh',position:'relative',top:'5%'}}>
       <Form style={{width:'65%',}}>
                       <Form.Group>
                       <div id="SearchForm">
-                      <Form.Label style={{color:'#e7e8ea'}}><b>Property Location:</b></Form.Label>
+                      <Form.Label style={{color:'#556B2F'}}><b>Property Location:</b></Form.Label>
                         <Form.Control style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.City} size="sm" name="City" type="text" placeholder="City" />
                       <br/> 
                         <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} value={this.state.Location} size="sm" name="Location" type="text" placeholder="Location" />
                       <br/>
-                      <Form.Label style={{color:'#e7e8ea'}}><b>Property Specifications:</b></Form.Label>
+                      <Form.Label style={{color:'#556B2F'}}><b>Property Specifications:</b></Form.Label>
                       <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} size="sm" name="Price" type="text" value={this.state.Price} placeholder="Estimated Price of the property" />    
                       <br/>
                           <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Size} name="Size" type="text" placeholder="Size Property" />
@@ -137,7 +147,7 @@ handleChange = (event) =>{
                             <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Baths} name="Baths" type="text" placeholder="Bathrooms" />
                             </Col>
                           </Row><br/>
-                          <Form.Label style={{color:'#e7e8ea'}}><b>Property Type:</b></Form.Label>
+                          <Form.Label style={{color:'#556B2F'}}><b>Property Type:</b></Form.Label>
                           
                           <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Purpose" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
                                       <option value="">Purpose</option>
@@ -154,10 +164,10 @@ handleChange = (event) =>{
                           <br />
                           <Row>
                             <Col lg={6} md={6}>
-                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#FF8C00',position:'relative',width:'120px'}}>Apply Changes</Button>
+                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#556B2F',position:'relative',width:'120px'}}>Apply Changes</Button>
                             </Col>
                             <Col lg={6} md={6}>
-                          <Button className="mr-2" onClick={this.reset} style={{backgroundColor:'#FF8C00',position:'relative',width:'100px'}}>Reset Form</Button>
+                          <Button className="mr-2" onClick={this.reset} style={{backgroundColor:'#556B2F',position:'relative',width:'100px'}}>Reset Form</Button>
                             </Col>
                           </Row>
 </div>

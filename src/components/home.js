@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './components.css';
 import axios from 'axios';
-import {Row,Col,Button} from 'react-bootstrap';
+import {Row,Col,Button,Image} from 'react-bootstrap';
 
 class Home extends Component{
   state = {
@@ -33,16 +33,28 @@ class Home extends Component{
     event.target.style.color = '#457b9d';    
   }
    MouseOut = (event) =>{
-    event.target.style.color="#34495E";
+    event.target.style.color='black';
   }
   handleClick=(id)=>{
     window.location.href=`/AdDetails/${id}`
   }
+  signup=()=>{
+    window.location.href=`/signup`
+  }
     render(){
         return (<div>
-        <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%',textAlign:'center'}}>
-        <h1 style={{textAlign:'center',fontFamily:'Anton'}}><b>Why Estate?</b></h1><br/>
-          <section id="features">
+        <div>
+        <div style={{width:'100%',backgroundColor:'white',height:'100%'}}>
+        <section style={{textAlign:'center',position:'relative',marginBottom:'10%'}}>
+          <h1 style={{fontFamily:'Shippori Mincho'}}><b>We Lease, We List, We Sell</b></h1>
+          <p style={{width:'60%',position:'relative',left:'20%'}}>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</p>
+          <br/>
+          <Button style={{backgroundColor:'white',color:'grey'}}>More Information</Button>
+        </section>  
+        </div>
+        <div style={{width:'100%',backgroundColor:'#eaeded',height:'60vh',paddingTop:'7%'}}>
+          <section style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'20%',textAlign:'center'}} id="features">
+          <h3 style={{textAlign:'center',fontFamily:'Anton'}}><b>Why Choose Us?</b></h3><br/>
 <div className="row">
   <div className="feature-box col-lg-4">
   <i onMouseOver={this.MouseOver} onMouseOut={this.MouseOut} style={{fontSize:'50px'}} className="icon fas fa-check-circle fa-4x mb-4"></i>
@@ -61,96 +73,38 @@ class Home extends Component{
 </div>
 </div>
   </section>
+  </div>
   </div><div>
           <br /><br/>
-  <section id="latest">
-  <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%'}}>
-    <div className="ui horizontal divider">
-            Latest Advertisements
-          </div><br/><br/>
-    <Row>
-    {this.state.properties.map(property=>
-      <Col key={property.id} sm={12} md={6} lg={4}>
-                    <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div  className="card">
-                        <div className="image">
-                      <div style={{backgroundColor:'#eaeded',width:'20%',position:'relative',marginLeft:'15px'}} class="ui blue ribbon label">
-                          <i style={{color:'white'}} class="star icon"></i> Latest
-                        </div>                              
-                          <img alt="Property" src={property.Image}/>
-                        </div>
-                        <div className="content">
-                          <div className="header"></div>
-                          <div className="meta">
-                            {property.Title}
-                          </div>
-                          <div className="description">
-                            {property.Price}
-                            </div>
-                        </div>
-                        <div className="extra content">
-                          <span className="right floated">
-                            {property.Date}
-                          </span>
-                          <span>
-                            {property.Size} {property.Units}
-                          </span><br/><br/>
-                          <span className="mt-2">
-                      <Button className="btn-md " onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#34495E',marginLeft:'30px'}}>View Advertisement</Button>
-                        </span>
-                        </div>
-                      </div>
-                    </div>
-                    </Col>
-    )}
-    </Row>
-    <br/><br/>
-      </div>
-  </section>
-  <section id="Most Viewed">
-  <div style={{width:'80%',position:'relative',left:'10%',right:'10%'}}>
-    <div className="ui horizontal divider">
-            Most Viewed Advertisements
-          </div><br/><br/>
-    <Row>
-    {this.state.properties.map(property=>
-      <Col key={property.id} sm={12} md={6} lg={4}>
-                    <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div  className="card">
-                        <div className="image">
-                      <div style={{backgroundColor:'#eaeded',width:'20%',position:'relative',marginLeft:'15px'}} class="ui red ribbon label">
-                          <i style={{color:'white'}} class="eye icon"></i> Most Viewed
-                        </div>                              
-                          <img alt="Property" src={property.Image}/>
-                        </div>
-                        <div className="content">
-                          <div className="header"></div>
-                          <div className="meta">
-                            {property.Title}
-                          </div>
-                          <div className="description">
-                            {property.Price}
-                            </div>
-                        </div>
-                        <div className="extra content">
-                          <span className="right floated">
-                            {property.Date}
-                          </span>
-                          <span>
-                            {property.Size} {property.Units}
-                          </span><br/><br/>
-                          <span className="mt-2">
-                      <Button className="btn-md " onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#34495E'}}>View Advertisement</Button>
-                        </span>
-                        </div>
-                      </div>
-                    </div>
-                    </Col>
-    )}
-    </Row>
-    <br/><br/>
-      </div>
-  </section>
+  <section style={{position:'relative',width:'80%',left:'10%',marginTop:'16vh'}} id="latest">
+  <Row>
+    <Col style={{position:'relative',bottom:'10px'}}><Image style={{width:'300px',height:'300px',float:'right',marginRight:'50px'}} className="rounded-circle" src="/handshake.jpg" alt="handshake"/></Col>
+    <Col style={{fontFamily:'Shippori Mincho'}}><h3 style={{width:'60%'}}><b>We help our clients make better decisions</b></h3>
+    <p style={{width:'60%'}}>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</p></Col>
+  </Row><br/>
+  <Row className="mt-4">
+    <Col style={{fontFamily:'Shippori Mincho',textAlign:'right',position:'relative',left:'20%'}}><h3 style={{width:'60%'}}><b>Helping you find property of your dream</b></h3>
+    <p style={{width:'60%'}}>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</p></Col>
+    <Col><Image style={{width:'300px',height:'300px',float:'left',marginLeft:'50px'}} className="rounded-circle" src="/houses.jpg" alt="houses"/></Col>
+  </Row>
+  </section><br/>
+    <section id="img">
+    <div style={{height:'80vh'}} id="div">
+    <div style={{width:'80%',position:'relative',left:'5%',textAlign:'center',top:'18%'}}>
+          <h1 style={{color:'white'}}>Say Goodbye to commissions</h1>
+          <h6 style={{color:'white'}}>We have the best plan for you because your dreams are important to us</h6><br/>
+          <Button onClick={this.signup} className="btn btn-lg mr-2" style={{display:'inline',backgroundColor:'tomato',color:'white'}}>I want to sell a home</Button><Button onClick={this.signup} className="btn btn-lg ml-2" style={{display:'inline',backgroundColor:'tomato',color:'white'}}>I want to buy a home</Button>
+          </div></div> 
+</section>
+<section style={{width:'100%',backgroundColor:'#eaeded',paddingTop:'10%',paddingBottom:'10%'}} id="Most Viewed">
+        <div style={{position:'relative',width:'80%',left:'10%'}}>
+        <Row>
+          <Col><Image style={{position:'relative',right:'2%',float:'right'}} src="/map1.png" /></Col>
+          <Col><h3 style={{width:'60%'}}><b>Providing Service all over the country</b></h3>
+    <p style={{width:'60%'}}>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true.</p></Col>
+        </Row>
+        </div>
+    </section>
   
         </div></div>
         );

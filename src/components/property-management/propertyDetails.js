@@ -2,8 +2,6 @@ import React,{Component} from 'react';
 import Navigation from '../navbar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Carousel from 'react-bootstrap/Carousel';
-import Image from 'react-bootstrap/Image';
 import '../components.css';
 import Data from '../mapdata';
 import axios from 'axios';
@@ -12,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 import Footer from '../footer';
 import Views from './addViews';
 import {withCookies} from 'react-cookie';
+import {Grid,Segment} from 'semantic-ui-react';
+import { Card, Icon, Image,Divider } from 'semantic-ui-react'
 
 class PropertyDetails extends Component{
     state = {
@@ -19,6 +19,9 @@ class PropertyDetails extends Component{
         saved:false,
         error:'',
         token:this.props.cookies.get('ad-token'),
+        map:false,
+        additional:false,
+        info:true,
       }
       getDetails = () =>{
         const { handle } = this.props.match.params
@@ -46,130 +49,123 @@ class PropertyDetails extends Component{
         }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
         this.setState({saved:true})
        }
+       conditional = (e) =>{
+        if(e==='map'){
+          this.setState({map:true,additional:false,info:false})
+        }
+        else{
+          if (e==='additional'){
+            this.setState({map:false,additional:true,info:false})
+          }
+          else{
+            this.setState({map:false,additional:false,info:true}) 
+          }
+        }
+       }
         
       render() {
           const properties = [this.state.Property]
         return(
-            <div>
-            <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#34495E" />
+            <div style={{backgroundColor:'white'}}>
+            <Navigation linkColor="#556B2F" color="#f2f3f4" />
             <br />
             {this.state.res ? 
-            <div className="mt-4" style={{backgroundColor:'white',padding:'0 30px 0',width:'80%',position:'relative',left:'10%',right:'10%',boxShadow: '10px 10px  #D5DBDB'}}>
-            <h1 className="mb-3" style={{textAlign:'center',fontFamily:'Lora',marginBottom:'50px',paddingTop:'20px'}}>Property Details</h1><br/><br/>
+            <div>
+            <Grid style={{marginLeft:'2%'}} columns={4} padded='vertically'>
+          <Grid.Row style={{height:'50vh'}} relaxed columns={3}>
+            <Grid.Column width={4}>
+              <Image style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px'}} src={this.state.res.Image1} /><br/>
+              <Image style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px'}} src={this.state.res.Image2} /><br/>
+              <Image style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px'}} src={this.state.res.Image3} /><br/></Grid.Column>
+            <Grid.Column width={8} style={{width:'66vw',backgroundColor:'vanila'}}>
+            <Image style={{width:'68vw',height:'72vh',marginRight:'40%',borderRadius:'10px'}} src={this.state.res.Image} />
+            </Grid.Column>
+            <Grid.Column width={3}>
+            <Card style={{marginLeft:'10%',marginTop:'10%',height:'60vh'}}>
+      <Card.Content>
+        <Image
+          size='small'
+          src='/person.jpg'
+       circular style={{marginLeft:'10%',marginBottom:'10%'}} /><br/>
+        <Card.Meta>Seller Name</Card.Meta>
+        <Card.Description>
+          Cell No: {this.state.res.cell_no}<br/>
+          Email: {this.state.res.email}<br/>
+          Contact No: {this.state.res.contact_no}
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <div className='ui two buttons'>
+          <Button className="ml-4" basic style={{backgroundColor:'#2ECC71'}}>
+            <i className="fa fa-envelope mr-4">  Contact Seller</i>
+          </Button>
+        </div>
+      </Card.Content>
+  </Card>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <br/><br/>
+        <div>
+        <Divider horizontal>Or</Divider>
+        <Grid style={{height:'50vh',marginTop:'15%',fontFamily:'Lora'}} columns={4} padded='horizontally'>
+          <Grid.Row relaxed columns={3}>
+            <Grid.Column width={4} >
+            <h3 style={{color:'#2ECC71',marginLeft:'15%',fontWeight:'bold'}}>Rs. {this.state.res.Price}</h3><br/>
+            <div style={{backgroundColor:'#e5e7e9',borderRadius:'50px',paddingTop:'10%',paddingBottom:'10%',textAlign:'center',width:'40%',marginLeft:'20%',marginTop:'10%'}}>
+            <button onClick={(e)=>this.conditional("info")} style={{borderRadius:'50px',backgroundColor:`${this.state.info===true ?'white' : '#e5e7e9'}`,padding:'5px',border:'1px solid #e5e7e9'}}><Icon size="big" style={{color:'#808080'}} name="info"></Icon></button><br/><br/>
+            <button onClick={(e)=>this.conditional("map")} style={{borderRadius:'50px',backgroundColor:`${this.state.map===true ?'white' : '#e5e7e9'}`,padding:'5px',border:'1px solid #e5e7e9'}}><Icon size="big" style={{color:'#808080'}} name="map marker" content='View Location on map'></Icon></button><br/><br/>
+              <button onClick={(e)=>this.conditional("additional")} style={{borderRadius:'50px',backgroundColor:`${this.state.additional===true ?'white' : '#e5e7e9'}`,padding:'5px',border:'1px solid #e5e7e9'}}><Icon size="big" style={{color:'#808080'}} name="list" content='Additional Specifications of property'></Icon></button><br/><br/>
+            
+            </div>
+              </Grid.Column>
+            <Grid.Column width={8} style={{width:'66vw',backgroundColor:'vanila'}}>
             <Row>
-            <Col lg={6} sm={12}>
-                <Image width="100%" height="100%" style={{borderRight:'1px solid grey'}} src={this.state.res.Image}></Image>
-            </Col>
-            <Col lg={6} sm={12}>
-                <h4 style={{fontFamily:'Lora'}}>Title: {this.state.res.Title}</h4><hr/>    
-                <h6 style={{fontFamily:'Lora'}}>Price: {this.state.res.Price}</h6><hr/>
-                <h6 style={{fontFamily:'Lora'}}>City: {this.state.res.City}</h6><hr />
-                <h6 style={{fontFamily:'Lora'}}>Location: {this.state.res.Location}</h6><hr />
-                <h6 style={{fontFamily:'Lora'}}>Type: {this.state.res.Type}</h6><hr />
-            </Col><br/>
-            <div className="mt-3" style={{fontFamily:'Lora'}}>
-            <h6><b>Description:</b> </h6>
-            <Col lg={12} sm={12}>
-                <h6>{this.state.res.Description}</h6>
-            </Col>
-            </div><br/>
-            <h6><b>Property Images:</b> </h6>
-            {this.state.res.Image1!=null ?
-            <div style={{width:'80%',position:'relative',height:'40%',marginTop:'10%',marginBottom:'10%'}}>
-            <Carousel>
-  {this.state.res.Image1!=null ? 
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={this.state.res.Image1}
-      alt="First slide"
-    />
-    <Carousel.Caption>
-      <h3>Front View</h3>
-    </Carousel.Caption>
-  </Carousel.Item>
-  : null}
-  {this.state.res.Image2!=null ? 
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={this.state.res.Image2}
-      alt="Third slide"
-    />
-
-    <Carousel.Caption>
-      <h3>Backside View</h3>
-    </Carousel.Caption>
-  </Carousel.Item>
-  : null}
-  {this.state.res.Image3!=null? 
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={this.state.res.Image3}
-      alt="Third slide"
-    />
-
-    <Carousel.Caption>
-      <h3>Interior</h3>
-    </Carousel.Caption>
-  </Carousel.Item>
-  : null}
-  {this.state.res.Image4!=null? 
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={this.state.res.Image4}
-      alt="First slide"
-    />
-    <Carousel.Caption>
-      <h3>Kitchen</h3>
-    </Carousel.Caption>
-  </Carousel.Item>
-  :null}
-  {this.state.res.Image5!=null? 
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={this.state.res.Image5}
-      alt="First slide"
-    />
-    <Carousel.Caption>
-      <h3>Bedrooms</h3>
-    </Carousel.Caption>
-  </Carousel.Item>
-  :null}
-</Carousel>
-            </div>
-           : <h3 style={{width:'60%',position:'relative',left:'20%'}}>No Images</h3>}
-            <div className="mt-3" style={{fontFamily:'Lora'}}>
-            <h6><b>Details:</b> </h6>
-            <Col lg={12} sm={12}>
-                <h6>Bedrooms: {this.state.res.Beds}</h6>
-                <h6>Baths: {this.state.res.Baths}</h6>
-                <h6>Purpose: For {this.state.res.Purpose}</h6>
-                <h6>Price: {this.state.res.Price}</h6>
-                <h6>Size: {this.state.res.Size} {this.state.res.Units}</h6>
-            <h6>Construction Status: {this.state.res.Construction_status}</h6>
-            </Col><br/>
-            <Col lg={12}>
-            <h6><b>Location on Map</b> </h6><br/><br/>
-            <MapDetail width="65vw" height="65vh" data={this.state.res} />
-            </Col><br/><br/>
-            <Col lg={12}>
-            <Views data={this.state.res} />
-            </Col>
-            {this.state.saved===false ? 
-            <Button className="ml-3" style={{backgroundColor:'#34495E'}} onClick={this.handleClick}><i className="fa fa-heart"></i>  Save Property</Button>
-            :
-            this.state.error ? <h6>Saved Already</h6> : 
-            <Button className="ml-3" style={{backgroundColor:'#34495E'}} ><i className="fa fa-check"></i>  Saved </Button>
-            } 
-            </div>
+              <Col lg={8} md={8} sm={8}>
+              <h1 style={{fontWeight:'bold'}}>{this.state.res.Title}</h1>
+            <h6 className="text-muted">{this.state.res.Location},{this.state.res.City}</h6>
+              </Col>
+              <Col lg={4} md={4} sm={4}>{this.state.saved!==false ? 
+            <Icon size="big" style={{color:'tomato',float:'right',width:'20px',height:'20px',marginRight:'5%'}} name="heart"></Icon>
+            : 
+            <Icon size="big" onClick={this.handleClick} style={{color:'tomato',float:'right',marginRight:'5%'}} name="heart outline"></Icon>
+          }<br/></Col>
+            </Row><br/>
+          <Row>
+              <Col><h5 className="text-muted">Bedrooms</h5><h3><b>{this.state.res.Beds}</b>  <i className="fa fa-bed ml-2" style={{color:'#d7dbdd'}}></i></h3></Col>
+              <Col><h5 className="text-muted">Bathrooms</h5><h3><b>{this.state.res.Baths}</b>  <i className="fa fa-bath ml-2" style={{color:'#d7dbdd'}}></i></h3></Col>
+              <Col><h5 className="text-muted">Area</h5><h3><b>{this.state.res.Size} {this.state.res.Units}</b></h3></Col>
+            </Row><br/>
+            <Row>
+              <Col><h5 className="text-muted">Type</h5><h3 style={{textTransform:'uppercase'}}><b>{this.state.res.Type}</b></h3></Col>
+              <Col><h5 className="text-muted">Purpose</h5><h3 style={{textTransform:'uppercase'}}><b>{this.state.res.Purpose}</b>  </h3></Col>
+              <Col><h5 className="text-muted">Status</h5><h3 style={{textTransform:'uppercase'}}><b>{this.state.res.Construction_status}</b></h3></Col>
             </Row><br/><br/>
-            </div>
+            <Row>
+              <Col lg={4} md={4} sm={4}><h3 ><b>Description:</b> </h3></Col>
+              <Col lg={8} md={8} sm={8}><h5 className="text-muted">{this.state.res.Description}</h5></Col>
+            </Row>
+            </Grid.Column>
+            <Grid.Column width={3}>
+            {this.state.map===true ? 
+            <MapDetail width="20vw" height="85vh" data={this.state.res} />
+            :
+            this.state.additional===true ? 
+            <div>
+              <h3>Additional Specifications</h3>
+              {this.state.res.Additional_specification ? 
+              <p>{this.state.res.Additional_specification}</p>
+              :
+              <p>No additional specifications available</p>
+              }
+            </div> 
+            : null
+            }
+            </Grid.Column>
+          </Grid.Row>
+        </Grid></div>
+          </div>
             : null }<br/><br/>
-            <Footer />
             </div>
         )
       }

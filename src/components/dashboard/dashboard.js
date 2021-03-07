@@ -11,7 +11,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {Row,Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import SideBar from '../sidebar';
 import LoaderExampleActive from '../loader';
 
 class Dashboard extends Component{  
@@ -84,7 +83,7 @@ StoreItems = () =>{
           :  <div style={{fontFamily:'Lora'}} >
            <div>
             <div>
-            <Navigation color="#34495E" />
+            <Navigation color="#34495E" linkColor="white" />
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <div className="ui horizontal divider">
             <h1 style={{textAlign:'center',fontFamily:'Oswald'}}>Dashboard</h1>

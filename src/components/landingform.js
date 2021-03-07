@@ -52,7 +52,7 @@ handleSubmit = (e) =>{
     render(){
         return(
             <div style={{position:'relative',left:'10%',width:'80%'}} >
-            <Form id="div" style={{position:'relative',width:'80%',paddingTop:'10px',borderRadius:'5px'}}><Form.Group>
+            <Form id="div" style={{position:'relative',width:'80%',paddingTop:'10px',borderRadius:'5px',height:'90%'}}><Form.Group>
                 <div style={{position:'relative',left:'25px',width:'80%'}}>
                 <h4 style={{position:'relative',left:'5%',color:'white'}}><b>Search for properties</b></h4><br/>
                                         <Form.Control className="ml-3"  value={this.state.City} name='City' onChange={this.handleChange} size="md" as="select">

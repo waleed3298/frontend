@@ -152,12 +152,12 @@ handleImageChange = (e) =>{
           <div>
                   {this.state.token ?
                     <div id="wrapper">
-                    <Navigation link1="Map" link2="Houses" link3="Plots" link4="Commercial" color="#556B2F" />
+                    <Navigation linkColor="white" color="#556B2F" />
                      <div className="Form">
                         <Form onSubmit={this.handleSubmit}>
                         <Form.Group>
                         <div id="Form">
-                        <h1 style={{textAlign:'center',fontFamily:'prata'}}>Post your Listing</h1><br />
+                        <h1 style={{textAlign:'center',fontFamily:'Oswald'}}>Post your Listing</h1><br />
                         <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Details</h6><br/>
                                 <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" /><br/>
                                 <Form.Control value={this.state.Description} onChange={e=>this.handleChange(e)} placeholder="Description" name="Description" as="textarea" rows={3}/><br/>

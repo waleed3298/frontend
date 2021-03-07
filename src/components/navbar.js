@@ -6,11 +6,13 @@ import FormControl from 'react-bootstrap/FormControl';
 import "./components.css";
 import {withCookies} from 'react-cookie';
 import Button from 'react-bootstrap/Button';
+import {Link} from 'react-router-dom';
 class Navigation extends Component{
   state={
     token: this.props.cookies.get('ad-token'),
     user:[],
-    profile:[]
+    profile:[],
+    linkColor:this.props.linkColor,
   }
 componentDidMount(){
   if (this.state.token){
@@ -66,25 +68,42 @@ getProfiles = () =>{
       const styles = {
         color:{
          backgroundColor : this.props.color,
+         borderRadius : '10px'
        }
      }
       return(
             <div>
                 <Navbar className="nav mb-4 container-fluid" style={styles.color} expand="lg">
-  <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:'white',position:'relative',left:'50px',fontFamily:'Parisienne'}} href="/"><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b>Estate</b></Navbar.Brand>
+  <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:`${this.state.linkColor}`,position:'relative',left:'50px',fontFamily:'Parisienne'}}><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b><Link style={{color:this.state.linkColor}} to="/">
+    Estate  </Link></b></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="ml-auto">
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/map">Map</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/properties">Buy</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/plots">Rent</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/commercial-areas">Blog</Nav.Link>
-      <Nav.Link style={{color:"white"}} href="http://localhost:3000/search">Search Properties</Nav.Link>
-      <Button onClick={this.add}  type="button"  className="btn btn-secondary mr-3">Add New Property</Button>
+      <Nav.Link ><Link style={{color:this.state.linkColor}} to="/map">
+    Map  </Link>
+    </Nav.Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/properties">
+    Buy  </Link>
+    </Nav.Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/plot">
+    Rent  </Link>
+    </Nav.Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/commercial_areas">
+    Blog  </Link>
+    </Nav.Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/search/None">
+    Search Properties  </Link>
+    </Nav.Link>
+      <Button type="button"  className="btn btn-secondary mr-3">
+      {this.state.token ?
+      <Link style={{color:this.state.linkColor}} to="/addProperty">Add New Property</Link>
+       : 
+       <Link style={{color:this.state.linkColor}} to="/login">Add New Property</Link>}
+      </Button>
     </Nav>
     {this.state.user ? 
       this.state.user.map(data=>
-        <Nav.Link className="ml-4" style={{color:"white"}} href="http://localhost:3000/dashboard">{data.username.toUpperCase()}</Nav.Link>)
+        <Nav.Link className="ml-4" style={{color:"white"}} ><Link style={{color:this.state.linkColor}} to="/dashboard">{data.username.toUpperCase()}</Link></Nav.Link>)
        : null}
       
     <Form inline>
@@ -94,11 +113,11 @@ getProfiles = () =>{
         this.state.profile.map(profile=>{
         <h6>{profile.Age}</h6>
       }) : null}
-      <button onClick={this.logout} style={{backgroundColor:'orange',color:'white'}} type='Button' className="btn btn-md  mr-2" >Logout</button></div>
+      <button style={{backgroundColor:'orange',color:'white'}} type='Button' className="btn btn-md  mr-2" ><Link style={{color:this.state.linkColor}} to="/logout">Logout</Link></button></div>
        :
        <div>
-      <button onClick={this.login} type='Button' style={{backgroundColor:'#EB984E',color:'white'}} className="btn  btn-md ml-2 mr-2">Login</button>
-      <button onClick={this.signup} style={{backgroundColor:'#EB984E',color:'white'}} type='Button' className="btn btn-md ml-2 mr-2">SignUp</button>
+      <button type='Button' style={{backgroundColor:'#EB984E',color:'white'}} className="btn  btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/login">Login</Link></button>
+      <button style={{backgroundColor:'#EB984E',color:'white'}} type='Button' className="btn btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/signup">SignUp</Link></button>
       </div> }
     </Form>
   </Navbar.Collapse>

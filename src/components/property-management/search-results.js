@@ -8,14 +8,14 @@ import Pagination from '../pagination';
 import Navigation from '../navbar';
 import {Link} from 'react-router-dom';
 import Footer from '../footer';
-
+import {Grid,Segment} from 'semantic-ui-react'
 class SearchResult extends Component{
     state = {
         token: this.props.cookies.get('ad-token'),
         search:false,
         clicked:false,
         featured:[],
-        postsPerPage : 3,
+        postsPerPage : 6,
         currentPage : 1,
         properties:[],
         City:'',
@@ -82,17 +82,18 @@ render(){
     const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
     const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
-  
       return (
-        <div style={{backgroundColor:'white'}}>
-        <Navigation color="#556B2F" />
+        <div style={{backgroundColor:'silver'}}>
+        <Navigation color="#556B2F" linkColor="white" />
         <div style={{textAlign:'center',width:'60%',position:'relative',left:'20%'}} className="text-center ui horizontal divider">
             Search Results
           </div>
-        <div className="row"><div style={{textAlign:'center'}} className="col-lg-6 col-md-8 col-sm-12">
-        <div  style={{width:'60%',zIndex:'1',position:'relative',bottom:'10%'}}>
+        <Grid columns={2} stackable>
+        <Grid.Row>
+        <Grid.Column  width={7}>
+        <div  style={{width:'60%',zIndex:'1'}}>
         
-        <Form style={{width:'65%',paddingRight:'5%'}}>
+        <Form style={{width:'65%',paddingRight:'5%',backgroundColor:'white'}}>
                         <Form.Group>
                         <div id="SearchForm">
                         <Form.Label><b>Property Location:</b></Form.Label>
@@ -147,36 +148,56 @@ render(){
                           </Form.Control>                         
                           
                           <br />
-                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#556B2F',position:'relative',left:'3%',width:'200px',bottom:'10%'}}>Apply Changes</Button>
+                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#556B2F',position:'relative',left:'3%',width:'150px',bottom:'10%'}}>Apply Changes</Button>
   </div>
                     <br />
                   </Form.Group><br/>
                 </Form><br/>
-                </div></div><div className="col-lg-6 col-md-8 col-sm-12">
-                <div style={{float:'right',position:'relative',top:'2%'}}>
+                </div></Grid.Column><Grid.Column width={9}>
+                <div style={{float:'right',position:'relative',top:'2%',left:'10%'}}>
                 {this.state.properties.length!=0 & this.state.search ? 
-    <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'20%'}}>
+    <div style={{width:'80%',position:'relative',right:'30%',marginBottom:'20%'}}>
     <Row>
-    {currentPosts.map(property=>                      
-      <div id={property.id} className="card mb-3" style={{minWidth: '150%',position:'relative',right:'50%'}}>
-  <div className="row no-gutters">
-    <div className="col-md-4">
-      <img src={property.Image} className="card-img" alt="..."/>
-    </div>
-    <div className="col-md-8">
-      <div className="card-body">
-        <h5 className="card-title">{property.Title}</h5>
-        <p className="card-text text-muted">Type: {property.Type}</p>
-        <p className="card-text text-muted">For {property.Purpose}</p>
-        <p style={{display:'inline',fontSize:'10px'}} className="card-text mr-2"><small className="text-muted"><i className="fa fa-2x fa-bed">   {property.Beds}</i></small></p>
-       <p style={{display:'inline'}} className="card-text text-muted"><i className="fa  fa-bath">   {property.Baths}</i></p>
-      </div>
-      <Button onClick={()=>this.handleClick(property.id)} style={{backgroundColor:'#556b2f'}}>View Advertisement</Button>
-    </div>
-  </div>
-</div>      
-    )}
-    </Row>
+                {currentPosts.map(property=>{
+                    return(
+                    <Col sm={12} md={6} lg={4}>
+                    <div key={property.id}>
+                    <div style={{marginBottom:'10px'}} className="ui link cards">
+                      <div  className="card">
+                        <div className="image">
+                          <img src={property.Image}/>
+                        </div>
+                        <div className="content">
+                          <div className="header"></div>
+                          <div className="meta">
+                            <a>{property.Title}</a>
+                          </div>
+                          <div className="description">
+                            {property.Price}
+                            </div>
+                        </div>
+                        <div className="extra content">
+                          <span className="right floated">
+                            {property.Date}
+                          </span>
+                          <span>
+                            {property.Size} {property.Units}
+                          </span><br/><br/>
+                          <span className="mt-2">       
+                    <Link to={URL+property.id}>
+                    <Button style={{backgroundColor:'#34495E'}}>View Advertisement</Button>
+                      </Link>
+                                           
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                      </div>
+                    </Col>
+                    )
+                })};
+                </Row>
     <Pagination style={{position:'relative',right:'70%'}}
           postsPerPage={this.state.postsPerPage}
           totalPosts={this.state.properties.length}
@@ -215,7 +236,7 @@ render(){
       : null }
     </div>}
        </div>
-       </div></div>
+       </Grid.Column></Grid.Row></Grid>
         </div>
 
           );
