@@ -83,7 +83,7 @@ render(){
     const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
       return (
-        <div style={{backgroundColor:'silver'}}>
+        <div >
         <Navigation color="#556B2F" linkColor="white" />
         <div style={{textAlign:'center',width:'60%',position:'relative',left:'20%'}} className="text-center ui horizontal divider">
             Search Results
@@ -93,7 +93,7 @@ render(){
         <Grid.Column  width={7}>
         <div  style={{width:'60%',zIndex:'1'}}>
         
-        <Form style={{width:'65%',paddingRight:'5%',backgroundColor:'white'}}>
+        <Form style={{width:'65%',paddingRight:'5%',backgroundColor:'white',marginLeft:'5%'}}>
                         <Form.Group>
                         <div id="SearchForm">
                         <Form.Label><b>Property Location:</b></Form.Label>

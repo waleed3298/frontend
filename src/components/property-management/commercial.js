@@ -44,60 +44,8 @@ class Properties extends Component{
       var URL = '/AdDetails/'
         return(
             <div id="wrapper">
-            <Navigation  color="#34495E" />
-            <SideNav style={{backgroundColor:'#34495E',height:'1400px'}}
-    onSelect={(selected) => {
-        // Add your code here
-    }}
->
-    <SideNav.Toggle />
-    <SideNav.Nav  defaultSelected="home">
-        <NavItem eventKey="home">
-            <NavIcon>
-                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            <a href="/">Home</a>
-            </NavText>
-        </NavItem>
-        <NavItem eventKey="maps">
-            <NavIcon>
-            <i className="fa fa-fw fa-map" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            <a href="/map">Maps</a>
-            </NavText>
-          </NavItem>
-            <NavItem eventKey="properties">
-            <NavIcon>
-            </NavIcon>
-                <NavText>
-                <a href="/properties">Houses</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="plots">
-            <NavIcon>
-            </NavIcon>
-                <NavText>
-                <a href="/plots">Plots</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="commercial">
-            <NavIcon>
-            </NavIcon>
-                <NavText>
-                <a href="/commercial-areas">Commercial Areas</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="search">
-            <NavIcon>
-            </NavIcon>
-                <NavText>
-                <a href="/search">Search Advertisements</a>
-                </NavText>
-            </NavItem>
-    </SideNav.Nav>
-</SideNav>
+            <Navigation linkColor="white"  color="#556B2F" />
+            
       <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Commercial Areas</h1>
             <br/><br/>

@@ -83,13 +83,13 @@ getProfiles = () =>{
     Map  </Link>
     </Nav.Link>
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/properties">
-    Buy  </Link>
+    Houses  </Link>
     </Nav.Link>
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/plot">
-    Rent  </Link>
+    Plots  </Link>
     </Nav.Link>
-    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/commercial_areas">
-    Blog  </Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/price-index">
+    Price Index  </Link>
     </Nav.Link>
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/search/None">
     Search Properties  </Link>

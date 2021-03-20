@@ -83,7 +83,7 @@ StoreItems = () =>{
           :  <div style={{fontFamily:'Lora'}} >
            <div>
             <div>
-            <Navigation color="#34495E" linkColor="white" />
+            <Navigation linkColor="white"  color="#556B2F" />
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <div className="ui horizontal divider">
             <h1 style={{textAlign:'center',fontFamily:'Oswald'}}>Dashboard</h1>
@@ -103,7 +103,7 @@ StoreItems = () =>{
   </div>
   <div className="extra content">
     <div  className="floated author">
-    <Button onClick={this.Ads} style={{position:'relative',left:'25%',backgroundColor:'#34495E'}}>View your advertisements</Button>
+    <Button onClick={this.Ads} style={{position:'relative',left:'25%',backgroundColor:'#556B2F'}}>View your advertisements</Button>
     </div>
   </div>
 </div>       
@@ -122,7 +122,7 @@ StoreItems = () =>{
       </div>
       <div className="extra content">
         <div  className="floated author">
-        <Button onClick={this.Saved} style={{position:'relative',left:'25%',backgroundColor:'#34495E'}}>View Saved advertisements</Button>
+        <Button onClick={this.Saved} style={{position:'relative',left:'25%',backgroundColor:'#556B2F'}}>View Saved advertisements</Button>
         </div>
       </div>
     </div>       
@@ -143,7 +143,7 @@ StoreItems = () =>{
       </div>
       <div className="extra content">
         <div  className="floated author">
-        <Button onClick={this.StoreItems} style={{position:'relative',left:'30%',backgroundColor:'#34495E'}}>View Store Items</Button>
+        <Button onClick={this.StoreItems} style={{position:'relative',left:'30%',backgroundColor:'#556B2F'}}>View Store Items</Button>
         </div>
       </div>
     </div>       
@@ -162,7 +162,7 @@ StoreItems = () =>{
       </div>
       <div className="extra content">
         <div  className="floated author">
-        <Button style={{position:'relative',left:'35%',backgroundColor:'#34495E'}}>Check Sales</Button>
+        <Button style={{position:'relative',left:'35%',backgroundColor:'#556B2F'}}>Check Sales</Button>
         </div>
       </div>
     </div>       

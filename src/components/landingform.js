@@ -33,7 +33,7 @@ reset = () =>{
 }
 handleClick = () =>{
   const url = `${this.state.City},${this.state.beds},${this.state.Construction_status},${this.state.Type}`
-  window.location.href = `http://localhost:3000/results/${url}`;
+  window.location.href = `http://localhost:3000/search/${url}`;
 }
 handleSubmit = (e) =>{
     e.preventDefault();

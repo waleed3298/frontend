@@ -63,6 +63,13 @@ Form.Control {
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
+.backgroundimage2 {
+  background-image: url("index.jpg");
+  width: 100vw;
+  height: 90vh;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
 .backgroundimage1 {
   background-image: url("ecom.jpg");
   width: 100vw;
@@ -97,6 +104,10 @@ Form.Control {
 }
 #div {
   background: rgb(0, 0, 0, 0.5);
+}
+
+#div1 {
+  background: rgba(214, 202, 202, 0.5);
 }
 .white {
   color: white;

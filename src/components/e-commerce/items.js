@@ -6,6 +6,8 @@ import Pagination from '../pagination';
 import SideNav, {  NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import Footer from '../footer';
+import {Card,Row,Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 class Items extends Component{
   state={
       loading: false,
@@ -17,7 +19,7 @@ class Items extends Component{
     }
     getAds = () =>{
       if(this.state.token){
-      fetch("http://127.0.0.1:4000/api/Items/",{
+      fetch("http://127.0.0.1:4000/api/advertisements/",{
             method : 'GET',
             headers:{
               'Authorization':`Token ${this.state.token}`
@@ -40,13 +42,35 @@ class Items extends Component{
       const paginate = pageNumber => this.setState({currentPage:pageNumber});
     
         return(
-            <div id="wrapper">
+            <div id="wrapper" style={{backgroundColor:'white'}}>
             <NavBar  color="#34495E" />
       <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <div class="ui horizontal divider">
             Your Advertisements
           </div>
-          <PropertyAd properties={currentPosts} loading={this.state.loading} />
+          <Row>
+          {this.state.Items.length>0 ?
+          currentPosts.map(product=>{
+         return(
+           <Col lg={3} md={6} sm={12}>
+          <Card className="my-3 p-3 rounded">
+            <Link to={`/product/${product.id}`}>
+                <Card.Img src={product.Image} />
+            </Link>
+            <Card.Body>
+                <Link to={`/product/${product.id}`}>
+                    <Card.Title as="div">
+                        <strong>{product.Title}</strong>
+                    </Card.Title>
+                </Link>
+                <Card.Text as="h3">
+                    ${product.Price}
+                </Card.Text>
+            </Card.Body>
+        </Card></Col>
+         )
+        }) : null}
+        </Row>
         <Pagination
           postsPerPage={this.state.postsPerPage}
           totalPosts={this.state.Items.length}

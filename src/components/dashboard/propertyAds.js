@@ -99,66 +99,8 @@ class PropertyAds extends Component{
             </div> 
             : 
             <div>
-            <Navigation color="#34495E" />
-            <SideNav style={{backgroundColor:'#34495E',height:'800px'}}
-    onSelect={(selected) => {
-        // Add your code here
-    }}
->
-    <SideNav.Toggle />
-    <SideNav.Nav >
-    {this.state.profile.map(data=>
-    <NavItem  eventKey="Profile">
-            <NavIcon>
-            <Image alt="Profile Picture" style={{width:'50px',height:'50px',marginTop:'20px'}} src={data.image}></Image>
-            </NavIcon>
-            <NavText className="ml-4">
-            <h6>Name:<b>{data.name}</b></h6>
-            <h6>Age:{data.Age}</h6>
-            <h6>Contact:{data.contact_no}</h6>
-            </NavText>
-        </NavItem>
-        )}<br/><br/>
-        <NavItem eventKey="home"><br/><br/>
-            <NavIcon>
-                <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            <a href="/">Home</a>
-            </NavText>
-        </NavItem>
-        <NavItem eventKey="maps">
-            <NavIcon>
-                <i className="fa fa-fw fa-map" style={{ fontSize: '1.75em' }} />
-            </NavIcon>
-            <NavText>
-            <a href="/map">Maps</a>
-            </NavText>
-          </NavItem>
-            <NavItem eventKey="properties">
-            <NavIcon>
-                </NavIcon>
-                <NavText>
-                <a href="/properties">Houses</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="plots">
-            <NavIcon>
-                </NavIcon>
-                <NavText>
-                <a href="/plots">Plots</a>
-                </NavText>
-            </NavItem>
-            <NavItem eventKey="commercial">
-            <NavIcon>
-                </NavIcon>
-                <NavText>
-                <a href="/commercial-areas">Commercial Areas</a>
-                </NavText>
-            </NavItem>
-            
-    </SideNav.Nav>
-</SideNav>
+            <Navigation linkColor="white"  color="#556B2F" />
+          
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Dashboard</h1>
             <div class="ui horizontal divider">

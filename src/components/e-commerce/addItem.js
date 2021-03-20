@@ -57,7 +57,7 @@ handleImageChange = (e) =>{
             <div>
             {this.state.token ? 
             <div id="wrapper">
-                <NavBar color="#34495E" />
+                <NavBar color="#556B2F" />
                 <div className="Form">
                    <Form onSubmit={this.handleSubmit} >
                        <Form.Group>
@@ -99,7 +99,7 @@ handleImageChange = (e) =>{
                         <Form.Label>Additional Features</Form.Label>
                         <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Additional_specifications" type="text" value={this.state.Additional_specifications} placeholder="Additional Features of item" />
                         <br />     
-                        <Button style={{backgroundColor:'#3A626F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit</Button>
+                        <Button style={{backgroundColor:'#556B2F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit</Button>
        
                            </div>
                        </Form.Group>
