@@ -18,7 +18,7 @@ class PropertyDetails extends Component{
         flag:false,
         saved:false,
         error:'',
-        token:this.props.cookies.get('ad-token'),
+        token:this.props.cookies.get('adtoken'),
         map:false,
         additional:false,
         info:true,

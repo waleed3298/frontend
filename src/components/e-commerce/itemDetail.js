@@ -4,21 +4,68 @@ import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Card, Form } from 'react-bootstrap'
 import Rating from './rating'
 import Loader from '../loader';
-import Message from '../message'
+import Message from '../message';
+import axios from 'axios';
+import Navigation from '../navbar';
+import {useCookies} from 'react-cookie';
+import { listProductDetails,listProductReviews } from '../../actions/productActions';
 
-function ItemDetail({ match, history }) {
+function ItemDetail({ props, match, history }) {
     const [qty, setQty] = useState(1)
     const [rating, setRating] = useState(0)
     const [comment, setComment] = useState('')
-
+    const [name,setName] = useState('')
+    const [reviews,setReviews] = useState([])
+    const [reviewError, setReviewError] = useState([])
+    const [cookies,setCookies] = useCookies(['ad-token'])
     const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(listProductDetails(match.params.id));
+        let url = `http://127.0.0.1:4000/api/Rating/${match.params.id}/`;
+        axios.get(url,{
+        headers:{
+        'content-type':'multipart/form-data',
+      }
+    }).then(res=>setReviews(res.data));
+            }
+    ,[])
+    const handleChange = (event) =>{
+        const value = event.target.value;
+       this.setState({
+         [event.target.name]: value
+       });
+    };
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        let form_data = new FormData();
+        form_data.append('Product',match.params.id);
+        form_data.append('Name',name);
+        form_data.append('Rating',rating);
+        form_data.append('Comment',comment);
+        let url = 'http://127.0.0.1:4000/api/CreateRating/';
+        axios.post(url,form_data,{
+          headers:{
+            'content-type':'multipart/form-data',
+            'Authorization': `Token ${cookies.adtoken}`
+          }
+        }).then(res=>console.log(res)).catch(error=>setReviewError(error))
+        if (reviewError){
+            console.log(reviewError)
+        }
+        else{
+            window.location.href = `http://127.0.0.1:3000/product/${match.params.id}/`
+        }
 
+      }
+      
     const productDetails = useSelector(state => state.productDetails)
     const { loading, error, product } = productDetails
-
+    
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
-
+    const addToCart = () =>{
+        window.location.href=`http://localhost:3000/cart/${match.params.id}?qty=${qty}`
+    }
     const productReviewCreate = useSelector(state => state.productReviewCreate)
     const {
         loading: loadingProductReview,
@@ -28,6 +75,8 @@ function ItemDetail({ match, history }) {
 
     return (
         <div>
+        <Navigation linkColor="white" color="#556B2F" />
+        <div style={{width:'90%',position:'relative',left:'5%'}}>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
             {loading ?
                 <Loader />
@@ -37,26 +86,26 @@ function ItemDetail({ match, history }) {
                         <div>
                             <Row>
                                 <Col md={6}>
-                                    <Image src={product.image} alt={product.name} fluid />
+                                    <Image src={product.Image} alt={product.name} fluid />
                                 </Col>
 
 
                                 <Col md={3}>
                                     <ListGroup variant="flush">
                                         <ListGroup.Item>
-                                            <h3>{product.name}</h3>
+                                            <h3>{product.Title}</h3>
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <Rating value={product.rating} text={`${product.numReviews} reviews`} color={'#f8e825'} />
+                                            <Rating value={product.avg_rating} text={`${product.no_of_reviews} reviews`} color={'#f8e825'} />
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            Price: ${product.price}
+                                            <b>Price:</b> ${product.Price}
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            Description: {product.description}
+                                            <b>Description:</b> {product.Description}
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Col>
@@ -69,7 +118,7 @@ function ItemDetail({ match, history }) {
                                                 <Row>
                                                     <Col>Price:</Col>
                                                     <Col>
-                                                        <strong>${product.price}</strong>
+                                                        <strong>${product.Price}</strong>
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>
@@ -107,10 +156,10 @@ function ItemDetail({ match, history }) {
                                                 </ListGroup.Item>
                                             )}
 
-
                                             <ListGroup.Item>
                                                 <Button
-                                                    className='btn-block'
+                                                    onClick={addToCart}
+                                                    className='btn-block btn-dark'
                                                     disabled={product.countInStock == 0}
                                                     type='button'>
                                                     Add to Cart
@@ -124,17 +173,18 @@ function ItemDetail({ match, history }) {
                             <Row>
                                 <Col md={6}>
                                     <h4>Reviews</h4>
-                                    {product.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
-
+                                    
                                     <ListGroup variant='flush'>
-                                        {product.reviews.map((review) => (
+                                        {reviews ?
+                                            reviews.map((review) => {
+                                            return(
                                             <ListGroup.Item key={review._id}>
-                                                <strong>{review.name}</strong>
-                                                <Rating value={review.rating} color='#f8e825' />
-                                                <p>{review.createdAt.substring(0, 10)}</p>
-                                                <p>{review.comment}</p>
+                                                <h5>{review.Name}</h5>
+                                                <Rating value={review.Rating} color='#f8e825' />
+                                                <p>{review.CreatedAt.substring(0, 10)}</p>
+                                                <p  style={{fontSize:'15px'}}>{review.Comment}</p>
                                             </ListGroup.Item>
-                                        ))}
+                                            )}):null}
 
                                         <ListGroup.Item>
                                             <h4>Write a review</h4>
@@ -143,7 +193,6 @@ function ItemDetail({ match, history }) {
                                             {successProductReview && <Message variant='success'>Review Submitted</Message>}
                                             {errorProductReview && <Message variant='danger'>{errorProductReview}</Message>}
 
-                                            {userInfo ? (
                                                 <Form >
                                                     <Form.Group controlId='rating'>
                                                         <Form.Label>Rating</Form.Label>
@@ -160,7 +209,8 @@ function ItemDetail({ match, history }) {
                                                             <option value='5'>5 - Excellent</option>
                                                         </Form.Control>
                                                     </Form.Group>
-
+                                                    <Form.Label>Name:</Form.Label>
+                                                    <Form.Control size="md" name="name" value={name} onChange={(e) => setName(e.target.value)} type="text" /><br/>
                                                     <Form.Group controlId='comment'>
                                                         <Form.Label>Review</Form.Label>
                                                         <Form.Control
@@ -174,15 +224,13 @@ function ItemDetail({ match, history }) {
                                                     <Button
                                                         disabled={loadingProductReview}
                                                         type='submit'
-                                                        variant='primary'
+                                                        variant='dark'
+                                                        onClick={handleSubmit}
                                                     >
                                                         Submit
                                                     </Button>
 
                                                 </Form>
-                                            ) : (
-                                                    <Message variant='info'>Please <Link to='/login'>login</Link> to write a review</Message>
-                                                )}
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Col>
@@ -191,7 +239,7 @@ function ItemDetail({ match, history }) {
                     )
 
             }
-        </div >
+        </div ></div>
     )
 }
 

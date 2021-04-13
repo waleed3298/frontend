@@ -28,7 +28,7 @@ class Login extends Component{
       data => {
         console.log(data.token)
         if (data.token != null){
-        this.props.cookies.set('ad-token',data.token)    
+        this.props.cookies.set('adtoken',data.token)    
          window.location.href = '/dashboard'
         }
         else{

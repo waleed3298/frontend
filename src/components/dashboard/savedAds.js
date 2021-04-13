@@ -28,7 +28,7 @@ class SavedAds extends Component{
         liked:[],
         profile:[],
         selectedProperty :  null,
-        token : this.props.cookies.get('ad-token')
+        token : this.props.cookies.get('adtoken')
     }
 
     Clicked = async(id) =>{

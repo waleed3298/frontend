@@ -11,7 +11,7 @@ import NavBar from './navbar';
 
 class AddItem extends Component{
     state = {
-        token:this.props.cookies.get('ad-token'),
+        token:this.props.cookies.get('adtoken'),
         Title:'',Image:null,Description:'',Price:'',Discounted_Price:'',Category:'',Type:'',Additional_specifications:'',
     }
     

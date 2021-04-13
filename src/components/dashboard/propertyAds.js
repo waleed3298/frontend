@@ -27,7 +27,7 @@ class PropertyAds extends Component{
         liked:[],
         profile:[],
         selectedProperty :  null,
-        token : this.props.cookies.get('ad-token')
+        token : this.props.cookies.get('adtoken')
     }
     getProfiles = () =>{
         fetch("http://127.0.0.1:4000/api/profile/",{

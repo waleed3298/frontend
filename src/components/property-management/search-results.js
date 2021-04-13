@@ -11,7 +11,7 @@ import Footer from '../footer';
 import {Grid,Segment} from 'semantic-ui-react'
 class SearchResult extends Component{
     state = {
-        token: this.props.cookies.get('ad-token'),
+        token: this.props.cookies.get('adtoken'),
         search:false,
         clicked:false,
         featured:[],

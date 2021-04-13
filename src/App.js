@@ -31,6 +31,7 @@ import PriceIndex from './components/priceIndex';
 import blogs from './components/Blog/blogs';
 import BlogDetail from './components/Blog/blogdetail';
 import cityPriceIndex from './components/cityPriceIndex';
+import CartScreen from './components/e-commerce/cartScreen'; 
 function App(){
         return (
             <BrowserRouter>
@@ -62,6 +63,7 @@ function App(){
       <Route exact path="/Blogs" component={blogs}></Route>
       <Route exact path="/Blogs/:handle" component={BlogDetail}></Route>
       <Route exact path="/CityIndex/:handle" component={cityPriceIndex}></Route>
+      <Route exact path="/cart/:id?" component={CartScreen}></Route>
       <Route component={NotFound} />
       </Switch>      
     </CookiesProvider>

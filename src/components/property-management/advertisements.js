@@ -13,7 +13,7 @@ class PropertyDisplay extends Component{
       currentPage : 1,
       properties:[],
       selectedProperty :  null,
-      token : this.props.cookies.get('ad-token')
+      token : this.props.cookies.get('adtoken')
     }
     getAds = () =>{
       if(this.state.token){

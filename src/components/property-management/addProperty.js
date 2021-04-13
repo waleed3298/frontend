@@ -15,7 +15,7 @@ import Footer from '../footer';
 
 class AddProperty extends Component{
   
-  state={token:this.props.cookies.get('ad-token'),showHouseForm:false,showPlotForm:false,showCommercialForm:false,Ad_id:'',error:'',
+  state={token:this.props.cookies.get('adtoken'),showHouseForm:false,showPlotForm:false,showCommercialForm:false,Ad_id:'',error:'',
   viewport: {
     latitude: 33.6844,
     longitude: 73.0479,

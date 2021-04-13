@@ -5,7 +5,7 @@ import {withCookies} from 'react-cookie';
 
 class Views extends Component{
     state = {
-        token : this.props.cookies.get('ad-token')
+        token : this.props.cookies.get('adtoken')
     }
     handleClick=()=>{
         window.location.href="/chat"

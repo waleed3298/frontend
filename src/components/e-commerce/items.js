@@ -15,7 +15,7 @@ class Items extends Component{
       currentPage : 1,
       Items:[],
       selectedProperty :  null,
-      token : this.props.cookies.get('ad-token')
+      token : this.props.cookies.get('adtoken')
     }
     getAds = () =>{
       if(this.state.token){

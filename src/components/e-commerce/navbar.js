@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 
 class NavBar extends Component{
   state={
-    token: this.props.cookies.get('ad-token'),
+    token: this.props.cookies.get('adtoken'),
     user:[],
     search:'',
   }
@@ -38,7 +38,7 @@ handleSearch = () =>{
   }
 
   logout = () =>{
-    this.props.cookies.remove('ad-token')
+    this.props.cookies.remove('adtoken')
     window.location.href = "/"
   }
  

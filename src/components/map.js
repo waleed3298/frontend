@@ -14,7 +14,7 @@ import {Grid,Segment} from 'semantic-ui-react';
 
 class Map extends Component{
   state = {
-    token: this.props.cookies.get('ad-token'),
+    token: this.props.cookies.get('adtoken'),
     search:false,
     clicked:false,
     featured:[],

@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
 class Navigation extends Component{
   state={
-    token: this.props.cookies.get('ad-token'),
+    token: this.props.cookies.get('adtoken'),
     user:[],
     profile:[],
     linkColor:this.props.linkColor,
@@ -46,7 +46,7 @@ getProfiles = () =>{
   }
 
   logout = () =>{
-    this.props.cookies.remove('ad-token')
+    this.props.cookies.remove('adtoken')
     window.location.href = "/"
   }
   add = () =>{
