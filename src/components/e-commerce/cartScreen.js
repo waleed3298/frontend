@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../message'
 import { addToCart, removeFromCart } from '../../actions/cartActions'
+import NavBar from './navbar';
+import CheckoutSteps from './checkoutSteps';
 
 function CartScreen({ match, location, history }) {
     const productId = match.params.id
@@ -25,10 +27,13 @@ function CartScreen({ match, location, history }) {
     }
 
     const checkoutHandler = () => {
-        history.push('/login?redirect=shipping')
+        history.push('/shipping')
     }
 
     return (
+        <div>
+            <NavBar color="black" />
+            <CheckoutSteps step3 />
         <div style={{width:'90%',position:'relative',left:'5%',top:'50px'}}>
         <Row>
             <Col md={8}>
@@ -111,6 +116,8 @@ function CartScreen({ match, location, history }) {
                 </Card>
             </Col>
         </Row></div>
+        </div>
+
     )
 }
 

@@ -12,7 +12,7 @@ import NavBar from './navbar';
 class AddItem extends Component{
     state = {
         token:this.props.cookies.get('adtoken'),
-        Title:'',Image:null,Description:'',Price:'',Discounted_Price:'',Category:'',Type:'',Additional_specifications:'',
+        Title:'',Image:null,Description:'',Price:'',Brand:'',Category:'',countInStock:'',
     }
     
   handleChange = (event) =>{
@@ -30,27 +30,21 @@ handleImageChange = (e) =>{
     let form_data = new FormData();
     form_data.append('Title',this.state.Title);
     form_data.append('Description',this.state.Description);
-    form_data.append('Type',this.state.Type);
-    form_data.append('Discounted_Price',this.state.Discounted_Price);
+    form_data.append('Brand',this.state.Brand);
     form_data.append('Category',this.state.Category);
     form_data.append('Price',this.state.Price);
-    form_data.append('Additional_specifications',this.state.Additional_specifications);
+    form_data.append('countInStock',this.state.countInStock);
     if(this.state.Image!==null){
     form_data.append('Image',this.state.Image,this.state.Image.name);
     }
-    let url = 'http://127.0.0.1:4000/api/CreateItem/';
+    let url = 'http://127.0.0.1:4000/api/CreateProduct/';
     axios.post(url,form_data,{
       headers:{
         'content-type':'multipart/form-data',
         'Authorization': `Token ${this.state.token}`
       }
     }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
-    if(this.state.error){
-        return this.state.error
-    }
-    else{
-        window.location.href="http://localhost:3000/dashboard"
-    }
+    
   }
     render(){
         return(
@@ -72,13 +66,11 @@ handleImageChange = (e) =>{
                                 <Form.Label>Description</Form.Label>
                                 <Form.Control value={this.state.Description} onChange={e=>this.handleChange(e)} name="Description" as="textarea" rows={3}/>
                                 <br />
-                        <Form.Label className="mt-1">Item Type</Form.Label>
-                        <Form.Control type="text" name="Type" value={this.state.Type} onChange={this.handleChange} />
                         <Form.Label>Price</Form.Label>
                                 <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Price" type="number" value={this.state.Price} placeholder="Price for your Item" />
                                 <br />
-                        <Form.Label>Discounted Price (if any)</Form.Label>
-                        <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Discounted_Price" type="number" value={this.state.Discounted_Price} placeholder="Discounted Price" />
+                        <Form.Label>Brand:</Form.Label>
+                        <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Brand" type="text" value={this.state.Brand} placeholder="Brand" />
                         <br />
                         <Form.Label>Category</Form.Label>
                                 <Form.Control value={this.state.Category} name='Category' onChange={this.handleChange} size="md" as="select">
@@ -96,8 +88,8 @@ handleImageChange = (e) =>{
                                 <option value="walls_and_flooring">Walls and Flooring</option>
                                 </Form.Control>
                                 <br />
-                        <Form.Label>Additional Features</Form.Label>
-                        <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Additional_specifications" type="text" value={this.state.Additional_specifications} placeholder="Additional Features of item" />
+                        <Form.Label>Stock Amount:</Form.Label>
+                        <Form.Control onChange={e=>this.handleChange(e)} size="md" name="countInStock" type="text" value={this.state.Additional_specifications} placeholder="Number of items" />
                         <br />     
                         <Button style={{backgroundColor:'#556B2F',position:'relative',left:'40%',marginBottom:'100px'}} type="submit" >Submit</Button>
        

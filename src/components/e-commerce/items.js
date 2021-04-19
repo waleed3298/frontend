@@ -19,7 +19,7 @@ class Items extends Component{
     }
     getAds = () =>{
       if(this.state.token){
-      fetch("http://127.0.0.1:4000/api/advertisements/",{
+      fetch("http://127.0.0.1:4000/api/Products/",{
             method : 'GET',
             headers:{
               'Authorization':`Token ${this.state.token}`
@@ -44,7 +44,7 @@ class Items extends Component{
         return(
             <div id="wrapper" style={{backgroundColor:'white'}}>
             <NavBar  color="#34495E" />
-      <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
+      <div style={{width:'80%',position:'relative',left:'10%',right:'20%'}}>
             <div class="ui horizontal divider">
             Your Advertisements
           </div>
@@ -58,7 +58,7 @@ class Items extends Component{
                 <Card.Img src={product.Image} />
             </Link>
             <Card.Body>
-                <Link to={`/product/${product.id}`}>
+                <Link to={`/product/${product._id}`}>
                     <Card.Title as="div">
                         <strong>{product.Title}</strong>
                     </Card.Title>
@@ -83,4 +83,4 @@ class Items extends Component{
     };
 };
 
-export default withCookies(Items);
+export default withCookies(Items)

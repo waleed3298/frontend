@@ -167,3 +167,6 @@ i:hover {
     background-color: olive;
   }
 }
+#dark {
+  color: grey !important;
+}

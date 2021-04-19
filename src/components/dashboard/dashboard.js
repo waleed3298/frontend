@@ -143,7 +143,8 @@ StoreItems = () =>{
       </div>
       <div className="extra content">
         <div  className="floated author">
-        <Button onClick={this.StoreItems} style={{position:'relative',left:'30%',backgroundColor:'#556B2F'}}>View Store Items</Button>
+        <Link to="/orders">
+        <Button  style={{position:'relative',left:'30%',backgroundColor:'#556B2F'}}>View Store Items</Button></Link>
         </div>
       </div>
     </div>       

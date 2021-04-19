@@ -17,7 +17,6 @@ class Navigation extends Component{
 componentDidMount(){
   if (this.state.token){
     this.getUser()
-    this.getProfiles();
   }
 }
 handleChange = (e) =>{
@@ -25,16 +24,6 @@ handleChange = (e) =>{
   this.setState({
     [e.target.name]:value
   });
-}
-getProfiles = () =>{
-  fetch("http://127.0.0.1:4000/api/profile/",{
-        method : 'GET',
-        headers:{
-          'Authorization':`Token ${this.state.token}`
-        }
-        }).then(resp=>resp.json()).then(res=>this.setState({profile:res})).catch(error=>console.log(error));
-        console.log((this.state.profile))
-        this.setState({flag:true});
 }
   getUser = () =>{
     fetch("http://127.0.0.1:4000/api/user/",{
@@ -108,12 +97,7 @@ getProfiles = () =>{
       
     <Form inline>
     {this.state.token ?
-      <div>
-      {this.state.profile.length>0?
-        this.state.profile.map(profile=>{
-        <h6>{profile.Age}</h6>
-      }) : null}
-      <button style={{backgroundColor:'orange',color:'white'}} type='Button' className="btn btn-md  mr-2" ><Link style={{color:this.state.linkColor}} to="/logout">Logout</Link></button></div>
+      <button style={{backgroundColor:'orange',color:'white'}} type='Button' className="btn btn-md  mr-2" ><Link style={{color:this.state.linkColor}} to="/logout">Logout</Link></button>
        :
        <div>
       <button type='Button' style={{backgroundColor:'#EB984E',color:'white'}} className="btn  btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/login">Login</Link></button>

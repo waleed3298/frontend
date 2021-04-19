@@ -66,6 +66,7 @@ handleSearch = () =>{
       <Nav.Link style={{color:"white"}} href="http://localhost:3000/properties">About</Nav.Link>
       <Nav.Link style={{color:"white"}} href="http://localhost:3000/plots">Tools</Nav.Link>
     </Nav>
+    <i style={{color:'white'}} class="fa fa-shopping-cart">Cart</i>
     {this.state.user ? 
       this.state.user.map(data=>
         <Nav.Link className="ml-4" style={{color:"white"}} href="http://localhost:3000/dashboard">{data.username.toUpperCase()}</Nav.Link>)

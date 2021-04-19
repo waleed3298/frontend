@@ -23,7 +23,7 @@ import AddItem from './components/e-commerce/addItem';
 import PropertyAds from './components/dashboard/propertyAds';
 import SavedAds from './components/dashboard/savedAds';
 import DashboardItems from './components/dashboard/items';
-import Items from './components/e-commerce/items';
+import ProductListScreen from './components/e-commerce/items';
 import NotFound from './components/notFound';
 import Landing from './components/landing';
 import ItemDetail from './components/e-commerce/itemDetail';
@@ -31,7 +31,13 @@ import PriceIndex from './components/priceIndex';
 import blogs from './components/Blog/blogs';
 import BlogDetail from './components/Blog/blogdetail';
 import cityPriceIndex from './components/cityPriceIndex';
-import CartScreen from './components/e-commerce/cartScreen'; 
+import CartScreen from './components/e-commerce/cartScreen';
+import Shipping from './components/e-commerce/shipping';
+import PaymentScreen from './components/e-commerce/paymentScreen';
+import PlaceOrderScreen from './components/e-commerce/placeOrder';
+import Payment from './components/payment';
+import OrdersList from './components/dashboard/ordersList';
+import OrderDetails from './components/dashboard/orderDetails';
 function App(){
         return (
             <BrowserRouter>
@@ -56,7 +62,7 @@ function App(){
       <Route exact path="/commercial-areas" component={Commercial}></Route>
       <Route exact path='/search/:handle' component={SearchResult}></Route>
       <Route exact path="/chat" component={Chat}></Route>
-      <Route exact path="/store-items" component={Items}></Route>
+      <Route exact path="/store-items" component={ProductListScreen}></Route>
       <Route exact path="/AddItem" component={AddItem}></Route>
       <Route exact path="/product/:id" component={ItemDetail}></Route>
       <Route exact path="/price-index" component={PriceIndex}></Route>
@@ -64,6 +70,11 @@ function App(){
       <Route exact path="/Blogs/:handle" component={BlogDetail}></Route>
       <Route exact path="/CityIndex/:handle" component={cityPriceIndex}></Route>
       <Route exact path="/cart/:id?" component={CartScreen}></Route>
+      <Route exact path="/shipping" component={Shipping}></Route>
+      <Route exact path="/payment" component={PaymentScreen}></Route>
+      <Route exact path="/placeorder" component={PlaceOrderScreen}></Route>
+      <Route exact path="/orders" component={OrdersList}></Route>
+      <Route exact path="/order/:id" component={OrderDetails}></Route>
       <Route component={NotFound} />
       </Switch>      
     </CookiesProvider>

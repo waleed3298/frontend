@@ -15,9 +15,9 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
         type: CART_ADD_ITEM,
         payload: {
             product: data._id,
-            name: data.Title,
-            image: data.Image,
-            price: data.Price,
+            name: data.name,
+            image: data.image,
+            price: data.price,
             countInStock: data.countInStock,
             qty
         }
@@ -46,11 +46,12 @@ export const saveShippingAddress = (data) => (dispatch) => {
     localStorage.setItem('shippingAddress', JSON.stringify(data))
 }
 
-export const savePaymentMethod = (data) => (dispatch) => {
+export const savePaymentMethod = (method,paid) => (dispatch) => {
     dispatch({
         type: CART_SAVE_PAYMENT_METHOD,
-        payload: data,
+        payload: method,paid
     })
 
-    localStorage.setItem('paymentMethod', JSON.stringify(data))
+    localStorage.setItem('paymentMethod', JSON.stringify(method))
+    localStorage.setItem('isPaid',JSON.stringify(paid))
 }

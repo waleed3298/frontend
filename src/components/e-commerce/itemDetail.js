@@ -17,7 +17,7 @@ function ItemDetail({ props, match, history }) {
     const [name,setName] = useState('')
     const [reviews,setReviews] = useState([])
     const [reviewError, setReviewError] = useState([])
-    const [cookies,setCookies] = useCookies(['ad-token'])
+    const [cookies,setCookies] = useCookies(['adtoken'])
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(listProductDetails(match.params.id));
@@ -86,14 +86,14 @@ function ItemDetail({ props, match, history }) {
                         <div>
                             <Row>
                                 <Col md={6}>
-                                    <Image src={product.Image} alt={product.name} fluid />
+                                    <Image src={product.image} alt={product.name} fluid />
                                 </Col>
 
 
                                 <Col md={3}>
                                     <ListGroup variant="flush">
                                         <ListGroup.Item>
-                                            <h3>{product.Title}</h3>
+                                            <h3>{product.name}</h3>
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
@@ -101,11 +101,11 @@ function ItemDetail({ props, match, history }) {
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <b>Price:</b> ${product.Price}
+                                            <b>Price:</b> ${product.price}
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <b>Description:</b> {product.Description}
+                                            <b>Description:</b> {product.description}
                                         </ListGroup.Item>
                                     </ListGroup>
                                 </Col>
@@ -118,7 +118,7 @@ function ItemDetail({ props, match, history }) {
                                                 <Row>
                                                     <Col>Price:</Col>
                                                     <Col>
-                                                        <strong>${product.Price}</strong>
+                                                        <strong>${product.price}</strong>
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>

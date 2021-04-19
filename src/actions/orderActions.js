@@ -30,26 +30,21 @@ import {
 
 import { CART_CLEAR_ITEMS } from '../constants/cartConstants'
 
-
-export const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = (order,cookie) => async (dispatch, getState) => {
     try {
         dispatch({
             type: ORDER_CREATE_REQUEST
         })
 
-        const {
-            userLogin: { userInfo },
-        } = getState()
-
         const config = {
             headers: {
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
+                Authorization: `Token ${cookie}`
             }
         }
 
         const { data } = await axios.post(
-            `/api/orders/add/`,
+            `http://127.0.0.1:4000/api/orders/add/`,
             order,
             config
         )
@@ -78,20 +73,17 @@ export const createOrder = (order) => async (dispatch, getState) => {
 }
 
 
-export const getOrderDetails = (id) => async (dispatch, getState) => {
+export const getOrderDetails = (id,cookie) => async (dispatch, getState) => {
     try {
         dispatch({
             type: ORDER_DETAILS_REQUEST
         })
 
-        const {
-            userLogin: { userInfo },
-        } = getState()
 
         const config = {
             headers: {
                 'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
+                Authorization: `Token ${cookie}`
             }
         }
 
