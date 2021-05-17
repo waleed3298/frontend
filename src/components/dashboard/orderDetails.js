@@ -45,7 +45,7 @@ class OrderDetails extends Component {
                                         Not Paid</h5>
                                         </Col>
                         }
-                        {this.state.order.isPaid==true ?
+                        {this.state.order.isDelivered==true ?
                                         <Col md={3}>
                                         <h5><i style={{color:'green'}} className="fa fa-check-circle"></i> Delivered
                                         </h5>

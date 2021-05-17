@@ -75,8 +75,8 @@ function ItemDetail({ props, match, history }) {
 
     return (
         <div>
-        <Navigation linkColor="white" color="#556B2F" />
-        <div style={{width:'90%',position:'relative',left:'5%'}}>
+<Navigation linkColor="white"  color="#556B2F" />
+                    <div style={{width:'90%',position:'relative',left:'5%'}}>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
             {loading ?
                 <Loader />

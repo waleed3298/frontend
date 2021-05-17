@@ -5,6 +5,10 @@ import Button from 'react-bootstrap/Button';
 import {withCookies} from 'react-cookie';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
+import {login, selectAuthError, selectIsLoggedIn, selectIsLoading} from '../../reducers/userSlice';
+
 class Login extends Component{
     state = {
         credentials:{
@@ -18,7 +22,7 @@ class Login extends Component{
         this.setState({credentials:cred})
     }
     getToken = () =>{
-        fetch('http://127.0.0.1:4000/auth/', {
+        fetch('http://127.0.0.1:4000/token/', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(this.state.credentials)
@@ -28,8 +32,7 @@ class Login extends Component{
       data => {
         console.log(data.token)
         if (data.token != null){
-        this.props.cookies.set('adtoken',data.token)    
-         window.location.href = '/dashboard'
+        this.props.cookies.set('adtoken',data.token)
         }
         else{
             this.setState({errorMessage:'Username or Password Incorrect'})
@@ -39,14 +42,16 @@ class Login extends Component{
     .catch( error => console.error(error))
     
     }
-    login = () =>{
-        this.getToken()
-    }
+    hasLogin = e =>{
+      this.getToken()
+      const { dispatch } = this.props;
+        e.preventDefault();
+        dispatch(login(this.state.credentials.username, this.state.credentials.password));
+      }
     
   signup = () =>{
     window.location.href = '/signup'
   }
-
     render(){
         return (
             <div>
@@ -70,7 +75,7 @@ class Login extends Component{
             <Form.Label>Password:</Form.Label>
                 <Form.Control onChange={this.handleChange} size="md" name="password" value={this.state.credentials.password} type="password" placeholder="Enter your Password" /><br />
                 
-                <button className="btn" onClick={this.login} style={{textAlign:'center',position:'relative',width:'100px',left:'40%',backgroundColor:'#556B2F',color:'white'}} variant="info">Log In</button><br/>
+                <button className="btn" onClick={this.hasLogin} style={{textAlign:'center',position:'relative',width:'100px',left:'40%',backgroundColor:'#556B2F',color:'white'}} variant="info">Log In</button><br/>
                 
             </Form.Group>
             </div>
@@ -82,4 +87,4 @@ class Login extends Component{
     }
 }
 
-export default withCookies(Login);
+export default withCookies(connect()(Login));

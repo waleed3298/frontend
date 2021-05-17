@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Form,Button} from 'react-bootstrap';
 import {useDispatch,useSelector} from 'react-redux';
-import NavBar from './navbar';
+import Navigation from '../navbar';
 import {saveShippingAddress} from '../../actions/cartActions';
 import CheckoutSteps from './checkoutSteps';
 
@@ -19,8 +19,7 @@ export default function Shipping({history}) {
         history.push('/payment')
     }
     return (
-        <div>
-         <NavBar  color="#34495E" />
+        <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />      
          <CheckoutSteps step3 />
      <div style={{width:'70%',position:'relative',left:'12.5%',top:'10%'}}>
         <h1>Shipping</h1>

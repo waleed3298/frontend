@@ -8,8 +8,10 @@ import Graph from './graph';
 import Cities from './cities';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-export default class priceIndex extends Component {
+import {withCookies} from 'react-cookie';
+class priceIndex extends Component {
     state={
+        token:this.props.cookies.get('adtoken'),
         City:'',
         properties:[],
         islamabad:'',
@@ -30,7 +32,7 @@ export default class priceIndex extends Component {
             'content-type':'multipart/form-data',
             'Authorization': `Token ${this.state.token}`
           }
-        }).then(res=>this.setState({data:res.data})).catch(error=>this.setState({error:error}));    
+        }).then(res=>this.setState({cities:res.data})).catch(error=>this.setState({error:error}));    
         }
   
 handleChange = (event) =>{
@@ -105,7 +107,7 @@ handleChange = (event) =>{
           <br/>
           <h1 className="text-center mt-4">Price per sqr ft of some famous cities of Pakistan</h1><br/>
           <div style={{marginLeft:'5%'}}>
-          <Graph />
+          <Graph cities={this.state.cities} />
           </div>
           <div>
           <br/><br/>
@@ -137,3 +139,4 @@ handleChange = (event) =>{
           );
     }
 }
+export default withCookies(priceIndex)

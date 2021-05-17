@@ -1,7 +1,9 @@
 import React , {Component} from 'react';
-import NavBar from './navbar';
+import Navigation from '../navbar';
 import Button from 'react-bootstrap/Button';
-class Landing extends Component{
+import '../components.css';
+import Items from './items';
+class landing extends Component{
   
   addItem = () =>{
     window.location.href="/AddItem"
@@ -9,7 +11,7 @@ class Landing extends Component{
   render(){
         return(
             <div>
-            <NavBar color="transparent" />
+            <Navigation linkColor="white"  color="transparent" />
             <div className="header backgroundimage1">
     <div className="top">
     <div className="dark-overlay landing-inner text-dark mt-4">
@@ -26,9 +28,10 @@ class Landing extends Component{
   </div>
   </div>
   </div>
+  <Items />
             </div>
         )
     }
 }
 
-export default Landing;
+export default landing;

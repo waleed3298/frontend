@@ -1,6 +1,5 @@
-import React , {Component} from 'react';
+import React , {useEffect, useCallback} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import AddProperty from './components/property-management/addProperty';
 import reportWebVitals from './reportWebVitals';
 import { Route , BrowserRouter, Switch } from 'react-router-dom';
@@ -38,20 +37,39 @@ import PlaceOrderScreen from './components/e-commerce/placeOrder';
 import Payment from './components/payment';
 import OrdersList from './components/dashboard/ordersList';
 import OrderDetails from './components/dashboard/orderDetails';
+import {useDispatch} from 'react-redux';
+import {useLocation} from 'react-router-dom';
+import {Navbar, Nav} from 'react-bootstrap';
+import landing from './components/e-commerce/landing';
+import AdPayment from './components/dashboard/adPayment';
+import Prediction from './components/predictor/prediction';
+
+import {checkStatus, logout} from './reducers/userSlice';
+
+import LoginPage from './pages/LoginPage';
+import ChatPage from './pages/ChatPage';
+import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFound';
+
+
+
 function App(){
+	const dispatch = useCallback(useDispatch(), []);
+	useEffect(() => dispatch(checkStatus()), [dispatch]);
+
         return (
+          <>
             <BrowserRouter>
     <CookiesProvider>
     <Switch>
-      <Route exact path="/" component={Landing}></Route>
+    <Route exact path="/" component={Landing}></Route>
       <Route exact path="/nav" component={Navigation}></Route>
+      <Route exact path='/login' component = {Login}></Route>
       <Route exact path="/addProperty" component={AddProperty}></Route>
       <Route exact path="/advertisements" component={PropertyDisplay}></Route>
       <Route exact path="/signup" component={SignUp}></Route>
-      <Route exact path="/login" component={Login}></Route>
       <Route exact path="/editproperty/:handle" component={EditProperty}></Route>
       <Route exact path="/map" component={Map}></Route>
-      <Route exact path="/map/:handle" component={MapDetail}></Route>
       <Route exact path="/AdDetails/:handle" component={PropertyDetails}></Route>
       <Route exact path="/dashboard" component={Dashboard}></Route>
       <Route exact path="/dashboardAds" component={PropertyAds}></Route>
@@ -60,8 +78,9 @@ function App(){
       <Route exact path="/properties" component={Properties}></Route>
       <Route exact path="/plots" component={Plots}></Route>
       <Route exact path="/commercial-areas" component={Commercial}></Route>
-      <Route exact path='/search/:handle' component={SearchResult}></Route>
+      <Route exact path='/search/:handle?' component={SearchResult}></Route>
       <Route exact path="/chat" component={Chat}></Route>
+      <Route exact path="/store" component={landing}></Route>
       <Route exact path="/store-items" component={ProductListScreen}></Route>
       <Route exact path="/AddItem" component={AddItem}></Route>
       <Route exact path="/product/:id" component={ItemDetail}></Route>
@@ -75,11 +94,16 @@ function App(){
       <Route exact path="/placeorder" component={PlaceOrderScreen}></Route>
       <Route exact path="/orders" component={OrdersList}></Route>
       <Route exact path="/order/:id" component={OrderDetails}></Route>
-      <Route component={NotFound} />
+      <Route exact path="/adPayment" component={AdPayment}></Route>
+      <Route exact path="/prediction" component={Prediction}></Route>
+      <Route exact path="/chat/:chatUuid" component={ChatPage} />
+			<Route exact path="/inbox/:handle?" component={HomePage} />
+			
+<Route component={NotFound} />
       </Switch>      
     </CookiesProvider>
   </BrowserRouter>
-
+</>
         )
 }
 

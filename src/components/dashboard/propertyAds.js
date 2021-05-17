@@ -30,7 +30,7 @@ class PropertyAds extends Component{
         token : this.props.cookies.get('adtoken')
     }
     getProfiles = () =>{
-        fetch("http://127.0.0.1:4000/api/profile/",{
+        fetch("http://127.0.0.1:4000/api/myProfile/",{
               method : 'GET',
               headers:{
                 'Authorization':`Token ${this.state.token}`
@@ -106,11 +106,25 @@ class PropertyAds extends Component{
             <div class="ui horizontal divider">
             Your Advertisements
           </div>
+          {this.state.profile.length > 0 ? <div> <h5 className="text-left">Number of Ads remaining: <b>{this.state.profile[0].Ad_quantity}</b></h5>
+          <p style={{width:'50%',color:"tomato"}}>If your number of remaining Ads become 0 then you will have to buy new ones in order to publish new advertisements.</p></div>
+          : null}
           <div style={{position:'relative',left:'75%'}} className="row"><div className="Col-lg-6">
-          <a href="/addProperty" className="round-button mr-3"><i className="fa fa-envelope"></i></a>
+          <Link to='/inbox'>
+          <p className="round-button mr-3"><i className="fa fa-envelope"></i></p>
+          </Link>
           </div>
           <div className="Col-lg-6">
-          <a href="/addProperty" className="round-button ml-2"><i className="fa fa-plus"></i></a>
+          {this.state.profile.length > 0 ?
+          this.state.profile[0].Ad_quantity>0 ?
+            <Link to='/addproperty'>
+          <p className="round-button ml-2"><i className="fa fa-plus"></i></p>
+          </Link>
+           : 
+           <Link to='/adPayment'>
+          <p className="round-button ml-2"><i className="fa fa-plus"></i></p>
+          </Link>
+           :null}
           </div></div>
         <br/><br/>
         <Posts properties={currentPosts} loading={this.state.loading} />

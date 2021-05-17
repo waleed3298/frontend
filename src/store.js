@@ -1,6 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import {configureStore} from '@reduxjs/toolkit';
+import userSlice from './reducers/userSlice';
+import chatSlice from './reducers/chatSlice';
+
 import {
     productListReducer,
     productDetailsReducer,
@@ -50,12 +54,16 @@ const reducer = combineReducers({
     userDelete: userDeleteReducer,
     userUpdate: userUpdateReducer,
 
+
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,
     orderListMy: orderListMyReducer,
     orderList: orderListReducer,
     orderDeliver: orderDeliverReducer,
+
+    user: userSlice,
+	chat: chatSlice
 })
 
 
@@ -83,4 +91,4 @@ const middleware = [thunk]
 const store = createStore(reducer, initialState,
     composeWithDevTools(applyMiddleware(...middleware)))
 
-export default store
+export default store;

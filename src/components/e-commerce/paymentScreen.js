@@ -4,15 +4,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import CheckoutSteps from './checkoutSteps'
 import { savePaymentMethod } from '../../actions/cartActions'
 import Payment from '../payment';
-import NavBar from '../navbar';
+import Navigation from '../navbar';
 import Message from '../message';
 function PaymentScreen({ history }) {
 
     const cart = useSelector(state => state.cart)
     const { shippingAddress } = cart
-
+    const [form,setForm] = useState(false)
     const dispatch = useDispatch()
-
+    const Clicked = () =>{
+        setForm(true)
+    }
+    const show = () =>{
+        setForm(false)
+    }
     const [paymentMethod, setPaymentMethod] = useState('')
     const [stripe,setStripe] = useState('')
     if (!shippingAddress.address) {
@@ -22,12 +27,12 @@ function PaymentScreen({ history }) {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(savePaymentMethod(paymentMethod))
-        history.push('/placeorder')
+        window.location.href = '/placeorder'
     }
     return (
-        <div>
-         <NavBar linkColor="white" color="#556B2F" />
-           <div style={{width:'80%',position:'relative',left:'10%'}}>
+        <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />
+            
+        <div style={{width:'80%',position:'relative',left:'10%'}}>
             <CheckoutSteps step3 />
             <Row style={{marginTop:'8%'}}>
                 <Col lg={3} md={3} style={{borderRight:'1px solid silver'}}>
@@ -41,6 +46,7 @@ function PaymentScreen({ history }) {
                             id='Debit'
                             name='paymentMethod'
                             value="Debit"
+                            onClick={Clicked}
                             onChange={(e) => setPaymentMethod(e.target.value)}
                         >
 
@@ -52,7 +58,7 @@ function PaymentScreen({ history }) {
                             id='Delivery'
                             name='paymentMethod'
                             value="Delivery"
-                            checked
+                            onClick={show}
                             onChange={(e) => setPaymentMethod(e.target.value)}
                         >
 
@@ -66,7 +72,8 @@ function PaymentScreen({ history }) {
             
                 </Col>
                 <Col>
-                <Payment  />
+                {form ?  <Payment  /> : null}
+               
                 </Col>
             </Row>
             </div>

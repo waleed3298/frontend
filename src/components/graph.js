@@ -5,14 +5,13 @@ import {Row,Col} from 'react-bootstrap';
 export default class Graph extends Component{
   
 state={
-  cities:[]
+  cities:[],
 }
   getResults = () =>{
 let url = `http://127.0.0.1:4000/api/PriceIndex/`
   axios.get(url,{
     headers:{
       'content-type':'multipart/form-data',
-      'Authorization': `Token ${this.state.token}`
     }
   }).then(res=>this.setState({cities:res.data})).catch(error=>this.setState({error:error}));    
   }

@@ -60,7 +60,8 @@ export const createOrder = (order,cookie) => async (dispatch, getState) => {
         })
 
         localStorage.removeItem('cartItems')
-
+        localStorage.removeItem('isPaid')
+        localStorage.removeItem('paymentMethod')
 
     } catch (error) {
         dispatch({

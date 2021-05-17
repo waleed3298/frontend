@@ -15,7 +15,7 @@ class SearchResult extends Component{
         search:false,
         clicked:false,
         featured:[],
-        postsPerPage : 6,
+        postsPerPage : 8,
         currentPage : 1,
         properties:[],
         City:'',
@@ -83,17 +83,17 @@ render(){
     const currentPosts = this.state.properties.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
       return (
-        <div >
-        <Navigation color="#556B2F" linkColor="white" />
+        <div style={{backgroundColor:'#fcfbff'}}>
+        <Navigation color="#f5f8fa" linkColor="#23313e" />
         <div style={{textAlign:'center',width:'60%',position:'relative',left:'20%'}} className="text-center ui horizontal divider">
             Search Results
           </div>
         <Grid columns={2} stackable>
         <Grid.Row>
         <Grid.Column  width={7}>
-        <div  style={{width:'60%',zIndex:'1'}}>
+        <div  style={{width:'70%',zIndex:'1'}}>
         
-        <Form style={{width:'65%',paddingRight:'5%',backgroundColor:'white',marginLeft:'5%'}}>
+        <Form style={{width:'65%',paddingRight:'5%',marginLeft:'5%',position:'relative',top:'5%'}}>
                         <Form.Group>
                         <div id="SearchForm">
                         <Form.Label><b>Property Location:</b></Form.Label>
@@ -148,7 +148,7 @@ render(){
                           </Form.Control>                         
                           
                           <br />
-                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#556B2F',position:'relative',left:'3%',width:'150px',bottom:'10%'}}>Apply Changes</Button>
+                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#ff6645',position:'relative',left:'1%',width:'190px',bottom:'10%'}}>Apply Changes</Button>
   </div>
                     <br />
                   </Form.Group><br/>
@@ -156,47 +156,28 @@ render(){
                 </div></Grid.Column><Grid.Column width={9}>
                 <div style={{float:'right',position:'relative',top:'2%',left:'10%'}}>
                 {this.state.properties.length!=0 & this.state.search ? 
-    <div style={{width:'80%',position:'relative',right:'30%',marginBottom:'20%'}}>
+    <div style={{width:'100%',position:'relative',right:'30%',marginBottom:'20%'}}>
     <Row>
                 {currentPosts.map(property=>{
                     return(
-                    <Col sm={12} md={6} lg={4}>
-                    <div key={property.id}>
-                    <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div  className="card">
-                        <div className="image">
-                          <img src={property.Image}/>
-                        </div>
-                        <div className="content">
-                          <div className="header"></div>
-                          <div className="meta">
-                            <a>{property.Title}</a>
-                          </div>
-                          <div className="description">
-                            {property.Price}
-                            </div>
-                        </div>
-                        <div className="extra content">
-                          <span className="right floated">
-                            {property.Date}
-                          </span>
-                          <span>
-                            {property.Size} {property.Units}
-                          </span><br/><br/>
-                          <span className="mt-2">       
-                    <Link to={URL+property.id}>
-                    <Button style={{backgroundColor:'#34495E'}}>View Advertisement</Button>
-                      </Link>
-                                           
-                            </span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                      </div>
+                    <Col sm={12} md={6} lg={6}>
+                    <div  onClick={()=>this.handleClick(property.id)} id={property.id} className="card mb-3" style={{width:'28vw',maxWidth: '540px',position:'relative',right:'40%',marginLeft:'50px',cursor:'pointer'}}>
+  <div className="row no-gutters">
+    <div className="col-md-4">
+      <img style={{height:'120px'}} src={property.Image} className="card-img" alt="..."/>
+    </div>
+    <div className="col-md-8">
+      <div className="card-body">
+        <h5 style={{fontWeight:'bold'}} className="card-title">{property.Title}</h5>
+        <p style={{fontWeight:'heavy'}}>Rs. {property.Price}</p>
+        <p className="card-text"><small className="text-muted">{property.Size} {property.Units}</small></p>
+      </div>
+    </div>
+  </div>
+</div>
                     </Col>
                     )
-                })};
+                })}
                 </Row>
     <Pagination style={{position:'relative',right:'70%'}}
           postsPerPage={this.state.postsPerPage}
@@ -205,28 +186,31 @@ render(){
       /><br/><br/>
       </div>:
       <div>
-      {this.state.clicked ?<div>
+      {this.state.clicked ?<div style={{width:'100%',position:'relative',right:'30%',marginBottom:'20%'}}>
+      <div>
        <h1 style={{textAlign:'left'}}>Sorry! No results Found...</h1>
        <div style={{position:'relative',width:'80%'}} className="ui horizontal divider">
             Suggested Properties
           </div>
-          <div style={{width:'80%',position:'relative',left:'10%',right:'10%',marginBottom:'5%'}}>
     <Row>
     {this.state.featured.map(property=>
-      <div id={property.id} className="card mb-3" style={{maxWidth: '540px',position:'relative',right:'50%'}}>
+      <Col lg={6} md={6}>
+      <div  onClick={()=>this.handleClick(property.id)} id={property.id} className="card mb-3" style={{width:'26vw',maxWidth: '540px',position:'relative',right:'40%',marginLeft:'50px',cursor:'pointer'}}>
   <div className="row no-gutters">
     <div className="col-md-4">
       <img src={property.Image} className="card-img" alt="..."/>
     </div>
     <div className="col-md-8">
       <div className="card-body">
-        <h5 className="card-title">{property.Title}</h5>
-        <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
+        <h5 style={{fontWeight:'bold'}} className="card-title">{property.Title}</h5>
+        <h5 style={{fontWeight:'heavy'}} className="card-title">Rs. {property.Price}</h5>
+        <p className="card-text">{property.description}</p>
+        <p className="card-text"><small className="text-muted">{property.Size} {property.Units}</small></p>
       </div>
     </div>
   </div>
 </div>
+</Col>
     )}
     </Row>
     <br/><br/>

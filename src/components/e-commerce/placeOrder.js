@@ -3,7 +3,8 @@ import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../message'
-import CheckoutSteps from './checkoutSteps'
+import CheckoutSteps from './checkoutSteps';
+import Navigation from '../navbar';
 import { createOrder } from '../../actions/orderActions'
 import { ORDER_CREATE_RESET } from '../../constants/orderConstants'
 import {useCookies} from 'react-cookie';
@@ -21,10 +22,12 @@ function PlaceOrderScreen({ history }) {
     cart.taxPrice = Number((0.082) * cart.itemsPrice).toFixed(2)
 
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
-
-    if (!cart.paymentMethod) {
+    const paid = localStorage.getItem('isPaid')
+    const method = localStorage.getItem('paymentMethod')
+    if (!method) {
         history.push('/payment')
     }
+
 
     useEffect(() => {
         if (success) {
@@ -39,7 +42,8 @@ function PlaceOrderScreen({ history }) {
         dispatch(createOrder({
             orderItems: cart.cartItems,
             shippingAddress: cart.shippingAddress,
-            paymentMethod: cart.paymentMethod,
+            paymentMethod: method,
+            isPaid: paid,
             itemsPrice: cart.itemsPrice,
             shippingPrice: cart.shippingPrice,
             taxPrice: cart.taxPrice,
@@ -48,7 +52,8 @@ function PlaceOrderScreen({ history }) {
     }
 
     return (
-        <div>
+        <div><Navigation linkColor="#233443"  color="#fcfbff" />
+           
             <CheckoutSteps step1 step2 step3 step4 />
             <Row>
                 <Col md={8}>
@@ -76,7 +81,7 @@ function PlaceOrderScreen({ history }) {
 
                         <ListGroup.Item>
                             <h2>Order Items</h2>
-                            {cart.cartItems.length === 0 ? <Message variant='info'>
+                            {cart.cartItems.length === 0 ? <Message variant='danger'>
                                 Your cart is empty
                             </Message> : (
                                     <ListGroup variant='flush'>
@@ -149,6 +154,7 @@ function PlaceOrderScreen({ history }) {
                                 <Button
                                     type='button'
                                     className='btn-block'
+                                    style={{backgroundColor:'#233443',color:'white'}}
                                     disabled={cart.cartItems === 0}
                                     onClick={placeOrder}
                                 >

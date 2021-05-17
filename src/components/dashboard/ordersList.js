@@ -21,7 +21,7 @@ export default function OrdersList() {
     },[])
         return (
             <div><Navigation linkColor="white" color="#556B2F" />
-            <h1 className="text-center mb-4">Your Orders</h1>
+            <h1 className="text-center mb-4"><i className="fa fa-shopping-cart"></i> Your Orders</h1>
                 <br/>
                 {orders.length>0 ?
                     <ListGroup variant='flush' style={{width:'80%',position:'relative',left:'10%'}}>

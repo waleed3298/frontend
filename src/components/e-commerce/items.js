@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import NavBar from './navbar';
+import Navigation from '../navbar';
 import {withCookies} from 'react-cookie';
 import PropertyAd from '../property-management/propertyads';
 import Pagination from '../pagination';
@@ -43,8 +43,7 @@ class Items extends Component{
     
         return(
             <div id="wrapper" style={{backgroundColor:'white'}}>
-            <NavBar  color="#34495E" />
-      <div style={{width:'80%',position:'relative',left:'10%',right:'20%'}}>
+            <div style={{width:'80%',position:'relative',left:'10%',right:'20%'}}>
             <div class="ui horizontal divider">
             Your Advertisements
           </div>
@@ -54,17 +53,17 @@ class Items extends Component{
          return(
            <Col lg={3} md={6} sm={12}>
           <Card className="my-3 p-3 rounded">
-            <Link to={`/product/${product.id}`}>
-                <Card.Img src={product.Image} />
+            <Link to={`/product/${product._id}`}>
+                <Card.Img src={product.image} />
             </Link>
             <Card.Body>
                 <Link to={`/product/${product._id}`}>
                     <Card.Title as="div">
-                        <strong>{product.Title}</strong>
+                        <strong>{product.name}</strong>
                     </Card.Title>
                 </Link>
                 <Card.Text as="h3">
-                    ${product.Price}
+                    ${product.price}
                 </Card.Text>
             </Card.Body>
         </Card></Col>

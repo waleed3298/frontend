@@ -7,6 +7,9 @@ import "./components.css";
 import {withCookies} from 'react-cookie';
 import Button from 'react-bootstrap/Button';
 import {Link} from 'react-router-dom';
+import {logout} from '../reducers/userSlice';
+import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom';
 class Navigation extends Component{
   state={
     token: this.props.cookies.get('adtoken'),
@@ -36,7 +39,8 @@ handleChange = (e) =>{
 
   logout = () =>{
     this.props.cookies.remove('adtoken')
-    window.location.href = "/"
+    const { dispatch } = this.props;
+    dispatch(logout());
   }
   add = () =>{
     if (this.state.token){
@@ -71,11 +75,8 @@ handleChange = (e) =>{
       <Nav.Link ><Link style={{color:this.state.linkColor}} to="/map">
     Map  </Link>
     </Nav.Link>
-    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/properties">
-    Houses  </Link>
-    </Nav.Link>
-    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/plot">
-    Plots  </Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/store">
+    Store  </Link>
     </Nav.Link>
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/price-index">
     Price Index  </Link>
@@ -83,11 +84,11 @@ handleChange = (e) =>{
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/search/None">
     Search Properties  </Link>
     </Nav.Link>
-      <Button type="button"  className="btn btn-secondary mr-3">
+      <Button type="button" style={{color:'#ffeeea',backgroundColor:'#ff6645'}}   className="btn  mr-3">
       {this.state.token ?
-      <Link style={{color:this.state.linkColor}} to="/addProperty">Add New Property</Link>
+      <Link to="/addProperty" style={{color:'#ffeeea'}}>Add New Property</Link>
        : 
-       <Link style={{color:this.state.linkColor}} to="/login">Add New Property</Link>}
+       <Link to="/login" style={{color:'#ffeeea'}}>Add New Property</Link>}
       </Button>
     </Nav>
     {this.state.user ? 
@@ -97,11 +98,11 @@ handleChange = (e) =>{
       
     <Form inline>
     {this.state.token ?
-      <button style={{backgroundColor:'orange',color:'white'}} type='Button' className="btn btn-md  mr-2" ><Link style={{color:this.state.linkColor}} to="/logout">Logout</Link></button>
+      <button style={{backgroundColor:'#ff6645',color:'#ffeeea'}} onClick={this.logout} type='Button' className="btn btn-md  mr-2" >Logout</button>
        :
        <div>
-      <button type='Button' style={{backgroundColor:'#EB984E',color:'white'}} className="btn  btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/login">Login</Link></button>
-      <button style={{backgroundColor:'#EB984E',color:'white'}} type='Button' className="btn btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/signup">SignUp</Link></button>
+      <button type='Button' style={{backgroundColor:'#ff6645',color:'#ffeeea'}} className="btn  btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/login">Login</Link></button>
+      <button style={{backgroundColor:'#ff6645',color:'#ffeeea'}} type='Button' className="btn btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/signup">SignUp</Link></button>
       </div> }
     </Form>
   </Navbar.Collapse>
@@ -110,4 +111,4 @@ handleChange = (e) =>{
         );
     };
 };
-export default withCookies(Navigation);
+export default withCookies(connect()(Navigation));

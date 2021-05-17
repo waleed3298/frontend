@@ -7,7 +7,6 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {withCookies} from 'react-cookie'
 import Navigation from '../navbar';
-import NavBar from './navbar';
 
 class AddItem extends Component{
     state = {
@@ -51,8 +50,8 @@ handleImageChange = (e) =>{
             <div>
             {this.state.token ? 
             <div id="wrapper">
-                <NavBar color="#556B2F" />
-                <div className="Form">
+            <Navigation linkColor="white"  color="#556B2F" />
+                            <div className="Form">
                    <Form onSubmit={this.handleSubmit} >
                        <Form.Group>
                            <div id="Form">

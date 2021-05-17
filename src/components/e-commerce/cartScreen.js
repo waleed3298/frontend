@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../message'
 import { addToCart, removeFromCart } from '../../actions/cartActions'
-import NavBar from './navbar';
 import CheckoutSteps from './checkoutSteps';
-
+import Navigation from '../navbar';
 function CartScreen({ match, location, history }) {
     const productId = match.params.id
     const qty = location.search ? Number(location.search.split('=')[1]) : 1
@@ -31,16 +30,16 @@ function CartScreen({ match, location, history }) {
     }
 
     return (
-        <div>
-            <NavBar color="black" />
+        <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />
+            
             <CheckoutSteps step3 />
         <div style={{width:'90%',position:'relative',left:'5%',top:'50px'}}>
         <Row>
             <Col md={8}>
-                <h1 style={{color:'grey'}}>Shopping Cart</h1>
+                <h1 style={{color:'grey',fontWeight:'bold'}}>Shopping Cart</h1>
                 {cartItems.length === 0 ? (
-                    <Message variant='info'>
-                        Your cart is empty <Link to='/'>Go Back</Link>
+                    <Message variant='danger'>
+                        Your cart is empty <Link to='/store-items'>Go Back</Link>
                     </Message>
                 ) : (
                         <ListGroup variant='flush'>
@@ -104,7 +103,8 @@ function CartScreen({ match, location, history }) {
                     <ListGroup.Item>
                         <Button
                             type='button'
-                            className='btn-block btn-dark'
+                            style={{backgroundColor:'#233443',color:'white'}}
+                            className='btn-block'
                             disabled={cartItems.length === 0}
                             onClick={checkoutHandler}
                         >
