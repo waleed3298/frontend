@@ -22,16 +22,22 @@ class PropertyDetails extends Component{
         map:false,
         additional:false,
         info:true,
+        id:null,
+        user:[],
+        clicked:'',
       }
       getDetails = () =>{
         const { handle } = this.props.match.params
         fetch(`http://127.0.0.1:4000/api/AD/${handle}/`,{
             method : 'GET'
-            }).then(resp=>resp.json()).then(res=>this.setState({res})).catch(error=>console.log(error));
+            }).then(resp=>resp.json()).then(res=>this.setState({res,clicked:res.Image})).catch(error=>console.log(error));
       }
+      
       componentDidMount () {
        this.getDetails();
        this.setState({flag:true})
+       if(this.state.res){
+       }
        }
        handleClick = (e) =>{
          e.preventDefault();
@@ -49,6 +55,9 @@ class PropertyDetails extends Component{
         }).then(res=>console.log(res)).catch(error=>this.setState({error:error}));
         this.setState({saved:true})
        }
+       contact = () =>{
+         window.location.href = `/inbox/${this.state.res.username}`
+       }
        conditional = (e) =>{
         if(e==='map'){
           this.setState({map:true,additional:false,info:false})
@@ -62,6 +71,9 @@ class PropertyDetails extends Component{
           }
         }
        }
+       Clicked = (e) =>{
+         this.setState({clicked:e})
+       }
         
       render() {
           const properties = [this.state.Property]
@@ -70,15 +82,15 @@ class PropertyDetails extends Component{
             <Navigation linkColor="#556B2F" color="#f2f3f4" />
             <br />
             {this.state.res ? 
-            <div>
+            <div style={{marginTop:'2%'}}>
             <Grid style={{marginLeft:'2%'}} columns={4} padded='vertically'>
           <Grid.Row style={{height:'50vh'}} relaxed columns={3}>
             <Grid.Column width={4}>
-              <Image style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px'}} src={this.state.res.Image1} /><br/>
-              <Image style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px'}} src={this.state.res.Image2} /><br/>
-              <Image style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px'}} src={this.state.res.Image3} /><br/></Grid.Column>
+              <Image onClick={()=>this.Clicked(this.state.res.Image1)} style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px',cursor:'pointer'}} src={this.state.res.Image1} /><br/>
+              <Image onClick={()=>this.Clicked(this.state.res.Image2)} style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px',cursor:'pointer'}} src={this.state.res.Image2} /><br/>
+              <Image onClick={()=>this.Clicked(this.state.res.Image3)} style={{width:'16vw',height:'22vh',marginLeft:'20%',borderRadius:'10px',cursor:'pointer'}} src={this.state.res.Image3} /><br/></Grid.Column>
             <Grid.Column width={8} style={{width:'66vw',backgroundColor:'vanila'}}>
-            <Image style={{width:'68vw',height:'72vh',marginRight:'40%',borderRadius:'10px'}} src={this.state.res.Image} />
+            <Image style={{width:'68vw',height:'72vh',marginRight:'40%',borderRadius:'10px'}} src={this.state.clicked} />
             </Grid.Column>
             <Grid.Column width={3}>
             <Card style={{marginLeft:'10%',marginTop:'10%',height:'60vh'}}>
@@ -87,16 +99,15 @@ class PropertyDetails extends Component{
           size='small'
           src='/person.jpg'
        circular style={{marginLeft:'10%',marginBottom:'10%'}} /><br/>
-        <Card.Meta>Seller Name</Card.Meta>
+      {this.state.user.length>0 ? console.log(this.state.user) : null}
+        <Card.Meta>{this.state.res.username.toUpperCase()}</Card.Meta>
         <Card.Description>
-          Cell No: {this.state.res.cell_no}<br/>
           Email: {this.state.res.email}<br/>
-          Contact No: {this.state.res.contact_no}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <div className='ui two buttons'>
-          <Button className="ml-4" basic style={{backgroundColor:'#2ECC71'}}>
+          <Button onClick={this.contact} className="ml-4" basic style={{backgroundColor:'#2ECC71'}}>
             <i className="fa fa-envelope mr-4">  Contact Seller</i>
           </Button>
         </div>
@@ -107,7 +118,6 @@ class PropertyDetails extends Component{
         </Grid>
         <br/><br/>
         <div>
-        <Divider horizontal>Or</Divider>
         <Grid style={{height:'50vh',marginTop:'15%',fontFamily:'Lora'}} columns={4} padded='horizontally'>
           <Grid.Row relaxed columns={3}>
             <Grid.Column width={4} >

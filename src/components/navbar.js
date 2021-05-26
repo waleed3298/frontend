@@ -41,6 +41,13 @@ handleChange = (e) =>{
     this.props.cookies.remove('adtoken')
     const { dispatch } = this.props;
     dispatch(logout());
+    const tok = localStorage.getItem('token')
+    if(!tok){
+      window.location.href="/"
+    }
+    else{
+      console.log("token still available")
+    }
   }
   add = () =>{
     if (this.state.token){
@@ -61,14 +68,13 @@ handleChange = (e) =>{
       const styles = {
         color:{
          backgroundColor : this.props.color,
-         borderRadius : '10px'
        }
      }
       return(
-            <div>
+            <div style={{height:'8vh'}}>
                 <Navbar className="nav mb-4 container-fluid" style={styles.color} expand="lg">
   <Navbar.Brand className="ml-3 mt-3" style={{fontSize:'2rem',color:`${this.state.linkColor}`,position:'relative',left:'50px',fontFamily:'Parisienne'}}><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px' }} /><b><Link style={{color:this.state.linkColor}} to="/">
-    Estate  </Link></b></Navbar.Brand>
+    e-Real Estate  </Link></b></Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="ml-auto">
@@ -84,27 +90,43 @@ handleChange = (e) =>{
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/search/None">
     Search Properties  </Link>
     </Nav.Link>
-      <Button type="button" style={{color:'#ffeeea',backgroundColor:'#ff6645'}}   className="btn  mr-3">
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/comparison">
+    Property-Comparison  </Link>
+    </Nav.Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/Blogs">
+    Blog  </Link>
+    </Nav.Link>
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/prediction">
+    Evaluator  </Link>
+    </Nav.Link>
+    {this.state.token ?
+      <Nav.Link className="mr-1" ><Link style={{color:this.state.linkColor}} to="/cart">
+    <i className="fa fa-shopping-cart"></i> Cart </Link>
+    </Nav.Link>
+   
+    :null}
+      <button type="button" style={{color:'#ffeeea',backgroundColor:'#ff6645'}}   className="btn  mr-1">
       {this.state.token ?
       <Link to="/addProperty" style={{color:'#ffeeea'}}>Add New Property</Link>
        : 
        <Link to="/login" style={{color:'#ffeeea'}}>Add New Property</Link>}
-      </Button>
+      </button>
     </Nav>
+    <Form inline>
+    {this.state.token ?
+      <button style={{backgroundColor:'#ff6645',color:'#ffeeea'}} onClick={this.logout} type='Button' className="btn btn-md  " >Logout</button>
+       :
+       <div>
+      <button type='Button' style={{backgroundColor:'#ff6645',color:'#ffeeea'}} className="btn  btn-md ml-2 mr-2"><Link style={{color:'#fcfbff'}} to="/login">Login</Link></button>
+      <button style={{backgroundColor:'#ff6645',color:'#ffeeea'}} type='Button' className="btn btn-md ml-2 mr-2"><Link style={{color:'#fcfbff'}} to="/signup">SignUp</Link></button>
+      </div> }
+    </Form>
     {this.state.user ? 
       this.state.user.map(data=>
         <Nav.Link className="ml-4" style={{color:"white"}} ><Link style={{color:this.state.linkColor}} to="/dashboard">{data.username.toUpperCase()}</Link></Nav.Link>)
        : null}
       
-    <Form inline>
-    {this.state.token ?
-      <button style={{backgroundColor:'#ff6645',color:'#ffeeea'}} onClick={this.logout} type='Button' className="btn btn-md  mr-2" >Logout</button>
-       :
-       <div>
-      <button type='Button' style={{backgroundColor:'#ff6645',color:'#ffeeea'}} className="btn  btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/login">Login</Link></button>
-      <button style={{backgroundColor:'#ff6645',color:'#ffeeea'}} type='Button' className="btn btn-md ml-2 mr-2"><Link style={{color:this.state.linkColor}} to="/signup">SignUp</Link></button>
-      </div> }
-    </Form>
+   
   </Navbar.Collapse>
 </Navbar>
             </div>

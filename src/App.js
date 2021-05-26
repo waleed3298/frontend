@@ -27,7 +27,7 @@ import NotFound from './components/notFound';
 import Landing from './components/landing';
 import ItemDetail from './components/e-commerce/itemDetail';
 import PriceIndex from './components/priceIndex';
-import blogs from './components/Blog/blogs';
+import Blogs from './components/Blog/blogs';
 import BlogDetail from './components/Blog/blogdetail';
 import cityPriceIndex from './components/cityPriceIndex';
 import CartScreen from './components/e-commerce/cartScreen';
@@ -45,12 +45,14 @@ import AdPayment from './components/dashboard/adPayment';
 import Prediction from './components/predictor/prediction';
 
 import {checkStatus, logout} from './reducers/userSlice';
-
+import Comparison from './components/property-management/comparison';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFound';
-
+import ItemSearch from './components/e-commerce/itemSearch';
+import CreateProfile from './components/dashboard/createProfile';
+import EditProfile from './components/dashboard/editProfile';
 
 
 function App(){
@@ -85,8 +87,8 @@ function App(){
       <Route exact path="/AddItem" component={AddItem}></Route>
       <Route exact path="/product/:id" component={ItemDetail}></Route>
       <Route exact path="/price-index" component={PriceIndex}></Route>
-      <Route exact path="/Blogs" component={blogs}></Route>
-      <Route exact path="/Blogs/:handle" component={BlogDetail}></Route>
+      <Route exact path="/Blogs" component={Blogs}></Route>
+      <Route exact path="/Blog/:handle" component={BlogDetail}></Route>
       <Route exact path="/CityIndex/:handle" component={cityPriceIndex}></Route>
       <Route exact path="/cart/:id?" component={CartScreen}></Route>
       <Route exact path="/shipping" component={Shipping}></Route>
@@ -98,6 +100,10 @@ function App(){
       <Route exact path="/prediction" component={Prediction}></Route>
       <Route exact path="/chat/:chatUuid" component={ChatPage} />
 			<Route exact path="/inbox/:handle?" component={HomePage} />
+			<Route exact path="/items/" component={ItemSearch} />
+			<Route exact path="/createProfile/" component={CreateProfile} />
+			<Route exact path="/editProfile/:handle" component={EditProfile} />
+			<Route exact path="/comparison" component={Comparison} />
 			
 <Route component={NotFound} />
       </Switch>      

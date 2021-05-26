@@ -9,25 +9,21 @@ import Navigation from '../navbar';
 import {Link} from 'react-router-dom';
 import Footer from '../footer';
 import {Grid,Segment} from 'semantic-ui-react'
-class SearchResult extends Component{
+import {Range} from 'react-range'
+class ItemSearch extends Component{
     state = {
         token: this.props.cookies.get('adtoken'),
         search:false,
         clicked:false,
+        values : [50],
         featured:[],
         postsPerPage : 8,
         currentPage : 1,
         properties:[],
-        City:'',
-        Location:'',
-        Size:'',
-        Units:'',
-        Construction_status:'',
-        Price:'',
-        Type:'',
-        Purpose:'',
-        Beds:'',
-        Baths:'',
+        price:'',
+        name:'',
+        brand:'',
+        category:'',
     }
 handleChange = (event) =>{
     const value = event.target.value;
@@ -40,7 +36,6 @@ handleClick = (id) =>{
 }
 getResults = () =>{
   const { handle } = this.props.match.params
-  if (handle){
   let url = `http://127.0.0.1:4000/api/advertisements/?search=${handle}`
   axios.get(url,{
     headers:{
@@ -49,13 +44,13 @@ getResults = () =>{
     }
   }).then(res=>this.setState({properties:res.data})).catch(error=>this.setState({error:error}));    
   this.setState({search:true})
-  }}
+  }
 
   handleSubmit = (e) =>{
     e.preventDefault();
-    const url2 = `?Type=${this.state.Type}&Location=${this.state.Location}&Construction_status=${this.state.Construction_status}&Price=${this.state.Price}&Size=${this.state.Size}&Units=${this.state.Units}&City=${this.state.City}&Purpose=${this.state.Purpose}&Beds=${this.state.Beds}&Baths=${this.state.Baths}`
+    const url2 = `?name=${this.state.name}&brand=${this.state.brand}&price=${this.state.price}&category=${this.state.category}`
     console.log(this.state);
-    let url = 'http://127.0.0.1:4000/api/advertisements'+url2;
+    let url = 'http://127.0.0.1:4000/api/productSearch'+url2;
     axios.get(url,{
       headers:{
         'content-type':'multipart/form-data',
@@ -86,8 +81,9 @@ render(){
       return (
         <div style={{backgroundColor:'#fcfbff'}}>
         <Navigation color="#f5f8fa" linkColor="#23313e" />
+        <div style={{position:'relative',top:'10vh'}}>        
         <div style={{textAlign:'center',width:'60%',position:'relative',left:'20%'}} className="text-center ui horizontal divider">
-            Search Results
+           <h1 style={{fontFamily:'Lora',fontWeight:'bold'}}> Search Results</h1>
           </div>
         <Grid columns={2} stackable>
         <Grid.Row>
@@ -97,59 +93,27 @@ render(){
         <Form style={{width:'65%',paddingRight:'5%',marginLeft:'5%',position:'relative',top:'5%'}}>
                         <Form.Group>
                         <div id="SearchForm">
-                        <Form.Label><b>Property Location:</b></Form.Label>
-                          <Form.Control style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.City} size="sm" name="City" type="text" placeholder="City" />
+                        <Form.Label><b>Item Name: </b></Form.Label>
+                          <Form.Control style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.name} size="sm" name="name" type="text" placeholder="Name" />
                         <br/> 
-                          <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} value={this.state.Location} size="sm" name="Location" type="text" placeholder="Location" />
-                        <br/>
-                        <Form.Label><b>Property Specifications:</b></Form.Label>
-                        <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} size="sm" name="Price" type="text" value={this.state.Price} placeholder="Estimated Price of the property" />    
-                        <br/>
-                            <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Size} name="Size" type="text" placeholder="Size Property" />
-                            <br/>
-                            <Row>
-                            <Col>
-                              <Form.Control style={{backgroundColor:'#f4f6f7'}} value={this.state.Units} name='Units' onChange={this.handleChange} size="sm" as="select">
-                                        <option value="square_yards">Units</option>
-                                        <option value="square_yards">Square Yards</option>
-                                        <option value="square_metres">Square Metres</option>
-                                        <option value="marla">Marla</option>
-                                        <option value="kanal">Kanal</option>
+                          <Form.Control onChange={e=>this.handleChange(e)} style={{backgroundColor:'#f4f6f7'}} value={this.state.brand} size="sm" name="brand" type="text" placeholder="Brand/Company" /><br/>
+                              <Form.Control style={{backgroundColor:'#f4f6f7'}} value={this.state.category} name='category' onChange={this.handleChange} size="sm" as="select">
+                                        <option value="">Category</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="Paints">Paints</option>
+                                        <option value="Construction Tools">Construction Tools</option>
+                                        <option value="Building Material">Building Material</option>
+                                        <option value="Lighting">Lighting</option>
+                                        <option value="Bathroom">Bathroom</option>
+                                        <option value="Hardware">Hardware</option>
+                                        <option value="Decor">Decor</option>
+                                        <option value="Walls and flooring">Walls and Flooring</option>
+                                        <option value="Kitchen">Kitchen</option>
+                                        <option value="Security">Security</option>
                                         </Form.Control>
                                         <br />
-                            </Col>
-                            <Col>
-                            <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='sm' as='select'>
-                                        <option value="">Status</option>
-                                        <option value="complete">Complete</option>
-                                        <option value="under_construction">Under Construction</option>
-                            </Form.Control>                         
-                            </Col>
-                            </Row>
-                            <Row>
-                              <Col>
-                              <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Beds} name="Beds" type="text" placeholder="Bedrooms" />
-                              </Col>
-                              <Col>
-                              <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.Baths} name="Baths" type="text" placeholder="Bathrooms" />
-                              </Col>
-                            </Row><br/>
-                            <Form.Label><b>Property Type:</b></Form.Label>
-                            
-                          <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Purpose" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
-                                      <option value="">Purpose</option>
-                                      <option value="sale">Sale</option>
-                                      <option value="rent">Rent</option>
-                                      </Form.Control> <br/>            
-                          <Form.Control style={{backgroundColor:'#f4f6f7'}} name="Type" value={this.state.Type} onChange={this.handleChange} size='sm' as='select'>
-                                      <option value="">Type</option>
-                                      <option value="property">House</option>
-                                      <option value="plot">Plot</option>
-                                      <option value="commercial_area">Commercial Area</option>
-                          </Form.Control>                         
-                          
-                          <br />
-                            <Button onClick={this.handleSubmit} style={{backgroundColor:'#ff6645',position:'relative',left:'1%',width:'190px',bottom:'10%'}}>Apply Changes</Button>
+                              <Form.Control size="sm" style={{backgroundColor:'#f4f6f7'}} onChange={e=>this.handleChange(e)} value={this.state.price} name="price" type="text" placeholder="Price in Rs." />
+                          <br />  <Button onClick={this.handleSubmit} style={{backgroundColor:'#ff6645',position:'relative',left:'1%',width:'210px',bottom:'10%'}}>Apply Changes</Button>
   </div>
                     <br />
                   </Form.Group><br/>
@@ -165,13 +129,13 @@ render(){
                     <div  onClick={()=>this.handleClick(property.id)} id={property.id} className="card mb-3" style={{width:'28vw',maxWidth: '540px',position:'relative',right:'40%',marginLeft:'50px',cursor:'pointer'}}>
   <div className="row no-gutters">
     <div className="col-md-4">
-      <img style={{height:'120px'}} src={property.Image} className="card-img" alt="..."/>
+      <img style={{height:'120px'}} src={property.image} className="card-img" alt="..."/>
     </div>
     <div className="col-md-8">
       <div className="card-body">
-        <h5 style={{fontWeight:'bold'}} className="card-title">{property.Title}</h5>
-        <p style={{fontWeight:'heavy'}}>Rs. {property.Price}</p>
-        <p className="card-text"><small className="text-muted">{property.Size} {property.Units}</small></p>
+        <h5 style={{fontWeight:'bold'}} className="card-title">{property.name}</h5>
+        <p style={{fontWeight:'heavy'}}>Rs. {property.price}</p>
+        <p className="card-text"><small className="text-muted">{property.category}</small></p>
       </div>
     </div>
   </div>
@@ -223,9 +187,10 @@ render(){
        </div>
        </Grid.Column></Grid.Row></Grid>
         </div>
+</div>
 
           );
   };
 }
 
-export default withCookies(SearchResult);
+export default withCookies(ItemSearch);

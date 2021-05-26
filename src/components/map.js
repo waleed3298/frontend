@@ -50,8 +50,7 @@ handleChange = (event) =>{
   }
   handleSubmit = (e) =>{
     e.preventDefault();
-    const url2 = `?search=${this.state.Type},${this.state.Location},${this.state.Construction_status},${this.state.Price},${this.state.Size},${this.state.Units},${this.state.City},${this.state.Purpose},`
-    console.log(this.state);
+    const url2 = `?Type=${this.state.Type}&Location=${this.state.Location}&Construction_status=${this.state.Construction_status}&Price=${this.state.Price}&Size=${this.state.Size}&Units=${this.state.Units}&City=${this.state.City}&Purpose=${this.state.Purpose}&Beds=${this.state.Beds}&Baths=${this.state.Baths}`
     let url = 'http://127.0.0.1:4000/api/advertisements'+url2;
     axios.get(url,{
       headers:{
@@ -97,9 +96,9 @@ handleChange = (event) =>{
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="ml-auto">
       <Nav.Link style={{color:"#233443"}} href="http://localhost:3000/search/None">Search Properties</Nav.Link>
-      <Nav.Link style={{color:"#233443"}} href="http://localhost:3000/properties">Houses</Nav.Link>
-      <Nav.Link style={{color:"#233443"}} href="http://localhost:3000/plots">Plots</Nav.Link>
-      <Nav.Link className="mr-2" style={{color:"#233443"}} href="http://localhost:3000/commercial-areas">Commercial Properties</Nav.Link>
+      <Nav.Link style={{color:"#233443"}} href="http://localhost:3000/Price-index">Price-Index</Nav.Link>
+      <Nav.Link style={{color:"#233443"}} href="http://localhost:3000/prediction">Evaluator</Nav.Link>
+      <Nav.Link className="mr-2" style={{color:"#233443"}} href="http://localhost:3000/store">Store</Nav.Link>
     </Nav>
     <Button onClick={this.add} style={{backgroundColor:'#ff6645'}}><i className="fa fa-plus"></i> Post new property</Button>
   </Navbar.Collapse>

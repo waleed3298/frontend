@@ -88,12 +88,11 @@ handleChange = (event) =>{
    
     render(){
         return (
-            <div id="wrapper">
-            <Navigation  linkColor="white" color="#556B2F" />
-            <div className='Form'>
+          <div style={{backgroundColor:'#f5f8fa',height:'100%'}}><Navigation linkColor="#233443"  color="#fcfbff" />      
+        <div className='Form'>
             <Form onSubmit={this.handleSubmit}>
                       <Form.Group>
-                      <h1 style={{textAlign:'center',fontFamily:'Oswald',marginTop:'50px'}}>Edit Your Advertisement</h1><br />
+                      <h1 style={{textAlign:'center',fontWeight:'bold',fontSize:'50px',fontFamily:'Oswald',marginTop:'50px'}}>Edit Your Advertisement</h1><br />
                       <div id="Form">
                       <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Details</h6> 
                       <Form.Label>Listing Title</Form.Label>

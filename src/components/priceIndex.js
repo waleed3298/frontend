@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navigation from './navbar';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { LineChart,BarChart,Bar, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import './components.css';
 import {Form,Row,Col,Button,Card,ListGroup} from 'react-bootstrap';
 import {Grid,List} from 'semantic-ui-react';

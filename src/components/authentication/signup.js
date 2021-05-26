@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button'
 import './authentication.css'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {Link} from 'react-router-dom';
+
 class SignUp extends Component{
     state = {
         error:'',
@@ -35,9 +37,6 @@ class SignUp extends Component{
     )
     .catch( error => this.setState({error:error}))
     }
-    login = () =>{
-        window.location.href="/login"
-    }
     handleClick = () =>{
         if (this.state.credentials.password!==this.state.credentials.password2){
             this.setState({error:"Passwords don't match!"})
@@ -57,10 +56,12 @@ class SignUp extends Component{
     render(){
         return (
             <div>
+            <Link to="/">
             <h1 className="mt-4 mr-4" style={{color:'#556B2F',float:'right',fontFamily:'Parisienne',cursor:'pointer'}} onClick={this.home} ><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px'}}/>Estate</h1>
-            <Row>
-                <Col lg={3} md={3} sm={3} className="signup"><div id="div" ><div style={{position:'relative',top:'40%',left:'10%'}}><h4 style={{color:'white'}}>Already Have an account?</h4><br/>
-                <button onClick={this.login} style={{backgroundColor:'#556B2F',position:'relative',left:'12%',color:'white'}} className="btn btn-lg ml-3">Sign In</button></div></div>
+            </Link><Row>
+                <Col lg={3} md={3} sm={3} className="signup"><div id="div1" ><div style={{position:'relative',top:'80%',left:'10%'}}><h4 style={{color:'white'}}>Already Have an account?</h4><br/>
+                <Link to='/login'>
+                <button  style={{backgroundColor:'#556B2F',position:'relative',left:'12%',color:'white'}} className="btn btn-lg ml-3">Sign In</button></Link></div></div>
                 </Col>
                 <Col className="mt-4" style={{position:'relative',right:'10%'}} lg={9} md={9} sm={9}><div className="Form" style={{width:'80%',position:'relative',left:'25%'}}>
             <h1 className="mt-4" style={{textAlign:'center',position:'relative',top:'5%',color:'#9ACD32',fontFamily:'Oswald'}}>Create a new account</h1><br/>

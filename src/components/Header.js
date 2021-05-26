@@ -26,26 +26,20 @@ handleChange = (event) =>{
     render(){
       var URL = '/results/'
         return (
-    <div className="header backgroundimage">
-    <div className="top">
-    <div className="dark-overlay landing-inner text-dark mt-2">
-    <div className="tl container">
-      <div  className="row">
-        <div style={{width:'80%',left:'10%',right:'10%',top:'2%'}} className="mt-4 col-md-12 text-center mt-4">
-        <div style={{position:'relative',top:'10%'}} className="row mt-4">
-        <div className="col-lg-6 col-md-6">
-          <h1 id="head" className="text-heavy text-left display-4 mb-4 mt-5 text-light" style={{fontWeight:"heavier",fontSize:'5rem',position:'relative',right:'5%'}}>Finding The Dream For Every Owner
-</h1></div><div className="col-lg-6 col-md-6">
-       <LandingForm />    
-          </div>
-          </div>
-          </div>
-      </div>
+    <div >    
+    <Row>
+      <Col className="grad" lg={5}>
+      <div style={{position:'relative',left:'8%'}} >
+          <h1  className="text-heavy text-left display-4 mt-4 mb-4 text-dark" style={{fontWeight:"bold",fontFamily:'Lora',fontSize:'5rem',position:'relative',top:'8vh',left:'16%',width:'80%'}}>Finding The Dream For Every Owner
+</h1><br/><br/>
+<LandingForm />
+</div>
+      </Col>
+      <Col lg={7}>
+      <img src="/sample5.png" alt="landing" style={{width:'100%',height:'100%'}}></img>
+      </Col>
+    </Row><br/>
     </div>
-  </div><br/><br/><br/><br/>
-  </div>
-  <br/>        
-  </div>
             );
     };
 }

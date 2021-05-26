@@ -36,6 +36,7 @@ class AddProperty extends Component{
   Price:'',
   Size:'',
   Units:'',
+  fade:'property',
   City:'',
   Beds:'',
   Baths:'',
@@ -144,14 +145,16 @@ handleImageChange = (e) =>{
       onSelected = (viewport,item) =>{
         this.setState({viewport:viewport});
       }
-    
+    fade = (e) =>{
+      this.setState({fade:e})
+    }
 
       render(){
         const {viewport, marker} = this.state;
         return(
           <div>
                   {this.state.token ?
-                    <div id="wrapper">
+                    <div  id="wrapper">
                     <Navigation linkColor="green" color="#fcfbff" />
                      <div className="Form">
                         <Form onSubmit={this.handleSubmit}>
@@ -159,7 +162,7 @@ handleImageChange = (e) =>{
                         <div id="Form">
                         <h1 style={{fontFamily:'Oswald',fontSize:'50px',fontWeight:'bold',textAlign:'center'}}>Post your Listing</h1><br />
                         <h6 style={{textAlign:'left',fontFamily:'Lora',backgroundColor:'#556B2F',padding:'10px',borderRadius:'1px',color:'white'}}>Property Details</h6><br/>
-                                <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement" /><br/>
+                                <Form.Control size="md" name="Title" value={this.state.Title} onChange={e=>this.handleChange(e)} type="text" placeholder="Title for your Advertisement"/><br/>
                                 <Form.Control value={this.state.Description} onChange={e=>this.handleChange(e)} placeholder="Description" name="Description" as="textarea" rows={3}/><br/>
                                 
                                 <Form.Control onChange={e=>this.handleChange(e)} size="md" name="Price" type="text" value={this.state.Price} placeholder="Asking Price of your property" />
@@ -228,12 +231,12 @@ value=""
                 
                         <Form.Label>Property Type</Form.Label>
                         <Row>
-                        <Col><Form.Check  name="Type" value="property" type="radio" label="House"></Form.Check></Col>
-                        <Col><Form.Check  name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
-                        <Col><Form.Check  name="Type" value="commercial" type="radio" label="Commercial"></Form.Check></Col>
+                        <Col><Form.Check onClick={()=>this.fade('property')} name="Type" value="property" type="radio" label="House"></Form.Check></Col>
+                        <Col><Form.Check onClick={()=>this.fade('plot')}  name="Type" value="plot" type="radio" label="Plot"></Form.Check></Col>
+                        <Col><Form.Check onClick={()=>this.fade('commercial_area')}  name="Type" value="commercial" type="radio" label="Commercial"></Form.Check></Col>
                         </Row>
                         <br/>  
-                            <Row>
+                            {this.state.fade=='property' ? <Row>
                             <Col>
                             <Form.Control value={this.state.Beds} onChange={e=>this.handleChange(e)} size="md" name="Beds" type="text" placeholder="Bedrooms" />
 
@@ -242,14 +245,31 @@ value=""
                             <Form.Control value={this.state.Baths} onChange={e=>this.handleChange(e)} size="md" name="Baths" type="text" placeholder="Bathrooms" />
                                         <br />
 
+                            </Col></Row>:
+                            <Row>
+                            <Col>
+                            <Form.Control value={this.state.Beds} onChange={e=>this.handleChange(e)} size="md" name="Beds" type="text" placeholder="Bedrooms" disabled/>
+
                             </Col>
-                            </Row>
-                                        <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='md' as='select'>
+                            <Col>
+                            <Form.Control value={this.state.Baths} onChange={e=>this.handleChange(e)} size="md" name="Baths" type="text" placeholder="Bathrooms" disabled/>
+                                        <br />
+
+                            </Col></Row>}
+                            {this.state.fade=='plot' ?
+                            <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='md' as='select' disabled>
                                         <option value="">Construction Status</option>
                                         <option value="complete">Complete</option>
                                         <option value="under_construction">Under Construction</option>
                             </Form.Control>
-                            <Form.Label>Purpose</Form.Label>
+                             
+                            :            <Form.Control name="Construction_status" value={this.state.Construction_status} onChange={this.handleChange} size='md' as='select'>
+                                        <option value="">Construction Status</option>
+                                        <option value="complete">Complete</option>
+                                        <option value="under_construction">Under Construction</option>
+                            </Form.Control>
+                            }
+                             <Form.Label>Purpose</Form.Label>
                             <Form.Group value={this.state.Purpose} onChange={this.handleChange}>
                             <Row>
                             <Col><Form.Check onClick={this.HouseForm} name="Purpose" value="sale" type="radio" label="Sale"></Form.Check></Col>
@@ -260,7 +280,7 @@ value=""
                         <Form.Group as="radio" value={this.state.Type} onChange={this.handleChange}>
                         <Row>
                         <Col><Form.Check  name="Featured" value="True" type="radio" label="Yes"></Form.Check></Col>
-                        <Col><Form.Check  name="Featured" value="False" type="radio" label="No"></Form.Check></Col>
+                        <Col ><Form.Check  name="Featured" value="False" type="radio" label="No"></Form.Check></Col>
                         </Row>
                         </Form.Group>
                         <br/>

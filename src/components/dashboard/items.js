@@ -114,9 +114,9 @@ class DashboardItems extends Component{
                     return(
                     <Col sm={12} md={6} lg={4}>
                     <div style={{marginBottom:'10px'}} className="ui link cards">
-                      <div style={{boxShadow: '10px 10px  #D5DBDB'}}  className="card">
+                      <div style={{boxShadow: '10px 10px  #D5DBDB',width:'10vw',height:'10%'}}  className="card">
                         <div className="image">
-                          <img alt="Property" src={item.Image}/>
+                          <img  alt="Property" src={item.Image}/>
                         </div>
                         <div className="content">
                           <div className="header"></div>

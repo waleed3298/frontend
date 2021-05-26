@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {login, selectAuthError, selectIsLoggedIn, selectIsLoading} from '../../reducers/userSlice';
-
+import {Link} from 'react-router-dom';
 class Login extends Component{
     state = {
         credentials:{
@@ -33,6 +33,13 @@ class Login extends Component{
         console.log(data.token)
         if (data.token != null){
         this.props.cookies.set('adtoken',data.token)
+        const tok = localStorage.getItem('token')
+        if(tok){
+          window.location.href="/dashboard"
+        }
+        else{
+          console.log("No token")
+        }
         }
         else{
             this.setState({errorMessage:'Username or Password Incorrect'})
@@ -43,23 +50,22 @@ class Login extends Component{
     
     }
     hasLogin = e =>{
-      this.getToken()
       const { dispatch } = this.props;
         e.preventDefault();
         dispatch(login(this.state.credentials.username, this.state.credentials.password));
+        this.getToken()
       }
     
-  signup = () =>{
-    window.location.href = '/signup'
-  }
     render(){
         return (
             <div>
-  <h1 className="mt-4 mr-4" style={{color:'#556B2F',float:'right',fontFamily:'Parisienne',cursor:'pointer'}} onClick={this.home} ><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px'}}/>Estate</h1>
+            <Link to='/'>
+  <h1 className="mt-4 mr-4" style={{color:'#556B2F',float:'right',fontFamily:'Parisienne',cursor:'pointer'}} onClick={this.home} ><i className="fa fa-fw fa-home" style={{ fontSize: '1em',position:'relative',top:'2px'}}/>Estate</h1></Link>
             <Row>
-                <Col lg={3} md={3} sm={3} className="login"><div id="div" ><div style={{position:'relative',top:'40%'}}><h4 style={{color:'white',textAlign:'center'}}>Try It Today</h4><br/>
+                <Col lg={3} md={3} sm={3} className="login"><div id="div1" ><div style={{position:'relative'}}><h4 style={{color:'white',textAlign:'center'}}>Try It Today</h4><br/>
                 <p style={{color:'white',textAlign:'center'}}>No Advance payment required</p><br/>
-                <button onClick={this.signup} style={{backgroundColor:'#556B2F',position:'relative',left:'35%',color:'white'}} className="btn btn-lg ml-3">Sign Up</button></div></div>
+                <Link to='/signup'>
+                <button  style={{backgroundColor:'#556B2F',position:'relative',left:'35%',color:'white'}} className="btn btn-lg ml-3">Sign Up</button></Link></div></div>
                 </Col>
               <Col className="mt-4" style={{position:'relative',right:'10%'}} lg={9} md={9} sm={9}>                <br/>
             <div className="Form">
@@ -74,7 +80,6 @@ class Login extends Component{
                 <Form.Control onChange={this.handleChange} name="username" value={this.state.credentials.username} size="md" type="text" placeholder="Username" /><br />
             <Form.Label>Password:</Form.Label>
                 <Form.Control onChange={this.handleChange} size="md" name="password" value={this.state.credentials.password} type="password" placeholder="Enter your Password" /><br />
-                
                 <button className="btn" onClick={this.hasLogin} style={{textAlign:'center',position:'relative',width:'100px',left:'40%',backgroundColor:'#556B2F',color:'white'}} variant="info">Log In</button><br/>
                 
             </Form.Group>

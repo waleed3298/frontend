@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Payment from '../payment';
+import AdPay from '../adPay';
 import Navigation from '../navbar';
 import {withCookies} from 'react-cookie';
 import axios from 'axios';
@@ -20,7 +20,7 @@ class AdPayment extends Component {
               this.setState({flag:true})
     }
     updateProfile = (e) =>{
-        let ads = this.state.profile[0].Ad_quantity + 4
+        let ads = Number(this.state.profile[0].Ad_quantity) + Number(this.state.payment)
         e.preventDefault();
       let form_data = new FormData();
       form_data.append('Full_Name',this.state.profile[0].Full_Name);
@@ -47,6 +47,7 @@ class AdPayment extends Component {
             <div>
             <div style={{width:'60%',position:'relative',left:'20%',top:'50px'}}>
             <h3 className="text-center">Select your package</h3><br/>
+            {this.state.payment!='' ? console.log(this.state.payment) : null}
             <Row>
                 <Col lg={4} md={4} sm={4}>
                 <Card style={{ width: '18rem' }}>
@@ -113,8 +114,11 @@ class AdPayment extends Component {
                         >
                         </Form.Check>
                     </Col>
-                </Row><br/>
-            <Payment /></div><br/>
+                </Row><br/>  
+            {this.state.payment=='4' ? <AdPay price='8000'/> : null }
+            {this.state.payment=='10' ? <AdPay price='16000'/> : null }
+            {this.state.payment=='18' ? <AdPay price='20000'/> : null }
+          </div><br/>
             <button style={{width:'50%',position:'relative',left:'25%',top:'70px'}} onClick={this.updateProfile} className="btn btn-md btn-dark">Update Advertisement quantity</button>
             </div>
         )

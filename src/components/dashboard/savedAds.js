@@ -75,8 +75,8 @@ class SavedAds extends Component{
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
     
         return(
-            <div >
-            <div>
+          <div style={{backgroundColor:'#f5f8fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />      
+          <div style={{marginTop:'5%'}}>
             {this.state.loading ?
               <div class="ui segment">
               <div class="ui active dimmer">
@@ -86,7 +86,6 @@ class SavedAds extends Component{
             </div> 
             : 
             <div>
-            <Navigation color="#556B2F" linkColor="white" />
             
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Dashboard</h1>

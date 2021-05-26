@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navigation from '../navbar';
-import {Form,Row,Col,Button} from 'react-bootstrap';
+import {Form,Row,Col,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 import ReactMapGL, {Marker, NavigationControl,GeolocateControl} from 'react-map-gl';
 import Geocoder from 'react-mapbox-gl-geocoder';
@@ -16,6 +16,7 @@ export default class Prediction extends Component {
         Units:'',
         Type:'',
         prediction:null,
+        percentage:null,
         viewport: {
             latitude: 33.6844,
             longitude: 73.0479,
@@ -26,8 +27,7 @@ export default class Prediction extends Component {
           marker: {
             latitude: 33.6844,
             longitude: 73.0479
-          },
-          
+          },     
     }
     reset = () =>{
         this.setState({
@@ -79,12 +79,12 @@ export default class Prediction extends Component {
           headers:{
             'content-type':'multipart/form-data',
           }
-        }).then(res=>this.setState({prediction:res.data})).catch(error=>this.setState({error:error}));
+        }).then(res=>this.setState({prediction:res.data,percentage:Number(res.data)*0.1})).catch(error=>this.setState({error:error}));
       }
       
       _updateViewport = viewport => {
         this.setState({viewport});
-      };
+        };
     
       _logDragEvent(name, event) {
         this.setState({
@@ -115,15 +115,13 @@ export default class Prediction extends Component {
       
       onSelected = (viewport,item) =>{
         this.setState({viewport:viewport});
-      }
-    
-          
+      }   
     render() {
         const {viewport, marker} = this.state;
         return (
             <div  style={{backgroundColor:'#fcfbff'}}>
                 <Navigation linkColor="black" color="#f5f8fa" />
-                <div className="Form">
+                <div style={{marginTop:'6%'}} className="Form">
                 <h1 className="text-center" style={{fontFamily:'Oswald',fontSize:'50px',color:'#bbbcbe',fontWeight:'bold'}}>Property Evaluation</h1><br/>
                 <p style={{fontWeight:'light',fontSize:'14px'}} className="text-center">This is the property price prediction page. If you are a buyer or a seller and want to predict the price of a property you want to sell or buy then this is the right place for you. You can use our online property valuation predictor in order to predict the value of your desired or listed property. Please enter the details of the property you want to value and press on the evalute button in order to find the value of the property.
                 Remember this property value estimator won't give you exact accurate value of the property and may not be True always. The main purpose of it is to provide you with an estimate of how much would be the property you are looking for is worth.</p><br/><br/>
@@ -196,10 +194,9 @@ value=""
 
       </ReactMapGL></Col>
       </Row><br/>
-      {this.state.prediction != null ? <h4 className="text-outline-success">Estimated price for your property is: Rs. {this.state.prediction} </h4>
-                        :
-                        <h4 >Estimated price for your property is:</h4>
-                         }
+      {this.state.prediction != null ? <div> 
+      <Alert variant='warning'>Estimated price range for your property is: <b>Rs. {Math.round(Number(this.state.prediction)-Number(this.state.percentage))} - {Math.round(Number(this.state.prediction)+Number(this.state.percentage))}</b> </Alert><Alert variant='success'>Estimated exact price for your property is:<b> Rs. {Math.round(this.state.prediction)} </b></Alert></div>
+                        :null}
                         <Row style={{marginTop:'5%',width:'60%',position:'relative',left:'20%'}}>
                             <Col lg={6} md={6}>
                                 <Button onClick={this.evaluate} className="btn btn-block btn-dark">Evaluate</Button>

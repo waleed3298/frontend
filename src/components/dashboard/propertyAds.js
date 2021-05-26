@@ -88,8 +88,8 @@ class PropertyAds extends Component{
     const paginate = pageNumber => this.setState({currentPage:pageNumber});
     
         return (
-            <div>
-                <div>
+          <div style={{backgroundColor:'#f5f8fa',height:'100%'}}><Navigation linkColor="#233443"  color="#fcfbff" />      
+          <div style={{marginTop:'5%'}}>
             {this.state.loading ?
               <div class="ui segment">
               <div class="ui active dimmer">
@@ -99,8 +99,6 @@ class PropertyAds extends Component{
             </div> 
             : 
             <div>
-            <Navigation linkColor="white"  color="#556B2F" />
-          
             <div style={{width:'60%',position:'relative',left:'20%',right:'20%'}}>
             <h1 style={{fontFamily:'Lora',textAlign:'center'}}>Dashboard</h1>
             <div class="ui horizontal divider">

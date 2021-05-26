@@ -42,17 +42,17 @@ class Items extends Component{
       const paginate = pageNumber => this.setState({currentPage:pageNumber});
     
         return(
-            <div id="wrapper" style={{backgroundColor:'white'}}>
-            <div style={{width:'80%',position:'relative',left:'10%',right:'20%'}}>
+          <div  style={{backgroundColor:'#fcfbff'}}>
+                 <div style={{width:'80%',position:'relative',left:'10%',right:'20%'}}>
             <div class="ui horizontal divider">
-            Your Advertisements
+            <h2 style={{fontWeight:'bold'}}>Some Top Products</h2>
           </div>
           <Row>
           {this.state.Items.length>0 ?
           currentPosts.map(product=>{
          return(
            <Col lg={3} md={6} sm={12}>
-          <Card className="my-3 p-3 rounded">
+          <Card className="">
             <Link to={`/product/${product._id}`}>
                 <Card.Img src={product.image} />
             </Link>

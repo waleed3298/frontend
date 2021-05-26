@@ -65,6 +65,7 @@ export const login = (username, password) => dispatch => {
 			)
 		)
 	);
+	
 };
 
 
@@ -112,6 +113,6 @@ export const checkStatus = () => dispatch => {
 				dispatch(setUserError('An error occurred while checking user status'));
 			}
 		});
-};
+	};
 
 export default userSlice.reducer;

@@ -15,6 +15,7 @@ import LoaderExampleActive from '../loader';
 import { BarChart,LineChart,Line, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {Grid,Segment} from 'semantic-ui-react';
 import { Card, Icon,Divider } from 'semantic-ui-react'
+import {Redirect} from 'react-router-dom';
 class Dashboard extends Component{  
   state={
         name:'',
@@ -72,20 +73,6 @@ class Dashboard extends Component{
     window.location.href = '/login'
   }
 }
-getLiked = ()=>{
-  if(this.state.token){
-    this.setState({loading:true})
-  fetch("http://127.0.0.1:4000/api/LikedAds/",{
-        method : 'GET',
-        headers:{
-          'Authorization':`Token ${this.state.token}`
-        }
-        }).then(resp=>resp.json()).then(res=>this.setState({liked:res})).catch(error=>console.log(error));
-     }
-else{
-  window.location.href = '/login'
-}
-}
 handleLink = (id) =>{
   window.location.href = `/AdDetails/${id}`
 }
@@ -98,61 +85,97 @@ Saved = () =>{
 StoreItems = () =>{
   window.location.href="http://localhost:3000/StoreItems"
 }
-
+add = () =>{
+  window.location.href="/addProperty"
+}
     componentDidMount(){
     this.getAds();
     this.getProfiles();
-    this.getLiked();
     this.Recent();
     this.setState({flag:true,loading:false})
     }
+  edit = () =>{
+    window.location.href=`/editProfile/${this.state.profile[0].id}`
+  }
 
     
     render(){
     var URL = '/editproperty/'     
         return(
-          <div style={{backgroundColor:'#f2f2f2'}}>
+          <div style={{backgroundColor:'#f5f8fa',height:'100%'}}><Navigation linkColor="#233443"  color="#fcfbff" />      
           {this.state.loading===true ? 
             <LoaderExampleActive />
-          :  <div style={{fontFamily:'Lora'}} >
+          :  <div style={{fontFamily:'Lora',marginTop:'6%'}} >
            <div>
             <div>
             
-            <Navigation linkColor="#52ab98"  color="#ffffff" />
-            <div className="ui horizontal divider">
-            <h1 style={{textAlign:'center',fontFamily:'Oswald'}}>Dashboard</h1>
+            <div style={{width:'60%',position:'relative',left:'20%'}} className="ui horizontal divider">
+            <h1 style={{textAlign:'center',fontFamily:'Oswald',fontWeight:'bold',fontSize:'50px'}}>Dashboard</h1>
           </div>
-          <div style={{position:'relative',left:'80%'}} className="row"><div className="Col-lg-6">
-          <Link to='/inbox'>
-          <p className="round-button mr-3"><i className="fa fa-envelope"></i></p>
+            <Row style={{position:'relative',bottom:'15px'}}>
+            <Col className="ml-2" lg={1} sm={1} md={1}>
+            <Link to="/Saved">
+            <button style={{backgroundColor:'white',color:'#0e8b75',borderRadius:'10px',marginBottom:'5%',width:'7vw',height:'10vh',position:'relative',left:'5%',top:'5%'}} className="btn btn-lg"><i className="fa fa-heart"></i>  Liked</button><br/>
+            </Link><Link to="/dashboardAds">
+ <button style={{backgroundColor:'white',color:'#0e8b75',borderRadius:'10px',marginBottom:'5%',width:'7vw',height:'10vh',position:'relative',left:'5%',top:'10%'}} className="btn btn-lg"><i className="fa fa-eye"></i>Listings</button></Link><br/>
+ <Link to="/orders">
+<button style={{backgroundColor:'white',color:'#0e8b75',borderRadius:'10px',marginBottom:'5%',width:'7vw',height:'10vh',position:'relative',left:'5%',top:'15%'}} className="btn btn-lg"><i className="fa fa-shopping-cart"></i>Orders</button></Link><br/><br/><br/><br/><br/>
+<div>
+{this.state.profile ? 
+  <div>
+  {console.log(this.state.profile)}
+            <button onClick={this.edit} style={{backgroundColor:'white',color:'#0e8b75',borderRadius:'10px',marginBottom:'5%',width:'7vw',height:'10vh',position:'relative',left:'5%',top:'25%'}} className="btn btn-lg">Edit Profile</button><br/>
+            </div>:
+            <div>
+            <Link to="/createProfile">
+            <button style={{backgroundColor:'white',color:'#0e8b75',borderRadius:'10px',marginBottom:'5%',width:'7vw',height:'10vh',position:'relative',left:'5%',top:'20%'}} className="btn btn-lg">Create Profile</button><br/>
+            </Link>
+            </div>}
+            </div>   </Col>
+        <Col lg={6} sm={6} md={6}>{this.state.properties.length>0 ?
+        <div>
+          <h4 style={{position:'relative',left:'2%',fontWeight:'bold'}} className="ml-3">Listing Stats </h4>
+          <i style={{color:'#0e8a75',float:'right',position:'relative',left:'10%'}} className="fa fa-circle "> Houses</i>    <i style={{color:'#ff6645',float:'right',position:'relative',left:'45%'}} className="fa fa-circle ml-3">  Plots and Commercial area</i>
+            <BarChart xlabel="id" Ylabel="Views" style={{paddingRight:'15%'}}  width={900} height={400} data={this.state.properties}>
+          <CartesianGrid strokeDasharray="3 3" />
+    <XAxis label={{ value: "ID", position: "insideBottom", dy: 10}}  dataKey="id" stroke="#556b2f" padding={{ left: 10, right: 10 }}/>
+    <YAxis  label={{ value: "Views", position: "insideLeft", angle: -90,   dy: -5}}  dataKey="Views" />
+    <Tooltip />
+    <Bar stackId="a" dataKey="Views" width="20px" >
+                {
+                  this.state.properties.map((entry, index) => (
+                    <Cell fill={entry.Type === "property" ? '#0e8a75' : '#ff6645' }/>
+         
+           ))
+                }
+ </Bar>
+  </BarChart></div>
+   : <h4 style={{position:'relative',left:'10%',fontWeight:'bold'}}>No current listings to show stats</h4>}
+         </Col>
+         <Col lg={4} sm={12} md={12}>
+         
+         <div style={{position:'relative',left:'25vw'}} className="row">
+          <div className="Col-lg-6">
+          <Link to="/inbox">
+          <p className="round-button ml-3"><i className="fa fa-envelope"></i></p>
           </Link>
           </div>
           <div className="Col-lg-6">
           {this.state.profile.length > 0 ?
           this.state.profile[0].Ad_quantity>0 ?
             <Link to='/addproperty'>
-          <p className="round-button ml-2"><i className="fa fa-plus"></i></p>
+          <p onClick={this.add} className="round-button mr-2 ml-2"><i className="fa fa-plus"></i></p>
           </Link>
            : 
            <Link to='/adPayment'>
-          <p className="round-button ml-2"><i className="fa fa-plus"></i></p>
+          <p className="round-button mr-2 ml-2"><i className="fa fa-plus"></i></p>
           </Link>
            :null}
           </div></div>
-            <Row>
-        <Col lg={8} sm={8} md={8}>{this.state.properties.length>0 ?
-        <div style={{marginLeft:'5%'}}>
-        <h4  className="ml-3">Advertisement Statistics: </h4>
-          <BarChart style={{backgroundColor:'#ffffff',paddingRight:'15%'}}  width={900} height={400} data={this.state.properties}>
-    <XAxis Legend="ID"  dataKey="id" stroke="#556b2f" padding={{ left: 10, right: 10 }}/>
-    <YAxis  dataKey="Views" />
-    <Tooltip />
-    <Bar dataKey="Views" fill="#c8d8e4" barSize={30} />
-  </BarChart></div> : <p>No properties data</p>}
-         </Col>
-         <Col>
+          
+         
          {this.state.profile.length > 0 ? 
-         <Card style={{marginLeft:'20%',marginTop:'6%',width:'60%',height:'50vh',borderRadius:'10px'}}>
+         <Card style={{marginLeft:'60%',marginTop:'6%',width:'60%',height:'50vh',borderRadius:'10px'}}>
       <Card.Content>
         <Image
           size='small'
@@ -170,8 +193,8 @@ StoreItems = () =>{
    : null}
          </Col>
       </Row><br/>
-      <h4 style={{position:'relative',left:'20px'}} className="ml-4">Recent Listings:</h4>
-            <div style={{width:'70%',position:'relative',left:'15%',right:'20%'}}>
+      
+      <h4 style={{position:'relative',left:'12%',fontWeight:'bold'}} className="ml-3">Recent Listings </h4>      <div style={{width:'70%',position:'relative',left:'15%',right:'20%'}}>
             
        <br/>
      <Row style={{height:'80%'}}>
@@ -203,7 +226,7 @@ StoreItems = () =>{
                           </span><br/><br/>
                           <span className="mt-2">
                       <Link to={URL+property.id}>
-                      <Button className="btn-block " style={{backgroundColor:'#52ab98'}}>Edit Ad</Button>
+                      <Button className="btn-block " style={{backgroundColor:'#0e8b75'}}>Edit Ad</Button>
                       </Link>
                         </span>
                         </div>
@@ -212,42 +235,12 @@ StoreItems = () =>{
                     </Col>
                     )
                 })
-     : null}
+     : <h6>No current Listings</h6>}
      </Row>
                 </div>
            </div>
    </div>
          </div> }
-         <h4 style={{position:'relative',left:'20px'}} className="ml-4">Dashboard Events:</h4>
-         <div style={{width:'70%',position:'relative',left:'15%'}} class="ui cards">
-  <div class="card">
-    <div class="content">
-      <div class="description">
-        View or Edit your Listings 
-      </div>
-    </div>
-    <Link to="/dashboardAds">
-    <Button style={{backgroundColor:'#94618e'}} className="btn btn-block"><i style={{color:'white'}} className="fa fa-eye"></i> Listings</Button></Link>
- </div>
-  <div class="card">
-    <div class="content">
-      <div class="description">
-        Check for the Listings you saved for later
-      </div>
-    </div>
-    <Link to="/Saved">
-    <Button style={{backgroundColor:'#94618e'}} className="btn btn-block"><i style={{color:'white'}} className="fa fa-heart"></i> Liked</Button></Link>
-  </div>
-  <div class="card">
-    <div class="content">
-      <div class="description">
-       View and manage your order summary
-      </div>
-    </div>
-    <Link to="/orders">
-    <Button style={{backgroundColor:'#94618e'}} className="btn btn-block"><i style={{color:'white'}} className="fa fa-shopping-cart"></i> Orders</Button></Link>
- </div>
-</div> 
     </div>)
     };
 };

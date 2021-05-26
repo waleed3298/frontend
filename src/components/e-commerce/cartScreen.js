@@ -30,9 +30,8 @@ function CartScreen({ match, location, history }) {
     }
 
     return (
-        <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />
-            
-            <CheckoutSteps step3 />
+        <div style={{backgroundColor:'#fcfbff',height:'100vh'}}><Navigation linkColor="#233443"  color="#f5f7fa" />
+            <div style={{marginTop:'5%'}}><CheckoutSteps  step3 />
         <div style={{width:'90%',position:'relative',left:'5%',top:'50px'}}>
         <Row>
             <Col md={8}>
@@ -54,7 +53,7 @@ function CartScreen({ match, location, history }) {
                                         </Col>
 
                                         <Col md={2}>
-                                            ${item.price}
+                                            Rs.{item.price}
                                         </Col>
 
                                         <Col md={3}>
@@ -96,7 +95,7 @@ function CartScreen({ match, location, history }) {
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h2>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h2>
-                            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                            Rs.{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
                         </ListGroup.Item>
                     </ListGroup>
 
@@ -117,6 +116,7 @@ function CartScreen({ match, location, history }) {
             </Col>
         </Row></div>
         </div>
+</div>
 
     )
 }

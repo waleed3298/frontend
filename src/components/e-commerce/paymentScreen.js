@@ -32,7 +32,7 @@ function PaymentScreen({ history }) {
     return (
         <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />
             
-        <div style={{width:'80%',position:'relative',left:'10%'}}>
+        <div style={{width:'80%',position:'relative',left:'10%',top:'8%'}}>
             <CheckoutSteps step3 />
             <Row style={{marginTop:'8%'}}>
                 <Col lg={3} md={3} style={{borderRight:'1px solid silver'}}>

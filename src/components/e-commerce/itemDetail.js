@@ -74,10 +74,9 @@ function ItemDetail({ props, match, history }) {
     } = productReviewCreate
 
     return (
-        <div>
-<Navigation linkColor="white"  color="#556B2F" />
-                    <div style={{width:'90%',position:'relative',left:'5%'}}>
-            <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+        <div style={{backgroundColor:'#fcfbff',height:'100vh'}}><Navigation linkColor="#233443"  color="#f5f7fa" />
+        <div style={{width:'90%',position:'relative',left:'5%',top:'10vh'}}>
+            <Link to='/store-items' className='btn btn-light my-3'>Go Back</Link>
             {loading ?
                 <Loader />
                 : error
@@ -86,7 +85,7 @@ function ItemDetail({ props, match, history }) {
                         <div>
                             <Row>
                                 <Col md={6}>
-                                    <Image src={product.image} alt={product.name} fluid />
+                                    <Image style={{width:'50vw',height:'80vh'}} src={product.image} alt={product.name} fluid />
                                 </Col>
 
 
@@ -101,7 +100,7 @@ function ItemDetail({ props, match, history }) {
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
-                                            <b>Price:</b> ${product.price}
+                                            <b>Price:</b> Rs.{product.price}
                                         </ListGroup.Item>
 
                                         <ListGroup.Item>
@@ -118,7 +117,7 @@ function ItemDetail({ props, match, history }) {
                                                 <Row>
                                                     <Col>Price:</Col>
                                                     <Col>
-                                                        <strong>${product.price}</strong>
+                                                        <strong>Rs.{product.price}</strong>
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>

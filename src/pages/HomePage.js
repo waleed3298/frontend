@@ -1,7 +1,7 @@
 import React, {useEffect, useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect, useHistory} from 'react-router-dom';
-import {Spinner, Card, ListGroup, Button, Form} from 'react-bootstrap';
+import {Alert,Spinner, Card, ListGroup, Button, Form} from 'react-bootstrap';
 import moment from 'moment';
 import Navigation from '../components/navbar';
 import {
@@ -15,20 +15,16 @@ import {
 import {selectIsLoggedIn, selectIsLoading} from '../reducers/userSlice';
 import './HomePage.css';
 
-function HomePage(match,props) {
+function HomePage({match},props) {
 	const dispatch = useCallback(useDispatch(), []);
 	const chats = useSelector(selectChats);
 	const isLoading = useSelector(selectChatLoading);
 	const error = useSelector(selectChatError);
 	const isAuthLoading = useSelector(selectIsLoading);
 	const isLoggedIn = useSelector(selectIsLoggedIn);
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState(match.params.handle ? match.params.handle : '');
 	const history = useHistory();
-	const name = match.params
-	if(name){
-		console.log(match.params)
-	}
-    
+	
 	useEffect(() => {
 		dispatch(getChats());
 	}, [dispatch]);
@@ -88,12 +84,14 @@ function HomePage(match,props) {
 									className="btn-md mb-2"
 									disabled={!username && username.replace(/\s+/g, '') === ''}>
 									Chat
-								</Button>
+								</Button>{match.params.handle ? 
+			<Alert className="ml-2" variat="success"><i className="fa fa-arrow-left"></i> Click on the button to start Chat</Alert>
+			 : null}
 							</Form>
 						</ListGroup.Item>
 					</ListGroup>
 				</Card>
-			)}
+			)}<br/>
 			{error && <p style={{color: 'red'}}>{error}</p>}
 		</div></div>
 	);

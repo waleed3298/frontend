@@ -19,7 +19,7 @@ export default function Shipping({history}) {
         history.push('/payment')
     }
     return (
-        <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />      
+        <div style={{backgroundColor:'#f5f7fa',height:'100vh'}}><Navigation linkColor="#233443"  color="#fcfbff" />    <div style={{marginTop:'5%'}}>
          <CheckoutSteps step3 />
      <div style={{width:'70%',position:'relative',left:'12.5%',top:'10%'}}>
         <h1>Shipping</h1>
@@ -79,6 +79,6 @@ export default function Shipping({history}) {
             </Form>
         </div>
         </div>
-        
+</div>        
     )
 }
