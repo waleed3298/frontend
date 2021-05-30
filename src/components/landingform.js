@@ -32,7 +32,7 @@ reset = () =>{
 })
 }
 handleClick = () =>{
-  const url = `${this.state.City},${this.state.beds},${this.state.Construction_status},${this.state.Type}`
+  const url = `City=${this.state.City}&Beds=${this.state.beds}&Construction_status${this.state.Construction_status},${this.state.Type}`
   window.location.href = `http://localhost:3000/search/${url}`;
 }
 handleSubmit = (e) =>{

@@ -53,6 +53,7 @@ handleChange = (event) =>{
     componentDidMount(){
       this.getResults();
       this.getCities();
+      console.log(this.state.cities)
     }
     render() {
         return (
@@ -109,6 +110,7 @@ handleChange = (event) =>{
           <div style={{marginLeft:'5%'}}>
           <Graph cities={this.state.cities} />
           </div>
+          {console.log(this.state.cities)}
           <div>
           <br/><br/>
           <h4 className="text-center">Comparing Price Indices of various cities in differect Years</h4>
@@ -126,13 +128,12 @@ handleChange = (event) =>{
                                         </Form.Control>                        
           </Form><br/>
           <div style={{marginLeft:'30%',marginTop:'5%'}}>
-          <LineChart width={600} height={300} data={this.state.data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <Line type="monotone" dataKey={this.state.Year}  stroke="#8884d8" />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <BarChart width={600} height={300} data={this.state.cities} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                <Bar type="monotone" dataKey={this.state.Year} fill='green'   />
                 <XAxis dataKey="City" />
                 <YAxis />
                 <Tooltip />
-            </LineChart>
+            </BarChart>
           </div>
           </div>
           </div>

@@ -30,6 +30,7 @@ import PriceIndex from './components/priceIndex';
 import Blogs from './components/Blog/blogs';
 import BlogDetail from './components/Blog/blogdetail';
 import cityPriceIndex from './components/cityPriceIndex';
+import CityIndex from './components/cityIndex';
 import CartScreen from './components/e-commerce/cartScreen';
 import Shipping from './components/e-commerce/shipping';
 import PaymentScreen from './components/e-commerce/paymentScreen';
@@ -103,7 +104,8 @@ function App(){
 			<Route exact path="/items/" component={ItemSearch} />
 			<Route exact path="/createProfile/" component={CreateProfile} />
 			<Route exact path="/editProfile/:handle" component={EditProfile} />
-			<Route exact path="/comparison" component={Comparison} />
+			<Route exact path="/comparison/:handle?" component={Comparison} />
+			<Route exact path="/Index/:handle" component={CityIndex} />
 			
 <Route component={NotFound} />
       </Switch>      

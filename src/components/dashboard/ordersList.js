@@ -25,7 +25,62 @@ export default function OrdersList() {
                 <br/>
                 {orders.length>0 ?
                     <ListGroup variant='flush' style={{width:'80%',position:'relative',left:'10%'}}>
+                    <h4 style={{fontFamily:'Lora',color:'green',fontWeight:'bold'}}>Pending Orders</h4> 
                             {orders.map(order => (
+                                order.isDelivered == false ?
+                                <ListGroup.Item key={order._id}>
+                                    <Row>
+                                    
+                                    <Col md={2}>
+                                        <b>Order No:</b> {order._id}
+                                        </Col>
+
+                                        <Col md={2}>
+                                            {order.createdAtDate}
+                                        </Col>
+
+                                        <Col md={2}>
+                                            Rs.{order.totalPrice}
+                                        </Col>
+                                        {order.isPaid==true ?
+                                            <Col md={1}>
+                                        <h6>Paid: <i style={{color:'green'}} class="fa fa-check-circle"></i>
+                                        </h6>
+                                        </Col>
+                                         :
+                                         <Col md={1}>
+                                        <h6>Paid: <i style={{color:'tomato'}} class="fa fa-times"></i>
+                                        </h6>
+                                        </Col>
+                                        }
+                                        {order.isDelivered==true ?
+                                            <Col md={2}>
+                                        <h6>Delivered: <i style={{color:'green'}} class="fa fa-check-circle"></i>
+                                        </h6>
+                                        </Col>
+                                         :
+                                         <Col md={2}>
+                                        <h6>Delivered: <i style={{color:'tomato'}} class="fa fa-times"></i>
+                                        </h6>
+                                        </Col>
+                                        }
+                                        
+                                        <Col md={3}>
+                                        <Link to={`/order/${order._id}`} >
+                                            <Button
+                                                type='button'
+                                                variant='light'
+                                                className="btn btn-md mb-3"
+                                            >
+                                                View Order Details
+                                            </Button></Link>
+                                        </Col>
+                                    </Row>
+                                </ListGroup.Item> : null
+                            ))}<br/><br/>
+                            <h4 style={{fontFamily:'Lora',color:'green',fontWeight:'bold'}}>Cleared Orders</h4> 
+                            {orders.map(order => (
+                                order.isDelivered == true ?
                                 <ListGroup.Item key={order._id}>
                                     <Row>
                                     
@@ -74,7 +129,7 @@ export default function OrdersList() {
                                             </Button></Link>
                                         </Col>
                                     </Row>
-                                </ListGroup.Item>
+                                </ListGroup.Item> : null
                             ))}
                         </ListGroup>
                         :null}

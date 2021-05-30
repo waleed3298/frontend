@@ -87,7 +87,7 @@ handleChange = (e) =>{
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/price-index">
     Price Index  </Link>
     </Nav.Link>
-    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/search/None">
+    <Nav.Link ><Link style={{color:this.state.linkColor}} to="/search">
     Search Properties  </Link>
     </Nav.Link>
     <Nav.Link ><Link style={{color:this.state.linkColor}} to="/comparison">

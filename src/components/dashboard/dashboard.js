@@ -157,7 +157,7 @@ add = () =>{
          <div style={{position:'relative',left:'25vw'}} className="row">
           <div className="Col-lg-6">
           <Link to="/inbox">
-          <p className="round-button ml-3"><i className="fa fa-envelope"></i></p>
+          <p className="round-button ml-3"><i class="fa fa-envelope"></i></p>
           </Link>
           </div>
           <div className="Col-lg-6">

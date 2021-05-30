@@ -5,7 +5,7 @@ import {Table,Row,Col,Form,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 class Comparison extends Component {
     state={
-        id1:'',
+        id1:this.props.match.params.handle,
         id2:'',
         properties:[],
         property1:[],
@@ -128,6 +128,7 @@ componentDidMount(){
     render() {
         return (
             <div>
+    {console.log(this.state.id1)}
             <Navigation linkColor="#233443"  color="#f5f7fa" />
             <div style={{marginTop:'2%'}} id="Form">
             <h1 style={{fontSize:'50px',fontWeight:'bold',textAlign:'center',fontFamily:'Oswald'}}>Compare Properties</h1><br/>
@@ -139,7 +140,7 @@ componentDidMount(){
             <Form.Control name="id1" value={this.state.id1} onChange={e=>this.handleChange(e)} size='md' as='select'>
             {this.state.properties.map(property=>{
               return( 
-                <option value={property.id}>{property.id} - {property.Title} ({property.Type.toLowerCase()}) </option>
+                <option value={property.id}>{property.id} - {property.Title} ({property.Type.toLowerCase()=='property' ? 'House' : property.Type},{property.Purpose.toLowerCase()}) </option>
               )
             })}
             </Form.Control>
@@ -149,8 +150,8 @@ componentDidMount(){
                 <Form.Control name="id2" value={this.state.id2} onChange={e=>this.handleChange(e)} size='md' as='select'>
             {this.state.properties.map(property=>{
               return( 
-                <option value={property.id}>{property.id} - {property.Title} ({property.Type.toLowerCase()})</option>
-              )
+                <option value={property.id}>{property.id} - {property.Title} ({property.Type.toLowerCase()=='property' ? 'House' : property.Type},{property.Purpose.toLowerCase()}) </option>
+               )
             })}
             </Form.Control>
             <br/>
@@ -178,7 +179,8 @@ componentDidMount(){
             {this.state.property1.length!=0 && this.state.property2.length!=0 ? 
 <div>{this.state.property1.Type.toLowerCase()==this.state.property2.Type.toLowerCase() && this.state.property2.Purpose.toLowerCase()==this.state.property2.Purpose.toLowerCase() ? 
 <div>
-{this.state.flag===true ? 
+{this.state.flag===true ?
+<div> 
 <Table style={{marginTop:'2%',marginLeft:'1%'}} striped bordered hover>
 <thead>
     <tr>
@@ -210,19 +212,19 @@ componentDidMount(){
     </tr>
     <tr>
       <td>Price</td>
-      <td style={{background: this.state.property1.Price>this.state.property2.Price ? 'tomato' : '#32CD32',color:'white'}}>Rs. {this.state.property1.Price}</td>
-      <td style={{background: this.state.property2.Price>this.state.property1.Price ? 'tomato' : '#32CD32',color:'white'}}>Rs. {this.state.property2.Price}</td>
+      <td style={{background: this.state.property1.Price>=this.state.property2.Price ? 'tomato' : '#32CD32',color:'white'}}>Rs. {this.state.property1.Price}</td>
+      <td style={{background: this.state.property2.Price>=this.state.property1.Price ? 'tomato' : '#32CD32',color:'white'}}>Rs. {this.state.property2.Price}</td>
     </tr>
     
     <tr>
       <td>Bedrooms:</td>
-      <td style={{background: this.state.property1.Beds>this.state.property2.Beds ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property1.Beds}</td>
-      <td style={{background: this.state.property2.Beds>this.state.property1.Beds ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property2.Beds}</td>
+      <td style={{background: this.state.property1.Beds>=this.state.property2.Beds ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property1.Beds}</td>
+      <td style={{background: this.state.property2.Beds>=this.state.property1.Beds ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property2.Beds}</td>
     </tr>
     <tr>
       <td>Bathrooms:</td>
-      <td style={{background: this.state.property1.Baths>this.state.property2.Baths ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property1.Baths}</td>
-      <td style={{background: this.state.property2.Baths>this.state.property1.Baths ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property2.Baths}</td>
+      <td style={{background: this.state.property1.Baths>=this.state.property2.Baths ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property1.Baths}</td>
+      <td style={{background: this.state.property2.Baths>=this.state.property1.Baths ? '#32CD32' : 'tomato',color:'white'}}>{this.state.property2.Baths}</td>
     </tr>    
     <tr>
       <td>City:</td>
@@ -236,8 +238,8 @@ componentDidMount(){
     </tr>
     <tr>
       <td>Construction Status:</td>
-      <td style={{backgroundColor: this.state.property1.Construction_status=='complete' ? '#32CD32' : null,color: this.state.property1.Construction_status=='complete' ? 'white' : null}}>{this.state.property1.Construction_status.toLowerCase()}</td>
-      <td style={{backgroundColor: this.state.property2.Construction_status=='complete' ? '#32CD32' : null,color: this.state.property1.Construction_status=='complete' ? 'white' : null}}>{this.state.property2.Construction_status.toLowerCase()}</td>
+      <td style={{backgroundColor: this.state.property1.Construction_status!='complete' ? 'tomato' : '#32CD32',color: this.state.property1.Construction_status=='complete' ? 'white' : 'white'}}>{this.state.property1.Construction_status.toLowerCase()}</td>
+      <td style={{backgroundColor: this.state.property2.Construction_status!='complete' ? 'tomato' : '#32CD32',color: this.state.property1.Construction_status=='complete' ? 'white' : 'white'}}>{this.state.property2.Construction_status.toLowerCase()}</td>
     </tr>
     <tr>
       <td>Purpose</td>
@@ -246,13 +248,14 @@ componentDidMount(){
     </tr>
     <tr>
       <td colspan="0.5">Walkscore*</td>
-       <td style={{backgroundColor:this.state.p1score>this.state.p2score ? '#32CD32' : 'tomato',color:'white'}}>{this.state.p1score>0 ? this.state.p1score : null}</td>
-       <td style={{backgroundColor:this.state.p2score>this.state.p1score ? '#32CD32' : 'tomato',color:'white'}}>{this.state.p2score>0 ? this.state.p2score : null}</td>
+       <td style={{backgroundColor:this.state.p1score>=this.state.p2score ? '#32CD32' : 'tomato',color:'white'}}>{this.state.p1score>0 ? this.state.p1score : null}</td>
+       <td style={{backgroundColor:this.state.p2score>=this.state.p1score ? '#32CD32' : 'tomato',color:'white'}}>{this.state.p2score>0 ? this.state.p2score : null}</td>
     </tr>
    
   </tbody>
-</Table> :
-
+</Table><br/> <p className="text-center">Walk Score is basically the aggregated score of a location calculated by the system according to the amneties in the surroundings. (e.g Schools, Hospitals, Parks, Gyms, Route availabilitis etc.) </p>
+</div> :
+<div>
 <Table style={{marginTop:'2%',marginLeft:'1%'}} striped bordered hover>
 <thead>
     <tr>
@@ -326,10 +329,12 @@ componentDidMount(){
    
   </tbody>
 </Table>
+<br/>
+<p className="text-center">Walk Score is basically the aggregated score of a location calculated by the system according to the amneties in the surroundings. (e.g Schools, Hospitals, Parks, Gyms, Route availabilitis etc.) </p>
+</div>
 }</div>
 :<Alert variant="danger">Please compare properties with same Type and Purpose</Alert>}
   <br/>
-    <p className="text-center">Walk Score is basically the aggregated score of a location calculated by the system according to the amneties in the surroundings. (e.g Schools, Hospitals, Parks, Gyms, Route availabilitis etc.) </p>
  </div>
  :null}<br/>
                                </div>     

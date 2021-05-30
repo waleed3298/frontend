@@ -41,7 +41,7 @@ handleClick = (id) =>{
 getResults = () =>{
   const { handle } = this.props.match.params
   if (handle){
-  let url = `http://127.0.0.1:4000/api/advertisements/?search=${handle}`
+  let url = `http://127.0.0.1:4000/api/advertisements?${handle}`
   axios.get(url,{
     headers:{
       'content-type':'multipart/form-data',

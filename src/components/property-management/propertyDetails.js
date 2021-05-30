@@ -19,9 +19,9 @@ class PropertyDetails extends Component{
         saved:false,
         error:'',
         token:this.props.cookies.get('adtoken'),
-        map:false,
+        map:true,
         additional:false,
-        info:true,
+        info:false,
         id:null,
         user:[],
         clicked:'',
@@ -74,7 +74,9 @@ class PropertyDetails extends Component{
        Clicked = (e) =>{
          this.setState({clicked:e})
        }
-        
+      compare = (id) =>{
+        window.location.href = `/comparison/${id}`
+      }
       render() {
           const properties = [this.state.Property]
         return(
@@ -131,11 +133,14 @@ class PropertyDetails extends Component{
               </Grid.Column>
             <Grid.Column width={8} style={{width:'66vw',backgroundColor:'vanila'}}>
             <Row>
-              <Col lg={8} md={8} sm={8}>
+              <Col lg={7} md={7} sm={7}>
               <h1 style={{fontWeight:'bold'}}>{this.state.res.Title}</h1>
             <h6 className="text-muted">{this.state.res.Location},{this.state.res.City}</h6>
               </Col>
-              <Col lg={4} md={4} sm={4}>{this.state.saved!==false ? 
+              <Col lg={4} md={4} sm={4}>
+              <button onClick={()=>this.compare(this.state.res.id)} className="btn btn-block" style={{backgroundColor:'green',color:'white'}} >Compare wih others</button>
+              </Col>
+              <Col lg={1} md={1} sm={1}>{this.state.saved!==false ? 
             <Icon size="big" style={{color:'tomato',float:'right',width:'20px',height:'20px',marginRight:'5%'}} name="heart"></Icon>
             : 
             <Icon size="big" onClick={this.handleClick} style={{color:'tomato',float:'right',marginRight:'5%'}} name="heart outline"></Icon>

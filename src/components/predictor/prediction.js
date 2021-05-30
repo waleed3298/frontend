@@ -15,18 +15,19 @@ export default class Prediction extends Component {
         beds:'',
         Units:'',
         Type:'',
+        loading:false,
         prediction:null,
         percentage:null,
         viewport: {
-            latitude: 33.6844,
-            longitude: 73.0479,
-            zoom: 5.5,
+            latitude: 33.5651,
+            longitude: 73.0169,
+            zoom: 10.5,
             bearing: 0,
             pitch: 0
           },
           marker: {
-            latitude: 33.6844,
-            longitude: 73.0479
+            latitude: 33.5651,
+            longitude: 73.0169
           },     
     }
     reset = () =>{
@@ -48,6 +49,7 @@ export default class Prediction extends Component {
     };
     evaluate = (e) =>{
         e.preventDefault();
+        this.setState({loading:true})
         if (this.state.City=='Islamabad'){
             this.setState({Islamabad:'1',Rawalpindi:'0',Karachi:'0',Lahore:'0'})
         }else{
@@ -80,6 +82,7 @@ export default class Prediction extends Component {
             'content-type':'multipart/form-data',
           }
         }).then(res=>this.setState({prediction:res.data,percentage:Number(res.data)*0.1})).catch(error=>this.setState({error:error}));
+        this.setState({loading:false})
       }
       
       _updateViewport = viewport => {
@@ -197,6 +200,7 @@ value=""
       {this.state.prediction != null ? <div> 
       <Alert variant='warning'>Estimated price range for your property is: <b>Rs. {Math.round(Number(this.state.prediction)-Number(this.state.percentage))} - {Math.round(Number(this.state.prediction)+Number(this.state.percentage))}</b> </Alert><Alert variant='success'>Estimated exact price for your property is:<b> Rs. {Math.round(this.state.prediction)} </b></Alert></div>
                         :null}
+                        {this.state.loading===true ? <h6>Loading...</h6> : null}
                         <Row style={{marginTop:'5%',width:'60%',position:'relative',left:'20%'}}>
                             <Col lg={6} md={6}>
                                 <Button onClick={this.evaluate} className="btn btn-block btn-dark">Evaluate</Button>
